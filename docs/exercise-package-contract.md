@@ -145,3 +145,11 @@ variants live in `tests/fixtures/two_sum_solutions/`: correct (hash map), an
 alternate valid algorithm that answers in reverse order, wrong answer, two stubs,
 runtime error, malformed output, import error, infinite loop and a noisy correct
 solution.
+
+## Starter file and attempt recording
+
+A package may include an optional `starter.py`. `practice attempt start` copies it
+byte for byte into the new attempt as `solution.py`; without it, a stub is
+generated from the callable signature in `problem.json`. `practice attempt test`
+runs the same runner and journals the outcome with `code_sha256` and
+`suite_sha256`. See [learner history](learner-history.md).
