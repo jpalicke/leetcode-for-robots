@@ -1,5 +1,5 @@
 # ABOUTME: The one vocabulary of content classes, each with a spoiler flag.
-# ABOUTME: Owned here until issue #14; every other module reads from this table.
+# ABOUTME: Owned here; the sources, the tutor policy and its checks all read this table.
 
 from dataclasses import dataclass
 
@@ -45,14 +45,45 @@ _CLASSES = (
     ),
 )
 
+# Classes for the learner's own material. They are not published sources, so a
+# preserved reference can never be given one of these classes.
+_LEARNER_CLASSES = (
+    ContentClass(
+        "prior_attempt",
+        True,
+        "The learner's earlier code. Hidden in a review or retry until asked for.",
+    ),
+    ContentClass(
+        "session_notes",
+        True,
+        "Recorded notes about an attempt. They can describe an approach or the help "
+        "given, so they are summarized as support needs.",
+    ),
+    ContentClass(
+        "recommendation_label",
+        True,
+        "A label shown with a suggested problem. It must not name a technique.",
+    ),
+    ContentClass(
+        "generated_context",
+        True,
+        "A request or export built for the tutor. Filtered by class before it is read.",
+    ),
+)
+
+# Classes a preserved source may carry.
 CONTENT_CLASSES: dict[str, ContentClass] = {entry.name: entry for entry in _CLASSES}
+LEARNER_CLASSES: dict[str, ContentClass] = {
+    entry.name: entry for entry in _LEARNER_CLASSES
+}
+ALL_CLASSES: dict[str, ContentClass] = {**CONTENT_CLASSES, **LEARNER_CLASSES}
 
 
 def content_class(name: str) -> ContentClass:
     try:
-        return CONTENT_CLASSES[name]
+        return ALL_CLASSES[name]
     except KeyError:
-        choices = ", ".join(CONTENT_CLASSES)
+        choices = ", ".join(ALL_CLASSES)
         raise ValueError(
             f"unknown content class {name!r}; use one of: {choices}"
         ) from None

@@ -20,11 +20,12 @@ from practice.catalog import DEFAULT_CATALOG_PATH, CatalogError, Entry, load_cat
 from practice.classification import CONTENT_CLASSES
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.package import PackageError, load_package
-from practice.paths import REFERENCES_DIR, resolve_practice_dir
+from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
 from practice.runner import RunResult, run_exercise
 from practice.search import search
 from practice.source_commands import run_sources_command
 from practice.sources import DEFAULT_ACTOR
+from practice.tutor_commands import run_tutor_command
 
 MAX_RESULTS = 20
 DEFAULT_TIMEOUT_SECONDS = 10.0
@@ -68,6 +69,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     add_attempt_commands(commands)
     add_sources_commands(commands)
+    add_tutor_commands(commands)
     return parser
 
 
@@ -169,6 +171,24 @@ def add_sources_commands(
     actions.add_parser("list", help="list imported source ids")
 
 
+def add_tutor_commands(
+    commands: "argparse._SubParsersAction[argparse.ArgumentParser]",
+) -> None:
+    tutor = commands.add_parser(
+        "tutor", help="check the tutor contract and start practice sessions"
+    )
+    actions = tutor.add_subparsers(dest="tutor_command", required=True)
+    check = actions.add_parser("check", help="verify the tutor policy and its scoping")
+    check.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help="repository to check (default: this one)",
+    )
+    actions.add_parser("start", help="print safe session settings for a tutor session")
+    actions.add_parser("classes", help="print the content class list for the policy")
+
+
 def format_entry(entry: Entry) -> str:
     premium = " premium" if entry.paid_only else ""
     return (
@@ -221,6 +241,9 @@ def main(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "run":
         return run_command(args)
+    if args.command == "tutor":
+        practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
+        return run_tutor_command(args, practice_dir, REPO_ROOT)
     if args.command == "sources":
         return run_sources_command(args, args.references)
     if args.command in ("attempt", "progress", "notes"):

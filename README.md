@@ -8,6 +8,11 @@ realistic tests, explanation feedback, and review suggestions.
 The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
+Practice sessions start from `tutor/START.md`, which points the agent at the scoped
+policy in `tutor/TUTOR.md`. Development agents read `CLAUDE.md` instead. See the
+[tutor contract](docs/tutor-contract.md) for setup and checks for Codex, Claude
+Code and optional Cursor.
+
 See [development setup](docs/development.md) to install dependencies and run checks.
 
 ## Usage
@@ -56,6 +61,18 @@ uv run --locked practice notes ATTEMPT_ID
 Every start makes a new blank attempt; earlier code is never touched. Progress and
 notes are computed from the journal each time. See
 [learner history](docs/learner-history.md) for the design.
+
+## Tutor contract
+
+```text
+uv run --locked practice tutor check     # verify the policy, its scoping and ignores
+uv run --locked practice tutor start     # safe session settings for a practice session
+uv run --locked practice tutor classes   # the content class list the policy carries
+```
+
+`tutor check` exits 0 when the contract holds and 3 when it does not, printing
+every problem to stderr. `tutor start` prints the mode, timing and the active
+attempt but never code, notes or assistance text.
 
 ## Reference sources
 

@@ -86,8 +86,9 @@ the material may be used. The notice file itself is preserved byte for byte.
 
 ### Content classes
 
-`practice.classification` owns the vocabulary until issue #14 refines it. Each
-class has a spoiler flag. Spoiler classes stay hidden in practice mode until
+`practice.classification` owns the vocabulary. The tutor policy copies it and
+`practice tutor check` fails if the two drift (see the
+[tutor contract](tutor-contract.md)). Each class has a spoiler flag. Spoiler classes stay hidden in practice mode until
 the agreed assistance level allows them.
 
 | Class | Spoiler |
@@ -98,6 +99,11 @@ the agreed assistance level allows them.
 | `hint` | yes |
 | `algorithm_implementation` | yes (can reveal the intended technique) |
 | `test_data` | yes (expected outputs reveal answers) |
+
+Four more classes cover learner-private material. They are never published
+sources, so `practice sources` does not accept them, but the tutor policy needs
+them and they are all spoilers: `prior_attempt`, `session_notes`,
+`recommendation_label` and `generated_context`.
 
 ## Commands
 

@@ -4,7 +4,9 @@ The repository currently provides development tooling, `practice search` and
 `practice run` (see the [exercise package contract](exercise-package-contract.md)) and
 private attempt history (see [learner history](learner-history.md)) and
 preserved reference sources (see [source intake](source-intake.md)).
-The other practice commands, exercise packages, and tutor instruction files are still planned.
+The tutor contract (a development `CLAUDE.md`, a separate scoped tutor policy and
+`practice tutor check`) is described in the [tutor contract](tutor-contract.md).
+The other practice commands and exercise packages are still planned.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run
 these commands from the repository root in fish, PowerShell, or another shell:
@@ -15,6 +17,7 @@ uv run --locked ruff check .
 uv run --locked ruff format --check .
 uv run --locked mypy
 uv run --locked pytest
+uv run --locked practice tutor check
 ```
 
 `.python-version` selects Python 3.13.14. uv can acquire that interpreter when

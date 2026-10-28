@@ -3,7 +3,13 @@
 
 import pytest
 
-from practice.classification import CONTENT_CLASSES, content_class, is_spoiler
+from practice.classification import (
+    ALL_CLASSES,
+    CONTENT_CLASSES,
+    LEARNER_CLASSES,
+    content_class,
+    is_spoiler,
+)
 
 
 def test_vocabulary_names_are_the_agreed_set() -> None:
@@ -36,3 +42,24 @@ def test_every_class_has_a_description_and_matches_its_key() -> None:
 def test_unknown_class_is_rejected_with_the_valid_choices() -> None:
     with pytest.raises(ValueError, match="reference_solution"):
         content_class("solution")
+
+
+def test_learner_private_classes_are_a_separate_spoiler_set() -> None:
+    assert set(LEARNER_CLASSES) == {
+        "prior_attempt",
+        "session_notes",
+        "recommendation_label",
+        "generated_context",
+    }
+    assert all(entry.spoiler for entry in LEARNER_CLASSES.values())
+
+
+def test_sources_cannot_be_classified_as_learner_private() -> None:
+    assert not set(LEARNER_CLASSES) & set(CONTENT_CLASSES)
+    assert set(ALL_CLASSES) == set(CONTENT_CLASSES) | set(LEARNER_CLASSES)
+
+
+def test_lookup_covers_private_classes_and_lists_every_choice_on_error() -> None:
+    assert is_spoiler("prior_attempt")
+    with pytest.raises(ValueError, match="generated_context"):
+        content_class("attempt")
