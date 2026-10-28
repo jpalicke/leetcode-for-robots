@@ -4,7 +4,7 @@ Practice data structures and algorithms locally with a coding-agent tutor.
 The learner writes the solution; the tutor offers questions, gradual hints,
 realistic tests, explanation feedback, and review suggestions.
 
-**Status: development tooling.** Python setup, quality-gate tests, catalog search and a solution runner are available.
+**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner and private attempt history are available.
 The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
@@ -37,6 +37,25 @@ uv run --locked practice run PACKAGE_DIR SOLUTION.py --timeout 5 --json
 Exit codes: 0 passed, 1 not passed (failed, error, malformed output, timeout, stub,
 unsupported contract or empty suite), 2 usage error, 3 invalid package or suite.
 The Two Sum package here is a runner test fixture, not the real exercise.
+
+Keep private attempts and a resumable history under `.practice/` (ignored by Git;
+a clean clone never needs it). `--practice-dir PATH` or `$PRACTICE_DIR` moves it:
+
+```text
+uv run --locked practice attempt start leetcode 1 --package tests/fixtures/two_sum
+uv run --locked practice attempt resume
+uv run --locked practice attempt test ATTEMPT_ID --package tests/fixtures/two_sum
+uv run --locked practice attempt note-assistance ATTEMPT_ID --kind hint --level 1
+uv run --locked practice attempt verdict ATTEMPT_ID --status accepted --source "LeetCode submissions"
+uv run --locked practice attempt list
+uv run --locked practice attempt finish ATTEMPT_ID
+uv run --locked practice progress
+uv run --locked practice notes ATTEMPT_ID
+```
+
+Every start makes a new blank attempt; earlier code is never touched. Progress and
+notes are computed from the journal each time. See
+[learner history](docs/learner-history.md) for the design.
 
 ## Planning documents
 

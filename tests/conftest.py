@@ -2,6 +2,7 @@
 # ABOUTME: Also builds small throwaway exercise packages in a temporary directory.
 
 import json
+import shutil
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -37,3 +38,15 @@ def make_package(tmp_path: Path) -> Callable[..., Path]:
         return package
 
     return build
+
+
+@pytest.fixture
+def leetcode_two_sum_package(tmp_path: Path, two_sum_package: Path) -> Path:
+    """A copy of the Two Sum fixture identified as LeetCode problem 1."""
+    package = tmp_path / "leetcode-1-package"
+    shutil.copytree(two_sum_package, package)
+    metadata_path = package / "problem.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    metadata.update(platform="leetcode", id="1")
+    metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
+    return package

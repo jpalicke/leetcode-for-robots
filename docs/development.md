@@ -1,7 +1,8 @@
 # Development setup
 
 The repository currently provides development tooling, `practice search` and
-`practice run` (see the [exercise package contract](exercise-package-contract.md)).
+`practice run` (see the [exercise package contract](exercise-package-contract.md)) and
+private attempt history (see [learner history](learner-history.md)).
 The other practice commands, exercise packages, and tutor instruction files are still planned.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run
@@ -35,8 +36,8 @@ Expected diagnostic failures are captured and asserted rather than printed as
 unhandled errors. No mock implementation or external service is used.
 
 `.scratch/` is available for disposable scenario runs and logs. `.venv/`, tool
-caches, and `.practice/` are excluded from Git. All learner state will live under
-`.practice/`; no learner history is initialized by these setup checks.
+caches, and `.practice/` are excluded from Git. All learner state lives under
+`.practice/`; the setup checks never create it.
 
 Restricted runners may need writable cache and temporary directories. Configure
 `UV_CACHE_DIR`, `TEMP`, and `TMP` for that runner rather than changing credentials

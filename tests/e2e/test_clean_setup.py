@@ -53,6 +53,7 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
             "tests/fixtures/two_sum",
             "tests/fixtures/two_sum_solutions/correct_hash_map.py",
         ],
+        [uv, "run", "--locked", "--offline", "practice", "progress"],
     ]
     for command in commands:
         result = subprocess.run(

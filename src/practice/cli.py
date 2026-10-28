@@ -5,19 +5,26 @@ import argparse
 import io
 import json
 import math
+import os
 import sys
 from pathlib import Path
 
+from practice.attempt_commands import run_attempt_command
+from practice.attempts import (
+    ASSISTANCE_KINDS,
+    LANGUAGES,
+    MODES,
+    VERDICT_STATUSES,
+)
 from practice.catalog import DEFAULT_CATALOG_PATH, CatalogError, Entry, load_catalog
+from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.package import PackageError, load_package
+from practice.paths import resolve_practice_dir
 from practice.runner import RunResult, run_exercise
 from practice.search import search
 
 MAX_RESULTS = 20
 DEFAULT_TIMEOUT_SECONDS = 10.0
-EXIT_NOT_PASSED = 1  # No search match, or a run that did not pass.
-EXIT_USAGE = 2
-EXIT_BAD_INPUT = 3  # A corrupt catalog or an invalid exercise package.
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -27,6 +34,13 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=DEFAULT_CATALOG_PATH,
         help="catalog file to use (default: the committed LeetCode snapshot)",
+    )
+    parser.add_argument(
+        "--practice-dir",
+        type=Path,
+        default=None,
+        help="where private attempts and the journal live "
+        "(default: $PRACTICE_DIR, else .practice/ in the repository)",
     )
     commands = parser.add_subparsers(dest="command", required=True)
     find = commands.add_parser("search", help="find problems by ID, title or slug")
@@ -43,7 +57,60 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument(
         "--json", action="store_true", help="print the full result as JSON"
     )
+    add_attempt_commands(commands)
     return parser
+
+
+def add_attempt_commands(
+    commands: "argparse._SubParsersAction[argparse.ArgumentParser]",
+) -> None:
+    package_help = "exercise package directory (default: problems/<platform>-<id>)"
+    attempt = commands.add_parser("attempt", help="start, resume and record attempts")
+    actions = attempt.add_subparsers(dest="attempt_command", required=True)
+
+    start = actions.add_parser("start", help="begin a new blank attempt")
+    start.add_argument("platform")
+    start.add_argument("problem_id")
+    start.add_argument("--language", choices=LANGUAGES, default="python")
+    start.add_argument("--mode", choices=MODES, default="practice")
+    start.add_argument("--timed", action="store_true", help="mark this attempt timed")
+    start.add_argument("--package", type=Path, default=None, help=package_help)
+
+    for name, text in (
+        ("resume", "show the latest unfinished attempt"),
+        ("list", "list attempts"),
+    ):
+        sub = actions.add_parser(name, help=text)
+        sub.add_argument("platform", nargs="?")
+        sub.add_argument("problem_id", nargs="?")
+
+    test = actions.add_parser("test", help="run an attempt and record the result")
+    test.add_argument("attempt_id")
+    test.add_argument("--package", type=Path, default=None, help=package_help)
+    test.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT_SECONDS)
+
+    assist = actions.add_parser(
+        "note-assistance", help="record help that was actually delivered"
+    )
+    assist.add_argument("attempt_id")
+    assist.add_argument("--kind", choices=ASSISTANCE_KINDS, required=True)
+    assist.add_argument("--level", type=int, default=None, help="hint level, 0 to 3")
+    assist.add_argument("--summary", default=None)
+
+    verdict = actions.add_parser("verdict", help="record what the platform said")
+    verdict.add_argument("attempt_id")
+    verdict.add_argument("--status", choices=VERDICT_STATUSES, required=True)
+    verdict.add_argument("--source", required=True, help="where you saw the verdict")
+    verdict.add_argument("--date", default=None, help="ISO date (default: today, UTC)")
+
+    finish = actions.add_parser("finish", help="close an attempt, keeping its history")
+    finish.add_argument("attempt_id")
+
+    progress = commands.add_parser("progress", help="show progress from the journal")
+    progress.add_argument("platform", nargs="?")
+    progress.add_argument("problem_id", nargs="?")
+    notes = commands.add_parser("notes", help="show one attempt's recorded timeline")
+    notes.add_argument("attempt_id")
 
 
 def format_entry(entry: Entry) -> str:
@@ -98,6 +165,9 @@ def main(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "run":
         return run_command(args)
+    if args.command in ("attempt", "progress", "notes"):
+        practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
+        return run_attempt_command(args, practice_dir)
     try:
         catalog = load_catalog(args.catalog)
     except CatalogError as error:
