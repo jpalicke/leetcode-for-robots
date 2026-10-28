@@ -1,6 +1,6 @@
 # DSA practice repository: specification draft
 
-Status: approved planning baseline; phase 1 tooling authorized on 2026-10-28.
+Status: approved planning baseline, reconciled on 2026-10-28; tooling complete.
 Date: 2026-10-28. Requirements source: requirements.md.
 
 ## 1. Product intent
@@ -46,7 +46,8 @@ Include:
    Two Sum, Contains Duplicate, Valid Anagram, Valid Parentheses, Binary Search,
    and Best Time to Buy and Sell Stock. These are a starting pack, not a catalog limit.
 3. A documented preparation pipeline and GitHub development backlog covering every catalog entry, with per-problem readiness and tracked blockers.
-4. Shared tutor policy and thin instruction entry points for supported agents.
+4. A scoped tutor policy for practice sessions and a separate development CLAUDE.md,
+   with thin instruction entry points for supported agents.
 5. Realistic local tests, preserved attempts, automatic progress notes, and reviews.
 6. A curriculum outline and recommendation policy, without exposing technique
    labels during ordinary practice.
@@ -272,8 +273,13 @@ The snapshot fetched on 2026-10-28 contains 4,096 entries; counts may change.
 
 Refreshing validates the response before replacing the snapshot. A failed refresh
 preserves the existing snapshot and reports its age; it must not silently remove
-problems or overwrite attempts. The public endpoint used during discovery is a
-data source, not a guaranteed supported integration contract.
+problems or overwrite attempts. The unofficial endpoint used during discovery,
+`https://leetcode.com/api/problems/all/`, is a data source, not a guaranteed
+supported integration contract. Its `frontend_question_id` is the learner-visible ID
+and differs from the internal `question_id`; keep them distinct.
+
+Store each problem statement as a link to LeetCode plus our own short original
+summary (task, signature, constraints and original examples), not copied text.
 
 Confirmed development scope: prepare the entire catalog through planned GitHub
 work items, with the six starters as the first verified batch. This replaces an
@@ -297,9 +303,10 @@ Catalog membership does not grant access to restricted statements or editorials.
 
 ## 11. Coding-agent instructions
 
-Proposal: put shared behavioral policy in root AGENTS.md and have CLAUDE.md
-import it using @AGENTS.md. Keep tool-specific details small. Cursor users can
-also use AGENTS.md without making Cursor necessary for anyone else.
+Decision: a development CLAUDE.md carries repository development rules. The tutor
+policy lives in a separate scoped file that only practice sessions load, so it never
+hinders development agents. Keep tool-specific details small. Cursor users can
+read the same tutor policy without making Cursor necessary for anyone else.
 
 Repository instructions guide model behavior; they are not an access-control
 boundary. Separate solution files and default context selection reduce accidental
@@ -369,7 +376,6 @@ agreed. Deliverable-specific schemas and adapter details are finalized in their
 own ticket contracts before implementation, preserving the agreed behavior.
 
 The ticket-based, test-first implementation plan is in implementation-plan.md.
-Planning defaults and score anchors were approved; Joe P requested reconciliation
-around separate deliverables and actual sub-issue hierarchies. Implementation is
-paused during that planning cleanup. Source-pool approval alone does not authorize
-another implementation ticket.
+Planning defaults and score anchors were approved, and tickets are reconciled around
+separate deliverables and actual sub-issue hierarchies. Implementation proceeds
+ticket by ticket in dependency order.

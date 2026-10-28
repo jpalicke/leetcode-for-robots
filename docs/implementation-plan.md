@@ -1,15 +1,20 @@
 # PDD implementation plan
 
-Prepared for Joe P on 2026-10-28. Status: ticket structure reconciled; implementation paused for planning cleanup.
+Prepared for Joe P on 2026-10-28. Status: ticket structure reconciled; tooling complete; implementation proceeds ticket by ticket.
 Requirements and specification remain authoritative for approved behavior.
 Joe P approved these defaults after removing the five-file limit for this project.
 
 ## Release boundary
 
-The first usable release has a searchable full-catalog snapshot, six verified
-Python exercises, both menus, private progress, gradual tutoring, and a filtered
-knowledge export. The remaining catalog is explicitly tracked preparation work;
-first release does not require every catalog entry to be runnable.
+The first usable release (milestone `v0.1`) has a searchable full-catalog snapshot,
+six verified Python exercises, both menus, private progress, gradual tutoring,
+explanation assessments, spaced reviews, recommendations, and a filtered knowledge
+export. The remaining catalog is explicitly tracked preparation work outside the
+release; first release does not require every catalog entry to be runnable.
+
+First vertical slice (label `slice-1`): practice Two Sum end to end by searching,
+starting an attempt, running tests and seeing progress. It needs the search
+deliverable, the runner, the attempt lifecycle and the Two Sum package.
 
 The [catalog parent](https://github.com/jpalicke/leetcode-for-robots/issues/1)
 links all workstreams. [Issue #3](https://github.com/jpalicke/leetcode-for-robots/issues/3)
@@ -101,7 +106,8 @@ steps do not require separate tickets or repeated approval handoffs.
   not keep a completed implementation ticket open.
 - Never close unfinished or blocked work as completed. A tracking parent closes
   only when its defined scope and coverage criteria are satisfied.
-- Prefer Sol; Luna only for suitable lightweight work. Minimize delegation.
+- Prefer Sol or Sonnet; Luna or Haiku only for suitable lightweight work. Delegate
+  through sequential subagents, one at a time, Sonnet by default and Haiku for light work.
   Do not raise reasoning effort or use Astra High without explicit approval.
 
 ## Deliverables and dependencies
@@ -113,9 +119,10 @@ outcome unless explicitly marked as a tracking parent.
 | Deliverable | Definition of done | Prerequisites |
 | --- | --- | --- |
 | Python development tooling | Locked environment; strict typing; lint/format; real setup tests; documented clean setup | Approved planning baseline |
-| Shared tutor contract | Shared AGENTS policy, Claude import, optional Cursor setup, policy checks and live agent evidence | Tooling |
-| Searchable catalog with safe refresh | Validate a real dated snapshot, search by ID/title/slug, reject corrupt input and retain last good snapshot | Tooling |
-| Catalog preparation coverage tracking | Map each snapshot entry exactly once to a problem/class sub-issue; resumable creation; report pending/blocked/ready without omissions | Catalog |
+| Shared tutor contract | Development CLAUDE.md plus a scoped tutor-policy file used only by practice sessions, optional Cursor setup, policy checks and live agent evidence | Tooling |
+| Search the catalog from the terminal | Commit and validate the real dated snapshot, `practice search` by ID/title/slug, reject corrupt input | Tooling |
+| Refresh the catalog without losing work | Fetch, validate, atomic swap, report added/changed/removed, keep last good snapshot on failure | Catalog search |
+| Catalog preparation coverage tracking | A `tools/` mapping script groups entries into class tickets of at most 100 (GitHub sub-issue cap), creates them in resumable rate-limited batches, treats premium entries as one blocked class, and reports coverage without omissions | Catalog |
 | Published-reference intake | Preserve a selected real source file/notices unchanged with revision/hash, citation, terms and separate adapter location | Tooling; tutor content classifications |
 | Ordinary Python exercise runner | Execute primitive/list/string contracts; accept valid alternate outputs; fail honestly on errors, stubs, empty suites and timeouts; return code/suite hashes | Tooling; documented package contract |
 | Attempt lifecycle and private history | Create blank attempts, preserve prior work, resume interruptions, save real events, attach evidence to exact versions, derive notes | Catalog; runner |
@@ -129,6 +136,10 @@ outcome unless explicitly marked as a tracking parent.
 | Filtered knowledge export | Stable IDs/provenance, deterministic output, pre-context reveal filtering, no default solutions or learner data | Reference metadata; tutor classifications |
 | Full catalog (tracking parent) | Complete snapshot mapping and prepared in-scope exercises; unfinished or blocked preparation keeps this parent open | Preparation coverage and problem/class children |
 | Six starter exercises (tracking parent) | All six individual exercise children meet readiness criteria | Six problem tickets |
+| Curriculum and prerequisite map | Ordered concepts and prerequisites for the starters, validated, no technique labels in practice mode | Catalog |
+| Study-mode lessons | Cited, classified teaching units for the starter concepts | Source intake; export; tutor contract |
+| Optional timed practice | Per-session opt-in timing that resets and never affects explanation scores | Navigation; history |
+| First-release acceptance | Clean-clone run of the spec scenarios with recorded evidence | Other v0.1 tickets |
 | Future refinements (tracking parent) | Separate discovery tickets for RAG, C++, Rust, Go, CodeFights and HackerRank; each defines its own implementation work | First-release baseline as relevant |
 
 Node-based, mutation, stateful and interactive execution contracts get separate
@@ -177,5 +188,6 @@ clean clone, timer reset, blank reviews, accurate slow-solution grading, alterna
 outputs, privacy and reveal boundaries. A final release checklist checks the
 combined workflow without becoming a miscellaneous multi-ticket implementation PR.
 
-Implementation is paused while Joe P reviews the reconciled plan. Updating the
-plan and GitHub tracking does not authorize starting another implementation ticket.
+Navigation depends on the catalog, runner, history and tutor contract; reviews and
+recommendations wire in their own menu actions. Preparation pipeline documentation
+is part of the Two Sum package ticket.
