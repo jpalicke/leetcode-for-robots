@@ -1,7 +1,7 @@
 # Development setup
 
-The repository currently provides development tooling. Practice commands,
-exercise packages, and tutor instruction files are still planned.
+The repository currently provides development tooling and `practice search`.
+The other practice commands, exercise packages, and tutor instruction files are still planned.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run
 these commands from the repository root in fish, PowerShell, or another shell:
@@ -37,8 +37,8 @@ Restricted runners may need writable cache and temporary directories. Configure
 or the dependency lock. On systems without hardlink support, uv's documented
 `UV_LINK_MODE=copy` setting selects file copying explicitly.
 
-First-party code uses strict mypy and Ruff. When application code is introduced,
-include its package in mypy's `files` setting. Preserved upstream reference files
+First-party code under `src/` and `tests/` uses strict mypy and Ruff. Keep new
+packages inside mypy's `files` setting. Preserved upstream reference files
 will be checked through separate adapters without editing their contents.
 
 Configuration references: [uv locking](https://docs.astral.sh/uv/concepts/projects/sync/),

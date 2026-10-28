@@ -4,11 +4,27 @@ Practice data structures and algorithms locally with a coding-agent tutor.
 The learner writes the solution; the tutor offers questions, gradual hints,
 realistic tests, explanation feedback, and review suggestions.
 
-**Status: development tooling.** Python setup and quality-gate tests are available.
-The practice tools and exercise packages are not implemented. Development follows
+**Status: development tooling.** Python setup, quality-gate tests and catalog search are available.
+The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
 See [development setup](docs/development.md) to install dependencies and run checks.
+
+## Usage
+
+Search the committed LeetCode catalog snapshot (fetched 2026-10-28) by problem ID,
+slug or title fragment:
+
+```text
+uv run --locked practice search "two sum"
+uv run --locked practice search 1
+uv run --locked practice search two-sum
+```
+
+Each result shows the learner-visible ID, title, difficulty, a `premium` flag for
+paid problems, and the slug. Exit codes: 0 found, 1 nothing matches, 2 usage
+error, 3 the catalog file is corrupt or unreadable (the reason goes to stderr).
+`--catalog PATH` searches a different catalog file, for example a copy.
 
 ## Planning documents
 
