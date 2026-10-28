@@ -6,7 +6,7 @@ realistic tests, explanation feedback, and review suggestions.
 
 **Status: development tooling.** Python setup and quality-gate tests are available.
 The practice tools and exercise packages are not implemented. Development follows
-the reviewed PDD plan, with approval and verification gates between phases.
+the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
 See [development setup](docs/development.md) to install dependencies and run checks.
 
@@ -16,7 +16,7 @@ See [development setup](docs/development.md) to install dependencies and run che
 - [Specification draft](docs/specification.md)
 - [Published reference research and source policy](docs/reference-sources.md)
 - [Development backlog proposal](docs/development-backlog.md)
-- [Phased implementation plan](docs/implementation-plan.md)
+- [Ticket-based implementation plan](docs/implementation-plan.md)
 
 ## Planned scope
 

@@ -44,3 +44,16 @@ will be checked through separate adapters without editing their contents.
 Configuration references: [uv locking](https://docs.astral.sh/uv/concepts/projects/sync/),
 [mypy configuration](https://mypy.readthedocs.io/en/stable/config_file.html), and
 [Ruff configuration](https://docs.astral.sh/ruff/configuration/).
+
+## Ticket delivery
+
+Complete and verify one testable ticket before opening its PR, ready for review.
+Internal implementation phases are not separate approval stops. A PR handles
+one ticket; multiple PRs for a ticket require a concrete scope justification.
+Drafts are reserved for Joe P's explicit request to share work in progress.
+
+When work is complete, comment on its issue in plain English: describe the
+delivered behavior and validation, link all relevant PRs and reference sources,
+and state whether merge is pending or complete. Then close the issue as completed.
+Keep unfinished work and parents with unmet coverage open. A pending PR merge
+alone does not require an otherwise complete implementation issue to stay open.
