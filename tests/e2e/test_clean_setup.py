@@ -20,12 +20,13 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
             checkout / folder,
             ignore=shutil.ignore_patterns("__pycache__"),
         )
-    for layer in ("unit", "integration"):
+    for layer in ("unit", "integration", "fixtures"):
         shutil.copytree(
             root / "tests" / layer,
             checkout / "tests" / layer,
             ignore=shutil.ignore_patterns("__pycache__"),
         )
+    shutil.copy2(root / "tests" / "conftest.py", checkout / "tests" / "conftest.py")
 
     uv = shutil.which("uv")
     assert uv is not None, "Install uv before running the development suite"
@@ -42,6 +43,16 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
         [uv, "run", "--locked", "--offline", "mypy"],
         [uv, "run", "--locked", "--offline", "pytest"],
         [uv, "run", "--locked", "--offline", "practice", "search", "two sum"],
+        [
+            uv,
+            "run",
+            "--locked",
+            "--offline",
+            "practice",
+            "run",
+            "tests/fixtures/two_sum",
+            "tests/fixtures/two_sum_solutions/correct_hash_map.py",
+        ],
     ]
     for command in commands:
         result = subprocess.run(
