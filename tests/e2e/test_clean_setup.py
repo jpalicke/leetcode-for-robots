@@ -28,8 +28,9 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
     environment["UV_PROJECT_ENVIRONMENT"] = str(checkout / ".venv")
     environment["UV_PYTHON"] = sys.executable
     environment["UV_PYTHON_DOWNLOADS"] = "never"
+    # Sync may download into the uv cache; later steps then run fully offline.
     commands = [
-        [uv, "sync", "--locked", "--offline"],
+        [uv, "sync", "--locked"],
         [uv, "run", "--locked", "--offline", "ruff", "check", "."],
         [uv, "run", "--locked", "--offline", "ruff", "format", "--check", "."],
         [uv, "run", "--locked", "--offline", "mypy"],
