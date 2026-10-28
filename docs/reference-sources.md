@@ -139,6 +139,11 @@ The initial pool, noncommercial intent, preference for published implementations
 source preservation approach, and reference-validation threshold are agreed.
 The implementation plan will define exact revision pins, per-file notices,
 source-specific attribution/share-alike handling, adapters, and validation commands.
+
+Catalog metadata comes from `https://leetcode.com/api/problems/all/`, an unofficial
+endpoint. Problem statements are stored as a link to LeetCode plus our own short
+summary, never copied text. Before mixing share-alike or noncommercial sources, a
+stated policy must say how each unit records its terms (required before #6).
 No reference import or implementation has begun.
 This research is a source-selection aid. It does not claim a full audit of every
 candidate file, successful execution of any upstream test suite, complete catalog

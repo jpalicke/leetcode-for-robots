@@ -1,6 +1,6 @@
 # Development backlog
 
-Prepared for Joe P on 2026-10-28. Implementation is paused during plan reconciliation.
+Prepared for Joe P on 2026-10-28. Plan and tickets reconciled.
 [Repository](https://github.com/jpalicke/leetcode-for-robots) and
 [implementation plan](implementation-plan.md).
 
@@ -27,8 +27,10 @@ A listed task is not a validated exercise. No arbitrary 25-problem batch default
 | --- | --- | --- |
 | [#1](https://github.com/jpalicke/leetcode-for-robots/issues/1) | Prepare the full LeetCode catalog as development tasks | Tracking parent |
 | [#3](https://github.com/jpalicke/leetcode-for-robots/issues/3) | Reconcile the PDD plan and deliverable-sized GitHub backlog | Planning deliverable |
-| [#4](https://github.com/jpalicke/leetcode-for-robots/issues/4) | Establish locked Python development tooling | Complete; PR #13 awaits merge |
-| [#5](https://github.com/jpalicke/leetcode-for-robots/issues/5) | Provide a searchable LeetCode catalog with safe refresh | Implementation/discovery deliverable |
+| [#4](https://github.com/jpalicke/leetcode-for-robots/issues/4) | Establish locked Python development tooling | Complete and merged |
+| [#5](https://github.com/jpalicke/leetcode-for-robots/issues/5) | Provide a searchable LeetCode catalog with safe refresh | Tracking parent |
+| [#34](https://github.com/jpalicke/leetcode-for-robots/issues/34) | Search the LeetCode catalog from the terminal | Implementation/discovery deliverable |
+| [#37](https://github.com/jpalicke/leetcode-for-robots/issues/37) | Refresh the catalog without losing work | Implementation/discovery deliverable |
 | [#6](https://github.com/jpalicke/leetcode-for-robots/issues/6) | Preserve published references with provenance and source notices | Implementation/discovery deliverable |
 | [#7](https://github.com/jpalicke/leetcode-for-robots/issues/7) | Run ordinary Python exercise contracts reliably | Implementation/discovery deliverable |
 | [#8](https://github.com/jpalicke/leetcode-for-robots/issues/8) | Track the first six verified Python exercise packages | Tracking parent |
@@ -54,10 +56,15 @@ A listed task is not a validated exercise. No arbitrary 25-problem batch default
 | [#29](https://github.com/jpalicke/leetcode-for-robots/issues/29) | Scope Go practice support | Implementation/discovery deliverable |
 | [#30](https://github.com/jpalicke/leetcode-for-robots/issues/30) | Research CodeFights platform support | Implementation/discovery deliverable |
 | [#31](https://github.com/jpalicke/leetcode-for-robots/issues/31) | Research HackerRank platform support | Implementation/discovery deliverable |
+| [#39](https://github.com/jpalicke/leetcode-for-robots/issues/39) | Define the curriculum and prerequisite map | Implementation/discovery deliverable |
+| [#40](https://github.com/jpalicke/leetcode-for-robots/issues/40) | Teach a data structures concept in study mode | Implementation/discovery deliverable |
+| [#41](https://github.com/jpalicke/leetcode-for-robots/issues/41) | Offer optional timed practice sessions | Implementation/discovery deliverable |
+| [#42](https://github.com/jpalicke/leetcode-for-robots/issues/42) | Verify the first release end to end | Implementation/discovery deliverable |
 
-Verified hierarchy: #1 → #8 → #20–#25; #12 → #26–#31. #15 remains
-open for the full snapshot mapping. Issue #4 was closed after its completion
-comment; PR #13 is ready for review and not yet merged.
+Verified hierarchy: #1 → #8 → #20–#25; #5 → #34, #37; #12 → #26–#31. #15 remains
+open for the full snapshot mapping. Issue #4 is complete and merged (PR #13).
+Milestone `v0.1` collects the first-release tickets; label `slice-1` marks the
+Two Sum vertical slice. The catalog source is `https://leetcode.com/api/problems/all/`.
 
 ## Per-problem preparation checklist
 
@@ -99,7 +106,7 @@ prerequisites, expected package outputs, independent verification and readiness
 criteria. Grouping tickets list their children and aggregate coverage; they do
 not replace independently deliverable problem/class tickets.
 
-Prefer Sol or Sonnet and minimal delegation; Luna or Haiku only where appropriate. No reasoning
+Prefer Sol or Sonnet, delegating through sequential subagents; Luna or Haiku only where appropriate. No reasoning
 escalation or Astra High without explicit approval. Keep attempts, notes,
 progress and generated requests local and Git-ignored. Full-catalog preparation
 is planned development work, not work deferred until a learner chooses a problem.

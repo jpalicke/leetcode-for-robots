@@ -1,7 +1,7 @@
 # DSA practice: requirements discovery
 
-Status: requirements captured; planning baseline approved on 2026-10-28.
-Implementation is paused while the ticket-based plan and GitHub backlog are reconciled.
+Status: requirements captured; planning baseline approved and reconciled on 2026-10-28.
+Tooling is complete; the ticket backlog is ready to drive implementation.
 
 ## Purpose and process
 
@@ -27,8 +27,8 @@ Then close the ticket; do not keep complete work open solely for pending merge.
 For development work on this project, prefer Sol (Codex) or Sonnet (Claude Code) for the
 main agent and delegated work. Use Luna (Codex) or Haiku (Claude Code) for suitable
 lightweight tasks. Do not use Astra High or raise reasoning effort without Joe P's
-explicit approval. Minimize unnecessary parallel
-agents to conserve session limits. These preferences do not require learners to
+explicit approval. Delegate through sequential subagents, one at a time, with Sonnet
+by default and Haiku for light work, to conserve session limits. These preferences do not require learners to
 use a particular tutor model or editor.
 
 ## Confirmed decisions
@@ -36,7 +36,9 @@ use a particular tutor model or editor.
 ### Catalog and problem selection
 
 - Cover the full LeetCode catalog and prepare its questions as planned development
-  tasks reflected in GitHub issues. Preparation is not limited to questions Joe P
+  tasks reflected in GitHub issues. The full-catalog parent is done when every entry
+  is ready for local practice or recorded as out of scope or blocked with a documented
+  reason (premium, SQL, shell, interactive); not everything must be ready. Preparation is not limited to questions Joe P
   selects during practice and does not imply running every task simultaneously.
 - Catalog coverage does not imply every problem has verified local tests or solutions.
 - Start with easy Python practice while allowing selection from the whole catalog.
@@ -128,7 +130,8 @@ use a particular tutor model or editor.
 - Gentle check-ins are welcome when observable interactions suggest difficulty:
   recurring failures, revisions with the same issue, an explanation revealing
   confusion, or Joe P saying he is stuck.
-- Silence alone is not evidence of struggle. Trigger thresholds remain open.
+- Silence alone is not evidence of struggle. Offer one check-in after two materially
+  similar failures or explicit confusion; the plan defines the details.
 - Evaluate alternative solutions on their merits; do not require matching a
   single reference implementation.
 - A correct slower solution can prompt gradual optimization coaching. Invite
@@ -153,6 +156,17 @@ use a particular tutor model or editor.
 - An accurate explanation of a slower correct solution can earn a strong score.
   Efficiency coaching is separate from explanation accuracy.
 - The explanation exercise does not block completion earned by passing tests.
+
+### Problem statements
+
+- Store a link to the LeetCode problem plus our own short original summary (task,
+  signature, constraints and our own examples). Do not copy LeetCode statement text.
+
+### Agent instruction files
+
+- A development `CLAUDE.md` holds repository development rules. A separate scoped
+  tutor-policy file is used only by practice sessions. The tutor policy must not be
+  the single root instruction file, because it would hinder development agents.
 
 ### Published references and local storage
 
@@ -222,8 +236,8 @@ use a particular tutor model or editor.
   This is a dated snapshot, not a fixed catalog size.
 - Current official instruction documentation was checked for Codex, Cursor,
   and Claude Code. Final adapters and citations belong in the specification.
-- The repository has been initialized with a work branch. No implementation
-  files have been created.
+- The repository has locked Python tooling. Catalog, runner and exercise
+  implementation tickets are open in GitHub.
 
 ## Remaining specification and implementation details
 
