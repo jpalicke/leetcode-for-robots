@@ -9,6 +9,16 @@ readme = "README.md"
 requires-python = ">=3.13,<3.14"
 dependencies = []
 
+[project.scripts]
+practice = "practice.cli:run"
+
+[build-system]
+requires = ["uv_build>=0.11.26,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "practice"
+
 [dependency-groups]
 dev = [
     "mypy>=2.4,<3",
@@ -17,13 +27,12 @@ dev = [
 ]
 
 [tool.uv]
-package = false
 required-version = ">=0.11.26"
 
 [tool.mypy]
 python_version = "3.13"
 strict = true
-files = ["tests"]
+files = ["src", "tests"]
 warn_unreachable = true
 show_error_codes = true
 

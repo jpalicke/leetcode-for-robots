@@ -13,3 +13,12 @@ def test_development_configuration_is_strict() -> None:
     assert config["tool"]["pytest"]["ini_options"]["filterwarnings"] == ["error"]
     assert config["tool"]["pytest"]["ini_options"]["testpaths"] == ["tests"]
     assert (root / "uv.lock").is_file()
+
+
+def test_practice_command_is_installable_and_typed() -> None:
+    root = Path(__file__).resolve().parents[2]
+    config = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))
+
+    assert config["project"]["scripts"]["practice"] == "practice.cli:run"
+    assert config["project"]["dependencies"] == []
+    assert "src" in config["tool"]["mypy"]["files"]

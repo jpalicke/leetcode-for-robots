@@ -14,6 +14,12 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
     checkout.mkdir()
     for name in ("pyproject.toml", "uv.lock", ".python-version", "README.md"):
         shutil.copy2(root / name, checkout / name)
+    for folder in ("src", "catalog"):
+        shutil.copytree(
+            root / folder,
+            checkout / folder,
+            ignore=shutil.ignore_patterns("__pycache__"),
+        )
     for layer in ("unit", "integration"):
         shutil.copytree(
             root / "tests" / layer,
@@ -35,6 +41,7 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
         [uv, "run", "--locked", "--offline", "ruff", "format", "--check", "."],
         [uv, "run", "--locked", "--offline", "mypy"],
         [uv, "run", "--locked", "--offline", "pytest"],
+        [uv, "run", "--locked", "--offline", "practice", "search", "two sum"],
     ]
     for command in commands:
         result = subprocess.run(
