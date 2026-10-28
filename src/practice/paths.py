@@ -1,4 +1,4 @@
-# ABOUTME: Locates learner state and exercise packages on disk.
+# ABOUTME: Locates learner state, exercise packages and preserved references on disk.
 # ABOUTME: Learner state defaults to the ignored .practice directory in the repository.
 
 import os
@@ -7,6 +7,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PRACTICE_DIR_ENV = "PRACTICE_DIR"
+REFERENCES_DIR = REPO_ROOT / "references"
 
 
 def resolve_practice_dir(flag: Path | None, environment: Mapping[str, str]) -> Path:
