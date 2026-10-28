@@ -24,9 +24,10 @@ Before closing completed work, post a plain-English comment describing the work,
 validation and relevant PR/source links, with merge status stated accurately.
 Then close the ticket; do not keep complete work open solely for pending merge.
 
-For development work on this project, prefer Sol for the main agent and delegated
-work. Use Luna for suitable lightweight tasks. Do not use Astra High or raise
-reasoning effort without Joe P's explicit approval. Minimize unnecessary parallel
+For development work on this project, prefer Sol (Codex) or Sonnet (Claude Code) for the
+main agent and delegated work. Use Luna (Codex) or Haiku (Claude Code) for suitable
+lightweight tasks. Do not use Astra High or raise reasoning effort without Joe P's
+explicit approval. Minimize unnecessary parallel
 agents to conserve session limits. These preferences do not require learners to
 use a particular tutor model or editor.
 

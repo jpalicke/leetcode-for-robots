@@ -101,7 +101,7 @@ steps do not require separate tickets or repeated approval handoffs.
   not keep a completed implementation ticket open.
 - Never close unfinished or blocked work as completed. A tracking parent closes
   only when its defined scope and coverage criteria are satisfied.
-- Prefer Sol; Luna only for suitable lightweight work. Minimize delegation.
+- Prefer Sol or Sonnet; Luna or Haiku only for suitable lightweight work. Minimize delegation.
   Do not raise reasoning effort or use Astra High without explicit approval.
 
 ## Deliverables and dependencies

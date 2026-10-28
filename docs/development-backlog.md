@@ -99,7 +99,7 @@ prerequisites, expected package outputs, independent verification and readiness
 criteria. Grouping tickets list their children and aggregate coverage; they do
 not replace independently deliverable problem/class tickets.
 
-Prefer Sol and minimal delegation; Luna only where appropriate. No reasoning
+Prefer Sol or Sonnet and minimal delegation; Luna or Haiku only where appropriate. No reasoning
 escalation or Astra High without explicit approval. Keep attempts, notes,
 progress and generated requests local and Git-ignored. Full-catalog preparation
 is planned development work, not work deferred until a learner chooses a problem.
