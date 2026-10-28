@@ -1,7 +1,7 @@
 # DSA practice: requirements discovery
 
 Status: requirements captured; planning baseline approved on 2026-10-28.
-The implementation plan records phase authorization; phase 1 tooling is authorized.
+Implementation is paused while the ticket-based plan and GitHub backlog are reconciled.
 
 ## Purpose and process
 
@@ -13,6 +13,16 @@ Follow Prompt-Driven Development: discover requirements, agree on a specificatio
 prepare an implementation plan, then build with verification.
 
 ## Development agent preferences
+
+Tickets represent separate, complete, testable deliverables. Normally one PR
+resolves one ticket; two or three PRs are exceptional. Internal phases are not
+delivery checkpoints. There is no five-file cap. Open PRs ready for review after
+implementation and verification; use drafts only on Joe P's explicit request.
+Use actual GitHub sub-issues for catalog problem/class preparation. Tracking
+parents aggregate coverage and do not require one enormous implementation PR.
+Before closing completed work, post a plain-English comment describing the work,
+validation and relevant PR/source links, with merge status stated accurately.
+Then close the ticket; do not keep complete work open solely for pending merge.
 
 For development work on this project, prefer Sol for the main agent and delegated
 work. Use Luna for suitable lightweight tasks. Do not use Astra High or raise

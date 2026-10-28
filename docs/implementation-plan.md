@@ -1,6 +1,6 @@
 # PDD implementation plan
 
-Prepared for Joe P on 2026-10-28. Status: approved baseline; phase 1 authorized.
+Prepared for Joe P on 2026-10-28. Status: ticket structure reconciled; implementation paused for planning cleanup.
 Requirements and specification remain authoritative for approved behavior.
 Joe P approved these defaults after removing the five-file limit for this project.
 
@@ -13,9 +13,9 @@ first release does not require every catalog entry to be runnable.
 
 The [catalog parent](https://github.com/jpalicke/leetcode-for-robots/issues/1)
 links all workstreams. [Issue #3](https://github.com/jpalicke/leetcode-for-robots/issues/3)
-tracks this review. Subsequent phases retain their individual approval gates.
+tracks this review. Tickets define delivery boundaries; phases are internal steps.
 
-## Proposed implementation decisions
+## Implementation decisions
 
 1. Use a Python package with a `practice` terminal entry point. Use uv, pytest,
    Ruff, and strict mypy. Pin the Python version and dependency versions during
@@ -80,69 +80,102 @@ ungraded. Record initial and revised explanations distinctly.
 Do not require formal proofs or artificial verbosity. A simple problem can earn
 full reasoning credit in a short explanation. Report core /10 and bonus separately.
 
-## Development and verification contract
+## Ticket and PR contract
 
-- This project has no per-phase file-count limit. Scope phases around coherent outcomes.
-  Stop after its checks and wait for Joe P's approval before the next phase.
-- The table below defines phase boundaries and acceptance contracts. Before each
-  phase, identify the expected paths and acceptance evidence. Split work when it
-  improves reviewability; do not split merely to satisfy an arbitrary file count.
-- For code, write and run the failing scenario first, implement minimally, then
-  run relevant checks. Use real files, child processes, and APIs; no mock mode.
-- Cover unit, integration, and end-to-end behavior across the product. E2E tests
-  launch the actual command in a temporary workspace and inspect real artifacts.
-- Before reporting an implementation phase complete, run strict mypy, all
-  configured Ruff checks/format checks, and the complete configured test suite.
-  Inspect logs and exercise its real user flow. Capture expected errors in tests.
-- Preserved upstream code is not reformatted, annotated, or made to satisfy
-  first-party typing rules by modification. Type-check adapters strictly and
-  execute upstream references through their independent validation contracts.
-- Evaluate tutor behavior in actual Codex and Claude Code sessions. Automated
-  file/process tests cannot establish instruction following. If either runtime
-  is unavailable, leave that compatibility check pending rather than claim a pass.
-- Use individual branches, normal hooks, and review. Never bypass hooks.
+A ticket describes one complete, testable deliverable. Tooling and the tutor
+contract are separate tickets. Internal design, TDD, implementation, and review
+steps do not require separate tickets or repeated approval handoffs.
 
-## Phases
+- Each PR addresses exactly one implementation ticket. Normally one PR resolves
+  it; two or three are exceptions justified by the deliverable itself.
+- No fixed file-count limit applies. Split unrelated outcomes, not arbitrary
+  numbers of files or problems.
+- Implement and verify the authorized ticket before opening its PR, ready for
+  review. Use drafts only when Joe P explicitly requests sharing work in progress.
+- Tracking parents organize related work; they are not implementation tickets
+  requiring one enormous PR. Use actual GitHub sub-issue relationships.
+- Once a ticket is complete, first post a plain-English completion comment:
+  describe what changed, what now works, and the verification performed; link
+  all relevant PRs and reference sources; distinguish implemented, reviewed,
+  and merged status. Then close the issue as completed. A pending merge does
+  not keep a completed implementation ticket open.
+- Never close unfinished or blocked work as completed. A tracking parent closes
+  only when its defined scope and coverage criteria are satisfied.
+- Prefer Sol; Luna only for suitable lightweight work. Minimize delegation.
+  Do not raise reasoning effort or use Astra High without explicit approval.
 
-Each row is a gated increment, not permission to execute the whole table at once.
-Related issues express workstreams; they can span several phases.
+## Deliverables and dependencies
 
-| Phase | Scope | First failing scenario and exit evidence | Issue |
-| --- | --- | --- | --- |
-| 1 | Tooling only: `pyproject.toml`, `uv.lock`, and three smoke tests under unit/integration/e2e | Configure and run a failing development-setup check before resolving dependencies; then verify locked environment, strict checker, lint/format, and three real setup smoke tests. These test setup only, not product features. | #4 |
-| 2 | `AGENTS.md`, `CLAUDE.md`, `.gitignore`, and policy/private-state contract tests | A missing policy clause or unignored learner path fails; verify hint/edit/timing/privacy rules and instruction loading in supported live agents. Establish the ignore boundary before creating attempts. Pick the requested project nicknames when creating AGENTS.md. | #4 |
-| 3 | Catalog schema/validator and tests | Duplicate/invalid identities and malformed snapshots fail; valid real catalog records parse without treating membership as readiness. | #5 |
-| 4 | Catalog acquisition/search command and real process tests | Search a stored real snapshot; refresh failure preserves it; validate a live acquisition separately. Store fetch evidence and age. | #5 |
-| 5 | Preparation batch generator, manifest, coverage report, and tests | Every entry in the named snapshot maps exactly once to a task; duplicates/omissions fail. Create bounded GitHub batch issues after validating the generated inventory, using resumable IDs to avoid duplicates. | #1, #5 |
-| 6 | Provenance/source intake schema, validation, and tests | Missing citation/revision/notice evidence blocks imported references; an original reference can use explicit original provenance. Verify preserved file hashes. | #6 |
-| 7 | Execution contract and primitive-input runner with unit/integration/e2e coverage | Real incomplete, wrong, valid alternate, and runaway attempts produce distinct honest outcomes. Run actual child processes. | #7 |
-| 8 | Attempt creation and journal persistence with tests | Resume an interrupted session; preserve prior code; code/suite changes invalidate current pass; incomplete writes and concurrent writers cannot silently lose history. | #10 |
-| 9 | First complete Two Sum package | A blank starter fails, a known defect fails, valid alternative algorithms pass, and the preserved reference passes independent small-input checks. Require provenance and readiness evidence. | #8 |
-| 10 | Remaining five starters, one complete problem at a time | Apply the same independent checks and readiness checklist to each problem. Each increment has its own verification/approval gate. | #8 |
-| 11 | Search/select/resume/test terminal menu and real interaction tests | A clean clone initializes private state; a real menu session selects and tests a ready exercise. Pending exercises never appear runnable. | #9 |
-| 12 | Shared chat-menu rendering, filtered tutor-request builder, contextual actions, and tests | Both menus reflect the same active state. Hint requests omit references/previous code; generated requests do not log delivered assistance. Confirm no agent launches/messages. | #9 |
-| 13 | Explanation assessments/derived notes with tests | Ungraded differs from zero; core and bonus separate; evidence attaches to attempt/code version and feedback revision. | #10 |
-| 14 | Review scheduling/recommendations with tests | Independently successful and assisted reviews produce agreed dates; skipped dates have no penalty; recommendation labels reveal no technique. | #10 |
-| 15 | Knowledge chunk metadata/export and tests | Default export excludes solutions and all learner state; explicit reveal includes only authorized problem/language content with provenance. | #11 |
-| 16 | Clean-clone documentation and acceptance evidence | Exercise both menus and live tutors; blank review, optional timer reset, alternate solution, slow-solution grading, private state, and export scenarios pass. | #3, #4, #9–#11 |
+The backlog file is the reconciled issue index. Names below define scope and
+map to the linked GitHub tickets there. Every row is an implementation
+outcome unless explicitly marked as a tracking parent.
 
-After the first release, preparation batches continue under #1. Implement
-specialized node/stateful/mutation adapters through separately gated increments
-under #7 before marking affected problems ready. Track unavailable/premium and
-non-Python formats explicitly. The retrieval experiment and language/platform
-extensions remain separate follow-ups in #12.
+| Deliverable | Definition of done | Prerequisites |
+| --- | --- | --- |
+| Python development tooling | Locked environment; strict typing; lint/format; real setup tests; documented clean setup | Approved planning baseline |
+| Shared tutor contract | Shared AGENTS policy, Claude import, optional Cursor setup, policy checks and live agent evidence | Tooling |
+| Searchable catalog with safe refresh | Validate a real dated snapshot, search by ID/title/slug, reject corrupt input and retain last good snapshot | Tooling |
+| Catalog preparation coverage tracking | Map each snapshot entry exactly once to a problem/class sub-issue; resumable creation; report pending/blocked/ready without omissions | Catalog |
+| Published-reference intake | Preserve a selected real source file/notices unchanged with revision/hash, citation, terms and separate adapter location | Tooling; tutor content classifications |
+| Ordinary Python exercise runner | Execute primitive/list/string contracts; accept valid alternate outputs; fail honestly on errors, stubs, empty suites and timeouts; return code/suite hashes | Tooling; documented package contract |
+| Attempt lifecycle and private history | Create blank attempts, preserve prior work, resume interruptions, save real events, attach evidence to exact versions, derive notes | Catalog; runner |
+| Two Sum exercise package | Complete statement/signature/starter, preserved or original reference, hints, tests, independent checks and readiness evidence | Reference intake; runner |
+| Each of the other five starter packages | Same per-problem contract, one problem per implementation ticket | First package standard; relevant source/runner support |
+| Explanation assessments | Store initial/revised evidence; 4/4/2 plus separate space bonus; ungraded differs from zero; slower correct explanations can earn full credit | Private history; tutor contract |
+| Spaced reviews | Blank preserved re-solving; 1/3/7/14/30-day suggestions; assistance-aware adjustment; skip/reschedule without penalty | Attempt lifecycle |
+| Curriculum recommendations | Deterministic due-review/prerequisite/curriculum selection, override support, no visible technique leakage | Catalog; history; assessments; reviews |
+| Shared chat and terminal navigation | Browse/select/resume/test/progress actions use the same state; real terminal and live chat acceptance evidence | Catalog; attempts; runner; tutor contract; related actions |
+| Paste-ready tutor requests | Correct problem/attempt/mode/action context; permitted reveal only; local ignored output; no automatic send/launch or false assistance event | Attempts; tutor contract; navigation |
+| Filtered knowledge export | Stable IDs/provenance, deterministic output, pre-context reveal filtering, no default solutions or learner data | Reference metadata; tutor classifications |
+| Full catalog (tracking parent) | Complete snapshot mapping and prepared in-scope exercises; unfinished or blocked preparation keeps this parent open | Preparation coverage and problem/class children |
+| Six starter exercises (tracking parent) | All six individual exercise children meet readiness criteria | Six problem tickets |
+| Future refinements (tracking parent) | Separate discovery tickets for RAG, C++, Rust, Go, CodeFights and HackerRank; each defines its own implementation work | First-release baseline as relevant |
 
-## Review findings and tradeoff
+Node-based, mutation, stateful and interactive execution contracts get separate
+adapter tickets when required by problem classes. Do not imply these are part
+of the first ordinary-Python runner. Keep non-Python and inaccessible problems
+visible in coverage without claiming they can run locally.
 
-The existing specification/backlog incorrectly said issues were not posted;
-those statements should now point to #1 and #3–#12. The confirmed grading weights
-remain 4/4/2 plus a separate space bonus; time is not the dominant component.
+## Catalog issue hierarchy
 
-A perfectionist would want complete problem schemas, every test-adapter contract,
-and calibrated live-tutor transcripts before implementation. A pragmatist can
-accept the bounded decisions here, validate them with Two Sum end to end, and
-refine specialized contracts before their own phases. The proposed choice is the
-latter, while preserving explicit review gates and honest readiness reporting.
+Use full-catalog parent #1, with coherent problem/class tracking children and
+individually implementable leaves. The six-starter parent #8 contains six actual
+problem sub-issues. Other class groups are based on a validated inventory and
+execution needs, not an arbitrary batch size or guessed problem metadata.
 
-Joe P approved the defaults, score anchors, and phased approach on 2026-10-28.
-That approval authorizes phase 1 only; subsequent phases retain their own gate.
+Every catalog entry must map exactly once to a preparation leaf or a clearly
+scoped class preparation ticket. Nested tracking parents may aggregate those
+leaves. Infra dependencies are linked, not counted as prepared problems.
+Creation and hierarchy mapping must be resumable and duplicate-safe. The full
+4,096-entry discovery snapshot is a target inventory, not a claim that all
+preparation children already exist. Coverage tracking remains open until the
+complete mapping is verified. Refresh reconciles additions without losing work.
+
+## Verification and delivery order
+
+Use TDD for code: run a failing scenario, implement minimally, then refactor with
+checks green. Use real files/processes/APIs, no mock mode. Each deliverable needs
+unit, integration, and end-to-end coverage appropriate to its behavior. Run
+strict mypy, configured lint and formatting checks, the full test suite, inspect
+logs, and simulate actual usage before reporting implementation complete.
+
+Preserved upstream code is not reformatted or annotated. Strictly check local
+adapters and independently validate references. A reference source's execution
+is validated by the runner/problem package, not a prerequisite cycle in source
+intake. Live agent behavior needs actual Codex and Claude Code sessions; static
+text checks cannot prove compliance. Record unavailable checks as pending.
+
+Start with tooling, then tutor contract and catalog. Build source intake and the
+ordinary runner against a documented package contract. Validate Two Sum and the
+attempt lifecycle, then prepare the remaining starter packages. Add assessments,
+reviews, recommendations, navigation and handoff according to their dependencies.
+The knowledge export can proceed once its source/classification contracts exist;
+it does not need to wait for every progress feature merely to exclude learner data.
+
+Cross-cutting acceptance belongs to the ticket that delivers the behavior:
+clean clone, timer reset, blank reviews, accurate slow-solution grading, alternate
+outputs, privacy and reveal boundaries. A final release checklist checks the
+combined workflow without becoming a miscellaneous multi-ticket implementation PR.
+
+Implementation is paused while Joe P reviews the reconciled plan. Updating the
+plan and GitHub tracking does not authorize starting another implementation ticket.
