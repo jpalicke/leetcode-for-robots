@@ -1,0 +1,5 @@
+# Keep shared text consistent across development platforms.
+* text=auto eol=lf
+
+# Preserve upstream reference bytes without line-ending conversion.
+/references/** -text

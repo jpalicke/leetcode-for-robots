@@ -1,0 +1,13 @@
+# Local environments and development artifacts.
+.venv/
+.scratch/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Learner attempts, progress, notes, and generated requests.
+.practice/

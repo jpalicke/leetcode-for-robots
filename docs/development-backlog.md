@@ -1,60 +1,67 @@
-# Development backlog proposal
+# Development backlog
 
-Prepared for Joe P. Planning only; implementation remains paused.
-GitHub destination: [jpalicke/leetcode-for-robots](https://github.com/jpalicke/leetcode-for-robots). No issues have been created yet.
+Prepared for Joe P on 2026-10-28. Implementation is paused during plan reconciliation.
+[Repository](https://github.com/jpalicke/leetcode-for-robots) and
+[implementation plan](implementation-plan.md).
 
-## Agreed scope change
+## Work organization
 
-Preparing all LeetCode questions is development work to be represented in GitHub
-issues. It is not work deferred until a learner selects a question, and it does
-not require running every preparation task simultaneously. The six easy starters
-are the first verified batch; the full catalog has an explicit preparation backlog.
+Implementation tickets deliver separate testable outcomes, normally one PR each.
+A PR handles one ticket. Internal phases are implementation details. No fixed
+file-count or problem-count limit applies. Open PRs ready for review after work
+and checks finish; drafts require Joe P's explicit request.
 
-The catalog response obtained on 2026-10-28 reports 4,096 entries. Coverage must be
-measured against a named snapshot, with later additions reconciled explicitly.
-A catalog listing, an open task, and a validated ready exercise are different states.
+Use actual GitHub sub-issues under [full catalog #1](https://github.com/jpalicke/leetcode-for-robots/issues/1)
+for individual LC problems and coherent classes. Tracking parents need no single
+PR; their children deliver the work. The starter group #8 contains six individual
+problem tickets. Keep infrastructure dependencies separate from problem readiness.
 
-## Proposed issue structure
+The discovery snapshot has 4,096 entries as of 2026-10-28. Validate and reconcile
+its complete mapping through the coverage-tracking ticket. Pending, blocked and
+ready are distinct. Do not omit premium, specialized, SQL or shell entries.
+A listed task is not a validated exercise. No arbitrary 25-problem batch default.
 
-- One parent issue for full-catalog preparation and its coverage report.
-- Bounded preparation-batch issues with a per-problem checklist. A starting limit
-  of 25 ordinary problems per issue is proposed; specialized problems can use
-  smaller batches or dedicated issues.
-- Separate issues for reusable infrastructure, adapters, source intake, and
-  validation features shared across batches.
-- Focused blocker issues where source access, licensing evidence, execution
-  contracts, or specialized platform behavior prevents readiness.
-- Each catalog entry maps to a batch or focused task, without silently omitting
-  premium, non-Python, interactive, SQL, or shell entries. Any unsupported scope
-  remains explicitly pending or blocked and never falsely marked Python-ready.
+## Issue index
 
-This keeps every question accountable without requiring thousands of individual
-issue creations. Batch granularity remains a proposal for review. GitHub is the
-work tracker; validated repository metadata is the authority for practice readiness.
-An issue closes only when its deliverables and verification evidence are present.
-
-## Proposed workstreams
-
-| Workstream / parent issue | Development tasks | Completion evidence |
+| Issue | Outcome | Kind |
 | --- | --- | --- |
-| Repository foundation and tutor contract | Shared agent instructions; project tooling; private learner-state boundary; source manifest contract | Supported agents load policy; strict checks configured; clean clone starts with no personal history |
-| Catalog and preparation inventory | Validated snapshot; IDs and source metadata; readiness states; exhaustive mapping into preparation batches | Every snapshot entry has a tracked preparation task; refresh preserves work and identifies additions |
-| Published source intake | Select files from the six approved sources; preserve code/notices; pin versions; adapters and independent validation | Provenance, applicable notices, executable contract, and local validation recorded; acceptance claims distinguished |
-| First verified exercise batch | Two Sum; Contains Duplicate; Valid Anagram; Valid Parentheses; Binary Search; Best Time to Buy and Sell Stock | Six complete exercise packages satisfy the per-problem checklist below |
-| Full-catalog preparation | Create bounded batches covering remaining entries; prepare and verify each package | Coverage report distinguishes ready, in progress, pending, and blocked for the complete snapshot |
-| Specialized execution formats | Typed nodes and serialization; mutation/custom outputs; stateful design problems; interactive contracts; non-Python scope inventory | Contract-specific tests; explicit support boundaries; no empty-suite or generic-stub passes |
-| Menus and tutor-request handoff | Chat menu; terminal menu; browse/resume/test/progress actions; paste-ready requests | Same active state from both menus; requests contain permitted context and no unintended solution |
-| Progress, grading, and reviews | Ignored local state; automatic notes; 4/4/2 rubric plus space bonus; adaptive review gaps | Resume, scoring, review, code-version tracking, and clean-clone scenarios pass |
-| RAG-ready knowledge preparation | Source-aware chunks; mode/reveal classification; deterministic export | Default export excludes solutions and learner state; provenance remains attached |
-| RAG follow-up and stretch tracks | Retrieval experiment; C++, Rust, Go; CodeFights and HackerRank | Separate milestones and acceptance criteria, without implying support in the first Python release |
+| [#1](https://github.com/jpalicke/leetcode-for-robots/issues/1) | Prepare the full LeetCode catalog as development tasks | Tracking parent |
+| [#3](https://github.com/jpalicke/leetcode-for-robots/issues/3) | Reconcile the PDD plan and deliverable-sized GitHub backlog | Planning deliverable |
+| [#4](https://github.com/jpalicke/leetcode-for-robots/issues/4) | Establish locked Python development tooling | Complete; PR #13 awaits merge |
+| [#5](https://github.com/jpalicke/leetcode-for-robots/issues/5) | Provide a searchable LeetCode catalog with safe refresh | Implementation/discovery deliverable |
+| [#6](https://github.com/jpalicke/leetcode-for-robots/issues/6) | Preserve published references with provenance and source notices | Implementation/discovery deliverable |
+| [#7](https://github.com/jpalicke/leetcode-for-robots/issues/7) | Run ordinary Python exercise contracts reliably | Implementation/discovery deliverable |
+| [#8](https://github.com/jpalicke/leetcode-for-robots/issues/8) | Track the first six verified Python exercise packages | Tracking parent |
+| [#9](https://github.com/jpalicke/leetcode-for-robots/issues/9) | Provide shared tutor-chat and terminal navigation | Implementation/discovery deliverable |
+| [#10](https://github.com/jpalicke/leetcode-for-robots/issues/10) | Preserve private attempts and resumable learner history | Implementation/discovery deliverable |
+| [#11](https://github.com/jpalicke/leetcode-for-robots/issues/11) | Export deterministic source-aware knowledge with reveal filtering | Implementation/discovery deliverable |
+| [#12](https://github.com/jpalicke/leetcode-for-robots/issues/12) | Track future retrieval, language and platform refinements | Tracking parent |
+| [#14](https://github.com/jpalicke/leetcode-for-robots/issues/14) | Define and verify the shared coding-agent tutor contract | Implementation/discovery deliverable |
+| [#15](https://github.com/jpalicke/leetcode-for-robots/issues/15) | Track every catalog problem through GitHub preparation sub-issues | Implementation/discovery deliverable |
+| [#16](https://github.com/jpalicke/leetcode-for-robots/issues/16) | Generate spoiler-aware requests for an existing tutor chat | Implementation/discovery deliverable |
+| [#17](https://github.com/jpalicke/leetcode-for-robots/issues/17) | Record explanation assessments separately from completion and optimization | Implementation/discovery deliverable |
+| [#18](https://github.com/jpalicke/leetcode-for-robots/issues/18) | Schedule adaptive blank-attempt spaced reviews | Implementation/discovery deliverable |
+| [#19](https://github.com/jpalicke/leetcode-for-robots/issues/19) | Recommend practice from curriculum and learner evidence | Implementation/discovery deliverable |
+| [#20](https://github.com/jpalicke/leetcode-for-robots/issues/20) | Prepare LeetCode 1: Two Sum (Python) | Implementation/discovery deliverable |
+| [#21](https://github.com/jpalicke/leetcode-for-robots/issues/21) | Prepare LeetCode 217: Contains Duplicate (Python) | Implementation/discovery deliverable |
+| [#22](https://github.com/jpalicke/leetcode-for-robots/issues/22) | Prepare LeetCode 242: Valid Anagram (Python) | Implementation/discovery deliverable |
+| [#23](https://github.com/jpalicke/leetcode-for-robots/issues/23) | Prepare LeetCode 20: Valid Parentheses (Python) | Implementation/discovery deliverable |
+| [#24](https://github.com/jpalicke/leetcode-for-robots/issues/24) | Prepare LeetCode 704: Binary Search (Python) | Implementation/discovery deliverable |
+| [#25](https://github.com/jpalicke/leetcode-for-robots/issues/25) | Prepare LeetCode 121: Best Time to Buy and Sell Stock (Python) | Implementation/discovery deliverable |
+| [#26](https://github.com/jpalicke/leetcode-for-robots/issues/26) | Design the RAG comparison experiment | Implementation/discovery deliverable |
+| [#27](https://github.com/jpalicke/leetcode-for-robots/issues/27) | Scope C++ practice support | Implementation/discovery deliverable |
+| [#28](https://github.com/jpalicke/leetcode-for-robots/issues/28) | Scope Rust practice support | Implementation/discovery deliverable |
+| [#29](https://github.com/jpalicke/leetcode-for-robots/issues/29) | Scope Go practice support | Implementation/discovery deliverable |
+| [#30](https://github.com/jpalicke/leetcode-for-robots/issues/30) | Research CodeFights platform support | Implementation/discovery deliverable |
+| [#31](https://github.com/jpalicke/leetcode-for-robots/issues/31) | Research HackerRank platform support | Implementation/discovery deliverable |
 
-These workstreams are a backlog structure, not permission to execute them all or
-an assertion that every workstream fits in one implementation phase. The phased
-plan will break them into small, test-first tasks and state dependencies/file scope.
+Verified hierarchy: #1 → #8 → #20–#25; #12 → #26–#31. #15 remains
+open for the full snapshot mapping. Issue #4 was closed after its completion
+comment; PR #13 is ready for review and not yet merged.
 
 ## Per-problem preparation checklist
 
-Use this acceptance checklist in each preparation batch:
+Use this acceptance checklist in each problem or coherent class preparation ticket:
 
 - Correct platform ID, slug/title, source link, difficulty, and language scope.
 - Verified available statement, constraints, callable signature, and output/mutation contract.
@@ -75,29 +82,24 @@ Use this acceptance checklist in each preparation batch:
   acceptance is additional evidence, not a readiness prerequisite.
 - Any unavailable material or unsupported execution requirement has a visible blocker.
 
-A batch is complete only when each listed problem meets this checklist or the
-batch is explicitly split to retain unresolved work in open issues. Moving a
+A class ticket is complete only when each listed problem meets this checklist or the
+scope is explicitly split to retain unresolved work in open issues. Moving a
 problem to a blocker issue does not count it as ready in the coverage report.
 
-## Batch issue body proposal
+## Ticket completion
 
-Each issue should identify:
+Before closing a complete ticket, add a plain-English comment explaining the
+work delivered and validation results. Link relevant PRs and reference sources,
+and state whether the PR is merged or awaits merge. Then close as completed.
+Do not wait for merge solely to close implemented and verified work. Do not close
+unfinished work or a tracking parent with unmet scope as completed.
 
-1. Catalog snapshot/version and the exact problem IDs in scope.
-2. Prerequisite infrastructure/adapters and approved source candidates.
-3. A per-problem readiness checklist and links to any blockers.
-4. Expected repository outputs and verification commands/evidence.
-5. Dependencies, milestone, and definition of done.
+Each problem ticket identifies exact platform/problem IDs, source/snapshot,
+prerequisites, expected package outputs, independent verification and readiness
+criteria. Grouping tickets list their children and aggregate coverage; they do
+not replace independently deliverable problem/class tickets.
 
-Use meaningful titles such as "Prepare LeetCode Python batch: [problem range or
-explicit selection]". Actual issue titles, IDs, repository, labels, and milestones
-will be resolved before posting; none are invented here as existing GitHub state.
-
-## Execution preferences
-
-Prefer Sol for implementation and delegated work. Luna may handle suitable
-lightweight metadata/checklist tasks. Minimize unnecessary parallel agents.
-Do not use Astra High or increase reasoning effort without explicit approval.
-Use the agreed PDD and TDD process; no implementation resumes until the
-specification and phased plan have been reviewed. Follow the phase/file limits
-and verification gates in Joe P's project instructions.
+Prefer Sol and minimal delegation; Luna only where appropriate. No reasoning
+escalation or Astra High without explicit approval. Keep attempts, notes,
+progress and generated requests local and Git-ignored. Full-catalog preparation
+is planned development work, not work deferred until a learner chooses a problem.

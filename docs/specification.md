@@ -1,6 +1,6 @@
 # DSA practice repository: specification draft
 
-Status: proposed specification for Joe P's review. Implementation remains paused.
+Status: approved planning baseline; phase 1 tooling authorized on 2026-10-28.
 Date: 2026-10-28. Requirements source: requirements.md.
 
 ## 1. Product intent
@@ -11,8 +11,8 @@ supports understanding, tests the work, records learning evidence, and suggests
 what to practice next.
 
 Confirmed requirements are recorded in requirements.md. Sections explicitly
-marked Proposal provide concrete defaults for review; they are not approved
-requirements or authorization to implement.
+marked Proposal retain their discovery labels. The implementation plan records
+the approved defaults and phase approval boundaries.
 
 ## 2. Confirmed product boundaries
 
@@ -23,7 +23,7 @@ requirements or authorization to implement.
 - Practice mode by default; study mode available; timing strictly opt-in per session.
 - Gradual assistance, explicit requests for full solutions, and edits as a last resort.
 - Automatic session notes, adaptive curriculum, and spaced review.
-- A core explanation score out of 10, emphasizing reasoning and time complexity,
+- A core explanation score out of 10, emphasizing the approach and correctness reasoning,
   plus up to one separate bonus point for space complexity. Optimization coaching
   is a separate discussion.
 - RAG is a fast follow. CodeFights and HackerRank are platform stretch goals.
@@ -281,11 +281,13 @@ on-demand-only preparation model. Use controlled batches and minimal parallelism
 in accordance with Joe P's resource preferences. Catalog entries remain pending
 until their actual material and tests meet readiness criteria.
 
-The proposed issue structure is a full-catalog parent issue plus bounded batch
-issues with per-problem checklists; specialized or blocked work can have focused
-issues. Each entry in the snapshot must map to a tracked task. This issue
-structure is proposed in development-backlog.md and is not yet posted to GitHub.
-The development repository is https://github.com/jpalicke/leetcode-for-robots; issue IDs will be recorded when the backlog is posted.
+The issue structure is full-catalog parent #1 with actual GitHub sub-issues for
+individual problems or coherent classes, with further children as useful. Each
+snapshot entry must map exactly once to a preparation ticket. Arbitrary batches
+of 25 problems are not the default delivery unit. Starter tracking parent #8
+contains six problem tickets #20–#25. Catalog access is #5; exhaustive mapping
+and resumable issue creation are separately tracked by #15. Tracking parents do
+not imply a single PR or a claim that all catalog entries are already mapped.
 
 For each preparation task, the developer/agent obtains the available statement and official
 language signature, prepares original learning notes and tests, validates the
@@ -359,12 +361,15 @@ Verify strict Python type checking, configured lint and formatting checks, the
 full suite, and logs. Use live agent sessions to assess tutor behavior; deterministic
 file tests alone do not establish that a model follows the policy.
 
-## 14. Review before an implementation plan
+## 14. Planning and delivery status
 
 The release outline, source pool and validation policy, 4/4/2 grading rubric with
-separate space bonus, and starting review schedule are agreed. Review the remaining
-proposals for the helper workflow, hint/check-in mechanics, progress records,
-problem preparation, and RAG export boundaries before preparing the implementation plan.
+separate space bonus, starting review schedule, and implementation defaults are
+agreed. Deliverable-specific schemas and adapter details are finalized in their
+own ticket contracts before implementation, preserving the agreed behavior.
 
-The next PDD artifact is a phased, test-first implementation plan. Source-pool or
-individual requirement approval does not authorize starting implementation.
+The ticket-based, test-first implementation plan is in implementation-plan.md.
+Planning defaults and score anchors were approved; Joe P requested reconciliation
+around separate deliverables and actual sub-issue hierarchies. Implementation is
+paused during that planning cleanup. Source-pool approval alone does not authorize
+another implementation ticket.

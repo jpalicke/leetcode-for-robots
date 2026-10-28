@@ -1,0 +1,41 @@
+# ABOUTME: Configures the locked Python development environment and quality gates.
+# ABOUTME: Keeps first-party tests strict while preserving upstream references.
+
+[project]
+name = "leetcode-for-robots"
+version = "0.1.0"
+description = "Local DSA practice with a coding-agent tutor"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4,<3",
+    "pytest>=9.2,<10",
+    "ruff>=0.15,<1",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.11.26"
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["tests"]
+warn_unreachable = true
+show_error_codes = true
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+extend-exclude = [".practice", ".scratch", "references"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--strict-config", "--strict-markers", "--import-mode=importlib"]
+filterwarnings = ["error"]
