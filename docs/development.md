@@ -2,7 +2,8 @@
 
 The repository currently provides development tooling, `practice search` and
 `practice run` (see the [exercise package contract](exercise-package-contract.md)) and
-private attempt history (see [learner history](learner-history.md)).
+private attempt history (see [learner history](learner-history.md)) and
+preserved reference sources (see [source intake](source-intake.md)).
 The other practice commands, exercise packages, and tutor instruction files are still planned.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run
@@ -45,8 +46,9 @@ or the dependency lock. On systems without hardlink support, uv's documented
 `UV_LINK_MODE=copy` setting selects file copying explicitly.
 
 First-party code under `src/` and `tests/` uses strict mypy and Ruff. Keep new
-packages inside mypy's `files` setting. Preserved upstream reference files
-will be checked through separate adapters without editing their contents.
+packages inside mypy's `files` setting. Preserved upstream reference files under
+`references/` are never edited or linted; they are checked with
+`practice sources verify` and run only through separate adapters.
 
 Configuration references: [uv locking](https://docs.astral.sh/uv/concepts/projects/sync/),
 [mypy configuration](https://mypy.readthedocs.io/en/stable/config_file.html), and

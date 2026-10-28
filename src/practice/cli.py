@@ -17,11 +17,14 @@ from practice.attempts import (
     VERDICT_STATUSES,
 )
 from practice.catalog import DEFAULT_CATALOG_PATH, CatalogError, Entry, load_catalog
+from practice.classification import CONTENT_CLASSES
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.package import PackageError, load_package
-from practice.paths import resolve_practice_dir
+from practice.paths import REFERENCES_DIR, resolve_practice_dir
 from practice.runner import RunResult, run_exercise
 from practice.search import search
+from practice.source_commands import run_sources_command
+from practice.sources import DEFAULT_ACTOR
 
 MAX_RESULTS = 20
 DEFAULT_TIMEOUT_SECONDS = 10.0
@@ -42,6 +45,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="where private attempts and the journal live "
         "(default: $PRACTICE_DIR, else .practice/ in the repository)",
     )
+    parser.add_argument(
+        "--references",
+        type=Path,
+        default=REFERENCES_DIR,
+        help="preserved reference sources and manifests (default: references/)",
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     find = commands.add_parser("search", help="find problems by ID, title or slug")
     find.add_argument("query", help="a problem ID, a title fragment or a slug")
@@ -58,6 +67,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--json", action="store_true", help="print the full result as JSON"
     )
     add_attempt_commands(commands)
+    add_sources_commands(commands)
     return parser
 
 
@@ -113,6 +123,52 @@ def add_attempt_commands(
     notes.add_argument("attempt_id")
 
 
+def add_sources_commands(
+    commands: "argparse._SubParsersAction[argparse.ArgumentParser]",
+) -> None:
+    sources = commands.add_parser(
+        "sources", help="preserve and verify published reference sources"
+    )
+    actions = sources.add_subparsers(dest="sources_command", required=True)
+    classes = sorted(CONTENT_CLASSES)
+
+    add = actions.add_parser("add", help="fetch one upstream file and its notice")
+    add.add_argument("source_id", help="lowercase id for the new entry")
+    add.add_argument(
+        "--repository", required=True, help="https://github.com/OWNER/REPO"
+    )
+    add.add_argument("--revision", required=True, help="the full 40 character commit")
+    add.add_argument("--path", required=True, help="the file's path in the repository")
+    add.add_argument("--license-path", required=True, help="the notice's path there")
+    add.add_argument("--license-id", required=True, help="license identifier, e.g. MIT")
+    add.add_argument("--terms", required=True, help="the license terms in a sentence")
+    add.add_argument("--policy-note", default=None, help="needed if not permissive")
+    add.add_argument("--language", default="python")
+    add.add_argument("--classification", choices=classes, required=True)
+    add.add_argument("--title", required=True)
+    add.add_argument("--raw-base", default=None, help="raw download base URL override")
+    add.add_argument("--actor", default=DEFAULT_ACTOR, help="who ran the fetch")
+
+    local = actions.add_parser(
+        "add-local", help="register an adaptation or an original implementation"
+    )
+    local.add_argument("source_id")
+    local.add_argument("--kind", choices=("adaptation", "original"), required=True)
+    local.add_argument("--file", type=Path, required=True, help="the code to keep")
+    local.add_argument("--language", default="python")
+    local.add_argument("--classification", choices=classes, required=True)
+    local.add_argument("--title", required=True)
+    local.add_argument("--actor", default=DEFAULT_ACTOR)
+    local.add_argument("--derived-from", default=None, help="upstream id (adaptation)")
+    local.add_argument("--transformation", default=None, help="what was changed")
+
+    actions.add_parser("verify", help="check every manifest, hash and notice")
+    show = actions.add_parser("show", help="show the citation record for a source")
+    show.add_argument("source_id")
+    show.add_argument("--json", action="store_true", help="print the record as JSON")
+    actions.add_parser("list", help="list imported source ids")
+
+
 def format_entry(entry: Entry) -> str:
     premium = " premium" if entry.paid_only else ""
     return (
@@ -165,6 +221,8 @@ def main(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "run":
         return run_command(args)
+    if args.command == "sources":
+        return run_sources_command(args, args.references)
     if args.command in ("attempt", "progress", "notes"):
         practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
         return run_attempt_command(args, practice_dir)

@@ -57,11 +57,26 @@ Every start makes a new blank attempt; earlier code is never touched. Progress a
 notes are computed from the journal each time. See
 [learner history](docs/learner-history.md) for the design.
 
+## Reference sources
+
+Published reference code is preserved byte for byte, with its license notice and
+a provenance manifest, under `references/`:
+
+```text
+uv run --locked practice sources verify
+uv run --locked practice sources show neetcode-leetcode-0001-two-sum-python
+uv run --locked practice sources add ID --repository URL --revision SHA --path PATH ...
+```
+
+Intake never runs the code and claims nothing about correctness. See
+[source intake](docs/source-intake.md).
+
 ## Planning documents
 
 - [Requirements and agreed decisions](docs/requirements.md)
 - [Specification draft](docs/specification.md)
 - [Published reference research and source policy](docs/reference-sources.md)
+- [Source intake and provenance manifests](docs/source-intake.md)
 - [Development backlog proposal](docs/development-backlog.md)
 - [Ticket-based implementation plan](docs/implementation-plan.md)
 

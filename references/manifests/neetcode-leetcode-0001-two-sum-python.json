@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0001-two-sum-python",
+  "kind": "upstream",
+  "title": "NeetCode: 1. Two Sum (Python)",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "upstream/neetcode-leetcode-0001-two-sum-python/0001-two-sum.py",
+    "sha256": "f2f80f710c28a6b2414bf25531bc591a80e9c3b307e233f3d38cba1109ac7bf2"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0001-two-sum-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-28T23:14:55+00:00",
+    "method": "http_fetch",
+    "fetched_urls": [
+      "https://raw.githubusercontent.com/neetcode-gh/leetcode/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/python/0001-two-sum.py",
+      "https://raw.githubusercontent.com/neetcode-gh/leetcode/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/LICENSE"
+    ],
+    "actor": "Claude Code agent running practice sources add for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "published",
+      "url": "https://github.com/neetcode-gh/leetcode/blob/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/python/0001-two-sum.py",
+      "repository": "https://github.com/neetcode-gh/leetcode",
+      "revision": "8fed5f7daa6a517e375a0562d876e4a72dfdafb8",
+      "path": "python/0001-two-sum.py"
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "none",
+      "code_sha256": null,
+      "run_at": null,
+      "suite_sha256": null,
+      "suite_version": null,
+      "runner": null
+    }
+  }
+}

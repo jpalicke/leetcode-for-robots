@@ -1,8 +1,10 @@
 # Published DSA references: source research and proposed policy
 
 Prepared for Joe P. Checked 2026-10-28. Research and planning only.
-No candidate code has been imported, no upstream suite was executed, and no
-candidate implementation has been independently verified as accepted on LeetCode.
+One file has been imported as a demonstration of the intake path
+([source intake](source-intake.md)): the NeetCode Python Two Sum solution. No
+upstream suite was executed, and no candidate implementation has been
+independently verified as accepted on LeetCode.
 Joe P approved the six-source initial pool in section 4. Detailed verification and import procedures remain under discussion.
 
 ## Confirmed requirement
@@ -84,7 +86,10 @@ Joe P approved selected material from these six sources:
 Individual files will be checked and validated as each problem is prepared, with
 original code/notices preserved and local adapters separate. The other researched
 sources remain in the inventory for possible later supplementation; they are not
-part of this approved initial pool. No code has been imported or implementation resumed.
+part of this approved initial pool. Only the single NeetCode demonstration file
+has been imported, preserved unchanged under `references/` with its notice and a
+provenance manifest. It has no local validation and no recorded platform
+acceptance. No other code has been imported.
 
 A perfectionist would require independently inspected platform acceptance for
 every applicable solution before admitting it. A pragmatist would accept strong
