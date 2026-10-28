@@ -1,7 +1,10 @@
 # Development backlog proposal
 
-Prepared for Joe P. Planning only; implementation remains paused.
-GitHub destination: [jpalicke/leetcode-for-robots](https://github.com/jpalicke/leetcode-for-robots). No issues have been created yet.
+Prepared for Joe P. Planning baseline approved; phase 1 tooling authorized.
+GitHub destination: [jpalicke/leetcode-for-robots](https://github.com/jpalicke/leetcode-for-robots).
+The [full-catalog parent #1](https://github.com/jpalicke/leetcode-for-robots/issues/1)
+links the posted workstreams #3–#12. Exact catalog preparation batches remain to
+be generated and checked under #5. See [the proposed implementation plan](implementation-plan.md).
 
 ## Agreed scope change
 
@@ -99,5 +102,5 @@ Prefer Sol for implementation and delegated work. Luna may handle suitable
 lightweight metadata/checklist tasks. Minimize unnecessary parallel agents.
 Do not use Astra High or increase reasoning effort without explicit approval.
 Use the agreed PDD and TDD process; no implementation resumes until the
-specification and phased plan have been reviewed. Follow the phase/file limits
-and verification gates in Joe P's project instructions.
+specification and phased plan have been reviewed. Follow the phase review gates
+and verification gates in Joe P's project instructions. This project has no per-phase file-count limit.

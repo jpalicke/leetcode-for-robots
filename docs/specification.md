@@ -1,6 +1,6 @@
 # DSA practice repository: specification draft
 
-Status: proposed specification for Joe P's review. Implementation remains paused.
+Status: approved planning baseline; phase 1 tooling authorized on 2026-10-28.
 Date: 2026-10-28. Requirements source: requirements.md.
 
 ## 1. Product intent
@@ -11,8 +11,8 @@ supports understanding, tests the work, records learning evidence, and suggests
 what to practice next.
 
 Confirmed requirements are recorded in requirements.md. Sections explicitly
-marked Proposal provide concrete defaults for review; they are not approved
-requirements or authorization to implement.
+marked Proposal retain their discovery labels. The implementation plan records
+the approved defaults and phase approval boundaries.
 
 ## 2. Confirmed product boundaries
 
@@ -23,7 +23,7 @@ requirements or authorization to implement.
 - Practice mode by default; study mode available; timing strictly opt-in per session.
 - Gradual assistance, explicit requests for full solutions, and edits as a last resort.
 - Automatic session notes, adaptive curriculum, and spaced review.
-- A core explanation score out of 10, emphasizing reasoning and time complexity,
+- A core explanation score out of 10, emphasizing the approach and correctness reasoning,
   plus up to one separate bonus point for space complexity. Optimization coaching
   is a separate discussion.
 - RAG is a fast follow. CodeFights and HackerRank are platform stretch goals.
@@ -284,8 +284,9 @@ until their actual material and tests meet readiness criteria.
 The proposed issue structure is a full-catalog parent issue plus bounded batch
 issues with per-problem checklists; specialized or blocked work can have focused
 issues. Each entry in the snapshot must map to a tracked task. This issue
-structure is proposed in development-backlog.md and is not yet posted to GitHub.
-The development repository is https://github.com/jpalicke/leetcode-for-robots; issue IDs will be recorded when the backlog is posted.
+structure is described in development-backlog.md. The posted full-catalog parent
+is https://github.com/jpalicke/leetcode-for-robots/issues/1 and links workstreams
+#3–#12. Exact per-problem batch membership remains to be generated under #5.
 
 For each preparation task, the developer/agent obtains the available statement and official
 language signature, prepares original learning notes and tests, validates the
@@ -366,5 +367,6 @@ separate space bonus, and starting review schedule are agreed. Review the remain
 proposals for the helper workflow, hint/check-in mechanics, progress records,
 problem preparation, and RAG export boundaries before preparing the implementation plan.
 
-The next PDD artifact is a phased, test-first implementation plan. Source-pool or
-individual requirement approval does not authorize starting implementation.
+The proposed phased, test-first implementation plan is in implementation-plan.md.
+Its defaults and score anchors still require review. Source-pool or individual
+requirement approval does not authorize starting implementation.

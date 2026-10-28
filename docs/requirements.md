@@ -1,7 +1,7 @@
 # DSA practice: requirements discovery
 
-Status: requirements captured; specification under review. Implementation remains paused.
-This document records decisions, not authorization to begin implementation.
+Status: requirements captured; planning baseline approved on 2026-10-28.
+The implementation plan records phase authorization; phase 1 tooling is authorized.
 
 ## Purpose and process
 
