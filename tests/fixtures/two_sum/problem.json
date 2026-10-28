@@ -1,0 +1,13 @@
+{
+  "platform": "fixture",
+  "id": "two-sum-runner-fixture",
+  "title": "Two Sum (runner test fixture, not the real exercise package)",
+  "language": "python",
+  "callable": {
+    "adapter": "function",
+    "name": "two_sum",
+    "parameters": ["nums", "target"]
+  },
+  "checker": "indices_sum_to_target",
+  "allow_none": false
+}

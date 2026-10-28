@@ -4,7 +4,7 @@ Practice data structures and algorithms locally with a coding-agent tutor.
 The learner writes the solution; the tutor offers questions, gradual hints,
 realistic tests, explanation feedback, and review suggestions.
 
-**Status: development tooling.** Python setup, quality-gate tests and catalog search are available.
+**Status: development tooling.** Python setup, quality-gate tests, catalog search and a solution runner are available.
 The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
@@ -25,6 +25,18 @@ Each result shows the learner-visible ID, title, difficulty, a `premium` flag fo
 paid problems, and the slug. Exit codes: 0 found, 1 nothing matches, 2 usage
 error, 3 the catalog file is corrupt or unreadable (the reason goes to stderr).
 `--catalog PATH` searches a different catalog file, for example a copy.
+
+Run a solution file against an exercise package (see the
+[exercise package contract](docs/exercise-package-contract.md)):
+
+```text
+uv run --locked practice run tests/fixtures/two_sum tests/fixtures/two_sum_solutions/correct_hash_map.py
+uv run --locked practice run PACKAGE_DIR SOLUTION.py --timeout 5 --json
+```
+
+Exit codes: 0 passed, 1 not passed (failed, error, malformed output, timeout, stub,
+unsupported contract or empty suite), 2 usage error, 3 invalid package or suite.
+The Two Sum package here is a runner test fixture, not the real exercise.
 
 ## Planning documents
 

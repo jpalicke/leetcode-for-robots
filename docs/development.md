@@ -1,6 +1,7 @@
 # Development setup
 
-The repository currently provides development tooling and `practice search`.
+The repository currently provides development tooling, `practice search` and
+`practice run` (see the [exercise package contract](exercise-package-contract.md)).
 The other practice commands, exercise packages, and tutor instruction files are still planned.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run
@@ -22,6 +23,11 @@ The first sync needs package-index access. The clean-checkout end-to-end test
 then uses the populated uv cache to install into a separate environment offline.
 Keep uv on PATH when running the suite. It checks setup only; these tests do not
 establish that the future practice application or tutor behavior works.
+
+The suite also runs real solution files in real child processes, including a
+timeout that must leave no stray processes. `tests/fixtures/` holds the Two Sum
+runner fixture and its solution variants. They are deliberately broken in places,
+so Ruff and mypy exclude that directory.
 
 The suite covers configuration contracts, actual successful/failing lint and
 strict typing runs, and a clean setup followed by all configured quality gates.
