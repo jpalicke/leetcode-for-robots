@@ -122,7 +122,7 @@ def test_a_problem_without_a_package_is_pending_and_never_started(
 
 
 def test_unavailable_future_items_do_nothing(learner: Path, problems: Path) -> None:
-    result = practice(learner, problems, "menu", "choose", "4")
+    result = practice(learner, problems, "menu", "choose", "5")
 
     assert result.returncode == 1
     assert "Not available yet." in result.stdout

@@ -18,12 +18,14 @@ from practice.attempts import (
 )
 from practice.catalog import DEFAULT_CATALOG_PATH, CatalogError, Entry, load_catalog
 from practice.classification import CONTENT_CLASSES
+from practice.clock import ClockError
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.menu_commands import make_environment, run_menu_command
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
 from practice.readiness_commands import run_readiness_command
 from practice.request_commands import run_request_command
+from practice.review_commands import run_review_command
 from practice.rubric import APPROACH_MAX, CORRECTNESS_MAX, SPACE_BONUS_MAX, TIME_MAX
 from practice.runner import RunResult, run_exercise
 from practice.search import search
@@ -95,8 +97,43 @@ def build_parser() -> argparse.ArgumentParser:
     add_sources_commands(commands)
     add_tutor_commands(commands)
     add_request_command(commands)
+    add_review_commands(commands)
     add_menu_commands(commands)
     return parser
+
+
+def add_review_commands(
+    commands: "argparse._SubParsersAction[argparse.ArgumentParser]",
+) -> None:
+    review = commands.add_parser(
+        "review",
+        help="spaced reviews: see what is due and redo problems from a blank file",
+        description="Reviews are derived from the journal. Nothing runs in the "
+        "background and nothing sends reminders; run `review list` to see what is due.",
+    )
+    actions = review.add_subparsers(dest="review_command", required=True)
+    actions.add_parser("list", help="show due and upcoming reviews")
+
+    def identify(sub: argparse.ArgumentParser) -> None:
+        sub.add_argument("platform")
+        sub.add_argument("problem_id")
+        sub.add_argument("--language", choices=LANGUAGES, default="python")
+
+    start = actions.add_parser("start", help="begin a blank review attempt")
+    identify(start)
+    start.add_argument(
+        "--package",
+        type=Path,
+        default=None,
+        help="exercise package directory (default: problems/<platform>-<id>)",
+    )
+    skip = actions.add_parser("skip", help="postpone a review without any penalty")
+    identify(skip)
+    move = actions.add_parser("reschedule", help="choose the next review date")
+    identify(move)
+    when = move.add_mutually_exclusive_group(required=True)
+    when.add_argument("--on", default=None, metavar="YYYY-MM-DD", help="a date")
+    when.add_argument("--in-days", type=int, default=None, help="days from today")
 
 
 def add_menu_commands(
@@ -127,6 +164,7 @@ def add_menu_commands(
         default=None,
         help="list problems; words search the catalog, none lists packages",
     )
+    menu.add_argument("--reviews", action="store_true", help="the menu of due reviews")
     menu.add_argument(
         "--confirm-reveal",
         action="store_true",
@@ -374,6 +412,14 @@ def run_command(args: argparse.Namespace) -> int:
 
 
 def main(argv: list[str]) -> int:
+    try:
+        return dispatch(argv)
+    except ClockError as error:
+        print(f"practice: error: {error}", file=sys.stderr)
+        return EXIT_USAGE
+
+
+def dispatch(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "run":
         return run_command(args)
@@ -389,6 +435,9 @@ def main(argv: list[str]) -> int:
         return run_readiness_command(args, args.references)
     if args.command == "sources":
         return run_sources_command(args, args.references)
+    if args.command == "review":
+        practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
+        return run_review_command(args, practice_dir)
     if args.command in ("attempt", "progress", "notes"):
         practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
         return run_attempt_command(args, practice_dir)

@@ -323,9 +323,10 @@ def _verdict_text(verdict: dict[str, object] | None) -> str:
 
 
 def describe_attempt(attempt: Attempt) -> str:
+    review = ", review" if attempt.review else ""
     return (
         f"{attempt.platform} {attempt.problem_id}  {attempt.title}  "
-        f"({attempt.language}, {attempt.mode}, {_timing(attempt.timed)})"
+        f"({attempt.language}, {attempt.mode}, {_timing(attempt.timed)}{review})"
     )
 
 

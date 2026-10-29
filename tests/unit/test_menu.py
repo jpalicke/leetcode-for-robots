@@ -66,7 +66,7 @@ def test_main_menu_with_no_history_has_the_documented_items(
     assert item(menu, "progress").available
 
 
-@pytest.mark.parametrize("key", ["reviews", "recommendations", "study", "timed"])
+@pytest.mark.parametrize("key", ["recommendations", "study", "timed"])
 def test_future_features_are_listed_but_say_not_available_yet(
     menu_env: MenuEnvironment, key: str
 ) -> None:
@@ -77,7 +77,7 @@ def test_future_features_are_listed_but_say_not_available_yet(
     assert "not available yet" in entry.reason.lower()
 
 
-@pytest.mark.parametrize("key", ["reviews", "recommendations", "study", "timed"])
+@pytest.mark.parametrize("key", ["recommendations", "study", "timed"])
 def test_choosing_a_future_feature_does_nothing_and_does_not_claim_success(
     menu_env: MenuEnvironment, key: str
 ) -> None:

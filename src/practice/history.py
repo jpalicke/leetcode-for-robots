@@ -38,12 +38,14 @@ class Attempt:
     started_at: str
     events: list[dict[str, Any]] = field(default_factory=list)  # Starts with the start.
     finished_at: str | None = None
+    review: bool = False  # Started as a blank spaced review of an earlier pass.
 
 
 @dataclass
 class History:
     attempts: list[Attempt]
     notices: list[str]  # Problems found while reading; shown, never hidden.
+    records: list[dict[str, Any]] = field(default_factory=list)  # All, in order.
 
 
 @dataclass(frozen=True)
@@ -143,6 +145,7 @@ def build_history(records: list[dict[str, Any]]) -> History:
                 timed=record["timed"],
                 started_at=record["at"],
                 events=[record],
+                review=record.get("review") is True,
             )
         elif attempt_id is not None:
             attempt = attempts.get(attempt_id)
@@ -164,7 +167,7 @@ def build_history(records: list[dict[str, Any]]) -> History:
             attempt.events.append(record)
             if record["type"] == "attempt_finished":
                 attempt.finished_at = attempt.finished_at or record["at"]
-    return History(list(attempts.values()), notices)
+    return History(list(attempts.values()), notices, records)
 
 
 def find_attempt(history: History, text: str) -> Attempt:

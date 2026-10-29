@@ -9,9 +9,10 @@ import uuid
 from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from pathlib import Path
 from typing import IO, Any
+
+from practice import clock
 
 SCHEMA_VERSION = 1
 RESERVED_FIELDS = ("schema_version", "event_id", "at", "type")
@@ -47,7 +48,7 @@ class Journal:
         record: dict[str, Any] = {
             "schema_version": SCHEMA_VERSION,
             "event_id": uuid.uuid4().hex,
-            "at": datetime.now(UTC).isoformat(timespec="milliseconds"),
+            "at": clock.now().isoformat(timespec="milliseconds"),
             "type": event_type,
             **fields,
         }

@@ -144,8 +144,8 @@ def test_terminal_menu_starts_and_tests_an_attempt_like_the_numbered_menu(
 def test_terminal_menu_says_unavailable_items_are_not_available_yet(
     menu_env: MenuEnvironment, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    # Down arrows to "Review problems that are due" (item 4), then leave.
-    code = tui_flow(menu_env, f"4{ENTER}{CTRL_C}")
+    # Item 5 (a recommendation) is still not available yet, then leave.
+    code = tui_flow(menu_env, f"5{ENTER}{CTRL_C}")
 
     assert code == 0
     assert "Not available yet" in capsys.readouterr().out
