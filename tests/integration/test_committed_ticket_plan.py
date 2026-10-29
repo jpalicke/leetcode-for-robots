@@ -89,10 +89,10 @@ def test_blocked_tickets_say_why_and_pending_ones_do_not(
         assert c["status"] in {"pending", "blocked", "in_progress"}
 
 
-def test_no_ticket_has_been_created_yet(classes: list[dict[str, Any]]) -> None:
-    """This plan precedes the GitHub tickets; only the starters have issue numbers."""
-    for c in classes:
-        assert (c["issue"] is not None) == (c["kind"] == "individual"), c["id"]
+def test_every_ticket_has_its_own_issue_number(classes: list[dict[str, Any]]) -> None:
+    numbers = [c["issue"] for c in classes]
+    assert all(isinstance(n, int) for n in numbers)
+    assert len(set(numbers)) == len(numbers)
 
 
 def test_every_premium_problem_is_in_a_blocked_premium_ticket(
