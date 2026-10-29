@@ -8,9 +8,6 @@ import re
 import sys
 import tempfile
 import time
-import urllib.error
-import urllib.parse
-import urllib.request
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -19,15 +16,13 @@ from typing import Any
 from practice.catalog import Catalog, CatalogError, load_catalog
 from practice.lists import ListError, parse_list
 from practice.paths import REPO_ROOT
+from practice.source_fetch import FetchError, address_refusal, fetch_url
 
 DEFAULT_REGISTRY = REPO_ROOT / "catalog" / "list-sources.json"
 DEFAULT_CATALOG = REPO_ROOT / "catalog" / "leetcode.json"
 DEFAULT_OUTPUT = REPO_ROOT / "catalog" / "lists"
 LEETCODE_URL = "https://leetcode.com/graphql"
 STUDY_PLAN_PAGE = "https://leetcode.com/studyplan/"
-MAX_BYTES = 8 * 1024 * 1024
-TIMEOUT_SECONDS = 60
-LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
 PLAN_KIND = "leetcode_study_plan"
 SITE_KIND = "neetcode_site_data"
 ALL_ROWS = "*"
@@ -90,47 +85,17 @@ class ListSpec:
 Groups = list[tuple[str, list[tuple[int, str]]]]
 
 
-class NoRedirects(urllib.request.HTTPRedirectHandler):
-    def redirect_request(
-        self, req: Any, fp: Any, code: Any, msg: Any, headers: Any, newurl: Any
-    ) -> None:
-        raise ToolError(
-            f"{req.full_url} answered with a redirect (HTTP {code}); "
-            "redirects are not followed"
-        )
-
-
 def check_address(url: str, what: str) -> None:
-    parsed = urllib.parse.urlparse(url)
-    if parsed.scheme == "https":
-        return
-    if parsed.scheme == "http" and parsed.hostname in LOOPBACK_HOSTS:
-        return
-    raise UsageError(
-        f"{what} must be an https address (http is allowed only on a loopback "
-        f"address), got {url}"
-    )
+    refusal = address_refusal(url)
+    if refusal:
+        raise UsageError(f"{what} {url}: {refusal}")
 
 
 def read_url(url: str, body: bytes | None, headers: dict[str, str]) -> bytes:
-    host = urllib.parse.urlparse(url).hostname
-    handlers: list[Any] = [NoRedirects]
-    if host in LOOPBACK_HOSTS:
-        handlers.append(urllib.request.ProxyHandler({}))
-    opener = urllib.request.build_opener(*handlers)
-    request = urllib.request.Request(url, data=body, headers=headers)
     try:
-        with opener.open(request, timeout=TIMEOUT_SECONDS) as response:
-            data: bytes = response.read(MAX_BYTES + 1)
-    except urllib.error.HTTPError as error:
-        raise ToolError(f"{url} answered HTTP {error.code}") from error
-    except (urllib.error.URLError, OSError) as error:
-        raise ToolError(f"cannot reach {url}: {error}") from error
-    if len(data) > MAX_BYTES:
-        raise ToolError(
-            f"the response from {url} is too large (over {MAX_BYTES} bytes)"
-        )
-    return data
+        return fetch_url(url, data=body, headers=headers)
+    except FetchError as error:
+        raise ToolError(str(error)) from error
 
 
 def parse_json(data: bytes, url: str) -> Any:

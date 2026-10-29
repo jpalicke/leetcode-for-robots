@@ -138,6 +138,14 @@ is `[ready]` only when its package passes `practice readiness`; premium problems
 `[blocked]` and everything else is `[pending]`. See [problem lists](docs/lists.md) for
 the ten lists, their sources and terms, and how to add one.
 
+## Catalog mapping
+
+Every catalog problem is assigned to exactly one preparation ticket in
+`catalog/ticket-plan.json`, grouped by concept and difficulty with premium, SQL and
+other non-Python problems kept apart. Check it with
+`uv run --locked python tools/plan_catalog.py check`, and see coverage with `report`.
+See [catalog mapping](docs/catalog-mapping.md). GitHub tickets are not created yet.
+
 ## Tutor contract
 
 ```text

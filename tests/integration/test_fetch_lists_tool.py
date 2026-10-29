@@ -158,7 +158,7 @@ class Handler(BaseHTTPRequestHandler):
             self._send(server.status, b'{"error": "nope"}')
             return True
         if server.oversize:
-            self._send(200, b" " * (9 * 1024 * 1024))
+            self._send(200, b" " * (6 * 1024 * 1024))
             return True
         if server.garbage:
             self._send(200, b"<html>not json</html>")
@@ -360,7 +360,7 @@ def test_an_unknown_plan_fails_and_writes_nothing(
     [
         ("status", "429"),
         ("redirect", "redirect"),
-        ("oversize", "too large"),
+        ("oversize", "larger than"),
         ("garbage", "not valid JSON"),
     ],
 )
