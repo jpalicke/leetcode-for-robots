@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0020-valid-parentheses-python-function-adapter",
+  "kind": "adaptation",
+  "title": "NeetCode 20. Valid Parentheses, wrapped as a plain function for the local runner",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "adaptations/neetcode-leetcode-0020-valid-parentheses-python-function-adapter/0020-valid-parentheses-function.py",
+    "sha256": "d9348dec03cb111298bd2c7a4e06e3a20cb39dd937a647014f00d3ff9ab9c06b"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0020-valid-parentheses-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": "neetcode-leetcode-0020-valid-parentheses-python",
+  "transformation": "Kept the upstream file byte for byte and appended a top-level isValid function that calls Solution().isValid so the runner can find a plain callable.",
+  "acquisition": {
+    "acquired_at": "2026-10-29T01:47:33+00:00",
+    "method": "local_adaptation",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "d9348dec03cb111298bd2c7a4e06e3a20cb39dd937a647014f00d3ff9ab9c06b",
+      "run_at": "2026-10-29T01:47:34+00:00",
+      "suite_sha256": "460777374d4a810c337bcf95dc12e55f8e697bb7b540144fc8e4318f039ff805",
+      "suite_version": "leetcode-20-v1",
+      "runner": "practice run"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 # Published DSA references: source research and proposed policy
 
 Prepared for Joe P. Checked 2026-10-28. Research and planning only.
-Three files have been imported as a demonstration of the intake path
+Four files have been imported as a demonstration of the intake path
 ([source intake](source-intake.md)): the NeetCode Python Two Sum, Contains
-Duplicate and Valid Anagram solutions. No
+Duplicate, Valid Anagram and Valid Parentheses solutions. No
 upstream suite was executed, and no candidate implementation has been
 independently verified as accepted on LeetCode.
 Joe P approved the six-source initial pool in section 4. Detailed verification and import procedures remain under discussion.

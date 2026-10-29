@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "platform": "leetcode",
+  "problem_id": "20",
+  "slug": "valid-parentheses",
+  "title": "Valid Parentheses",
+  "difficulty": "easy",
+  "language": "python",
+  "files": {
+    "statement": {"path": "statement.md", "content_class": "statement_summary"},
+    "notes": {"path": "notes.md", "content_class": "reference_solution"},
+    "hints": "hints/index.json",
+    "starter": "starter.py"
+  },
+  "references": {
+    "upstream": ["neetcode-leetcode-0020-valid-parentheses-python"],
+    "adaptations": ["neetcode-leetcode-0020-valid-parentheses-python-function-adapter"],
+    "originals": ["original-leetcode-0020-valid-parentheses-pair-removal-python"]
+  },
+  "verification": {
+    "checked_on": "2026-10-29",
+    "verified": [
+      {
+        "fact": "Problem 20 is titled Valid Parentheses, slug valid-parentheses, difficulty easy, not premium.",
+        "against": "catalog/leetcode.json (snapshot 2026-10-28) and the live LeetCode GraphQL question endpoint"
+      },
+      {
+        "fact": "The method is isValid(s); s is a string and the return is a boolean. The Python3 stub is class Solution with isValid(self, s: str) -> bool.",
+        "against": "the live LeetCode GraphQL metaData field and the python3 codeSnippets entry"
+      },
+      {
+        "fact": "Constraints: 1 <= s.length <= 10^4, and s consists only of the characters ()[]{}.",
+        "against": "the live LeetCode GraphQL content field"
+      },
+      {
+        "fact": "The page lists five examples: () gives true, ()[]{} gives true, (] gives false, ([]) gives true, ([)] gives false. They are cases platform-example-1 to 5 in the suite.",
+        "against": "the live LeetCode GraphQL content field"
+      },
+      {
+        "fact": "The upstream NeetCode file python/0020-valid-parentheses.py exists at revision 8fed5f7daa6a517e375a0562d876e4a72dfdafb8 and is preserved byte for byte with its MIT notice.",
+        "against": "raw.githubusercontent.com, compared with the preserved copy"
+      }
+    ],
+    "not_verified": [
+      "The rendered problem page was not viewed in a browser; only the GraphQL fields were read.",
+      "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
+      "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",
+      "The class-method form is not run locally: the runner calls a top-level function, so learners paste the body into class Solution when they submit."
+    ]
+  },
+  "blockers": []
+}
