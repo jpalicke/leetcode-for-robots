@@ -125,6 +125,19 @@ A blank starter reports `STUB`, never a pass. A local pass is not a LeetCode
 acceptance; record that yourself with `attempt verdict`. See
 [exercise preparation](docs/exercise-preparation.md) for how packages are made.
 
+## Problem lists
+
+```text
+uv run --locked practice lists                 # every list, with ready/blocked/pending counts
+uv run --locked practice lists show blind-75   # one list in order, a status on each problem
+```
+
+Curated lists such as LeetCode Top Interview 150, LeetCode 75, Blind 75 and NeetCode
+150 are committed under `catalog/lists/` and checked against the catalog. A problem
+is `[ready]` only when its package passes `practice readiness`; premium problems are
+`[blocked]` and everything else is `[pending]`. See [problem lists](docs/lists.md) for
+the ten lists, their sources and terms, and how to add one.
+
 ## Tutor contract
 
 ```text

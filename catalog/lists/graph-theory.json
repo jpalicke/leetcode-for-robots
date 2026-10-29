@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "id": "graph-theory",
+  "name": "LeetCode Graph Theory",
+  "platform": "leetcode",
+  "size": 36,
+  "source": {
+    "kind": "leetcode_study_plan",
+    "url": "https://leetcode.com/studyplan/graph-theory/",
+    "plan_slug": "graph-theory",
+    "retrieved_on": "2026-10-29",
+    "note": "Problem ids and slugs only; no problem text is stored."
+  },
+  "groups": [
+    {"name": "Standard Traversal", "problems": [
+      {"id": 547, "slug": "number-of-provinces"},
+      {"id": 802, "slug": "find-eventual-safe-states"},
+      {"id": 841, "slug": "keys-and-rooms"},
+      {"id": 1129, "slug": "shortest-path-with-alternating-colors"},
+      {"id": 1376, "slug": "time-needed-to-inform-all-employees"},
+      {"id": 1466, "slug": "reorder-routes-to-make-all-paths-lead-to-the-city-zero"},
+      {"id": 797, "slug": "all-paths-from-source-to-target"},
+      {"id": 1192, "slug": "critical-connections-in-a-network"}
+    ]},
+    {"name": "BFS", "problems": [
+      {"id": 1926, "slug": "nearest-exit-from-entrance-in-maze"},
+      {"id": 934, "slug": "shortest-bridge"},
+      {"id": 433, "slug": "minimum-genetic-mutation"},
+      {"id": 127, "slug": "word-ladder"},
+      {"id": 1306, "slug": "jump-game-iii"},
+      {"id": 542, "slug": "01-matrix"},
+      {"id": 1091, "slug": "shortest-path-in-binary-matrix"},
+      {"id": 863, "slug": "all-nodes-distance-k-in-binary-tree"},
+      {"id": 864, "slug": "shortest-path-to-get-all-keys"}
+    ]},
+    {"name": "Matrix Graphs", "problems": [
+      {"id": 200, "slug": "number-of-islands"},
+      {"id": 1020, "slug": "number-of-enclaves"},
+      {"id": 1254, "slug": "number-of-closed-islands"},
+      {"id": 695, "slug": "max-area-of-island"},
+      {"id": 417, "slug": "pacific-atlantic-water-flow"}
+    ]},
+    {"name": "Graph Theory", "problems": [
+      {"id": 997, "slug": "find-the-town-judge"},
+      {"id": 1557, "slug": "minimum-number-of-vertices-to-reach-all-nodes"},
+      {"id": 1615, "slug": "maximal-network-rank"},
+      {"id": 785, "slug": "is-graph-bipartite"},
+      {"id": 261, "slug": "graph-valid-tree"}
+    ]},
+    {"name": "Union Find / DSU", "problems": [
+      {"id": 721, "slug": "accounts-merge"},
+      {"id": 990, "slug": "satisfiability-of-equality-equations"},
+      {"id": 1061, "slug": "lexicographically-smallest-equivalent-string"},
+      {"id": 839, "slug": "similar-string-groups"}
+    ]},
+    {"name": "Topological Sort", "problems": [
+      {"id": 207, "slug": "course-schedule"},
+      {"id": 210, "slug": "course-schedule-ii"},
+      {"id": 269, "slug": "alien-dictionary"},
+      {"id": 1203, "slug": "sort-items-by-groups-respecting-dependencies"},
+      {"id": 1857, "slug": "largest-color-value-in-a-directed-graph"}
+    ]}
+  ]
+}

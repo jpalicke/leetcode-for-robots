@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "id": "leetcode-75",
+  "name": "LeetCode 75",
+  "platform": "leetcode",
+  "size": 75,
+  "source": {
+    "kind": "leetcode_study_plan",
+    "url": "https://leetcode.com/studyplan/leetcode-75/",
+    "plan_slug": "leetcode-75",
+    "retrieved_on": "2026-10-29",
+    "note": "Problem ids and slugs only; no problem text is stored."
+  },
+  "groups": [
+    {"name": "Array / String", "problems": [
+      {"id": 1768, "slug": "merge-strings-alternately"},
+      {"id": 1071, "slug": "greatest-common-divisor-of-strings"},
+      {"id": 1431, "slug": "kids-with-the-greatest-number-of-candies"},
+      {"id": 605, "slug": "can-place-flowers"},
+      {"id": 345, "slug": "reverse-vowels-of-a-string"},
+      {"id": 151, "slug": "reverse-words-in-a-string"},
+      {"id": 238, "slug": "product-of-array-except-self"},
+      {"id": 334, "slug": "increasing-triplet-subsequence"},
+      {"id": 443, "slug": "string-compression"}
+    ]},
+    {"name": "Two Pointers", "problems": [
+      {"id": 283, "slug": "move-zeroes"},
+      {"id": 392, "slug": "is-subsequence"},
+      {"id": 11, "slug": "container-with-most-water"},
+      {"id": 1679, "slug": "max-number-of-k-sum-pairs"}
+    ]},
+    {"name": "Sliding Window", "problems": [
+      {"id": 643, "slug": "maximum-average-subarray-i"},
+      {"id": 1456, "slug": "maximum-number-of-vowels-in-a-substring-of-given-length"},
+      {"id": 1004, "slug": "max-consecutive-ones-iii"},
+      {"id": 1493, "slug": "longest-subarray-of-1s-after-deleting-one-element"}
+    ]},
+    {"name": "Prefix Sum", "problems": [
+      {"id": 1732, "slug": "find-the-highest-altitude"},
+      {"id": 724, "slug": "find-pivot-index"}
+    ]},
+    {"name": "Hash Map / Set", "problems": [
+      {"id": 2215, "slug": "find-the-difference-of-two-arrays"},
+      {"id": 1207, "slug": "unique-number-of-occurrences"},
+      {"id": 1657, "slug": "determine-if-two-strings-are-close"},
+      {"id": 2352, "slug": "equal-row-and-column-pairs"}
+    ]},
+    {"name": "Stack", "problems": [
+      {"id": 2390, "slug": "removing-stars-from-a-string"},
+      {"id": 735, "slug": "asteroid-collision"},
+      {"id": 394, "slug": "decode-string"}
+    ]},
+    {"name": "Queue", "problems": [
+      {"id": 933, "slug": "number-of-recent-calls"},
+      {"id": 649, "slug": "dota2-senate"}
+    ]},
+    {"name": "Linked List", "problems": [
+      {"id": 2095, "slug": "delete-the-middle-node-of-a-linked-list"},
+      {"id": 328, "slug": "odd-even-linked-list"},
+      {"id": 206, "slug": "reverse-linked-list"},
+      {"id": 2130, "slug": "maximum-twin-sum-of-a-linked-list"}
+    ]},
+    {"name": "Binary Tree - DFS", "problems": [
+      {"id": 104, "slug": "maximum-depth-of-binary-tree"},
+      {"id": 872, "slug": "leaf-similar-trees"},
+      {"id": 1448, "slug": "count-good-nodes-in-binary-tree"},
+      {"id": 437, "slug": "path-sum-iii"},
+      {"id": 1372, "slug": "longest-zigzag-path-in-a-binary-tree"},
+      {"id": 236, "slug": "lowest-common-ancestor-of-a-binary-tree"}
+    ]},
+    {"name": "Binary Tree - BFS", "problems": [
+      {"id": 199, "slug": "binary-tree-right-side-view"},
+      {"id": 1161, "slug": "maximum-level-sum-of-a-binary-tree"}
+    ]},
+    {"name": "Binary Search Tree", "problems": [
+      {"id": 700, "slug": "search-in-a-binary-search-tree"},
+      {"id": 450, "slug": "delete-node-in-a-bst"}
+    ]},
+    {"name": "Graphs - DFS", "problems": [
+      {"id": 841, "slug": "keys-and-rooms"},
+      {"id": 547, "slug": "number-of-provinces"},
+      {"id": 1466, "slug": "reorder-routes-to-make-all-paths-lead-to-the-city-zero"},
+      {"id": 399, "slug": "evaluate-division"}
+    ]},
+    {"name": "Graphs - BFS", "problems": [
+      {"id": 1926, "slug": "nearest-exit-from-entrance-in-maze"},
+      {"id": 994, "slug": "rotting-oranges"}
+    ]},
+    {"name": "Heap / Priority Queue", "problems": [
+      {"id": 215, "slug": "kth-largest-element-in-an-array"},
+      {"id": 2336, "slug": "smallest-number-in-infinite-set"},
+      {"id": 2542, "slug": "maximum-subsequence-score"},
+      {"id": 2462, "slug": "total-cost-to-hire-k-workers"}
+    ]},
+    {"name": "Binary Search", "problems": [
+      {"id": 374, "slug": "guess-number-higher-or-lower"},
+      {"id": 2300, "slug": "successful-pairs-of-spells-and-potions"},
+      {"id": 162, "slug": "find-peak-element"},
+      {"id": 875, "slug": "koko-eating-bananas"}
+    ]},
+    {"name": "Backtracking", "problems": [
+      {"id": 17, "slug": "letter-combinations-of-a-phone-number"},
+      {"id": 216, "slug": "combination-sum-iii"}
+    ]},
+    {"name": "DP - 1D", "problems": [
+      {"id": 1137, "slug": "n-th-tribonacci-number"},
+      {"id": 746, "slug": "min-cost-climbing-stairs"},
+      {"id": 198, "slug": "house-robber"},
+      {"id": 790, "slug": "domino-and-tromino-tiling"}
+    ]},
+    {"name": "DP - Multidimensional", "problems": [
+      {"id": 62, "slug": "unique-paths"},
+      {"id": 1143, "slug": "longest-common-subsequence"},
+      {"id": 714, "slug": "best-time-to-buy-and-sell-stock-with-transaction-fee"},
+      {"id": 72, "slug": "edit-distance"}
+    ]},
+    {"name": "Bit Manipulation", "problems": [
+      {"id": 338, "slug": "counting-bits"},
+      {"id": 136, "slug": "single-number"},
+      {"id": 1318, "slug": "minimum-flips-to-make-a-or-b-equal-to-c"}
+    ]},
+    {"name": "Trie", "problems": [
+      {"id": 208, "slug": "implement-trie-prefix-tree"},
+      {"id": 1268, "slug": "search-suggestions-system"}
+    ]},
+    {"name": "Intervals", "problems": [
+      {"id": 435, "slug": "non-overlapping-intervals"},
+      {"id": 452, "slug": "minimum-number-of-arrows-to-burst-balloons"}
+    ]},
+    {"name": "Monotonic Stack", "problems": [
+      {"id": 739, "slug": "daily-temperatures"},
+      {"id": 901, "slug": "online-stock-span"}
+    ]}
+  ]
+}

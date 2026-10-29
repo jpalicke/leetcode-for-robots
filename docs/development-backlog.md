@@ -58,6 +58,7 @@ A listed task is not a validated exercise. No arbitrary 25-problem batch default
 | [#31](https://github.com/jpalicke/leetcode-for-robots/issues/31) | Research HackerRank platform support | Implementation/discovery deliverable |
 | [#39](https://github.com/jpalicke/leetcode-for-robots/issues/39) | Define the curriculum and prerequisite map | Implementation/discovery deliverable |
 | [#40](https://github.com/jpalicke/leetcode-for-robots/issues/40) | Teach a data structures concept in study mode | Implementation/discovery deliverable |
+| [#68](https://github.com/jpalicke/leetcode-for-robots/issues/68) | Browse curated problem lists (LeetCode 150, Blind 75) with preparation status | Implementation/discovery deliverable |
 | [#41](https://github.com/jpalicke/leetcode-for-robots/issues/41) | Offer optional timed practice sessions | Implementation/discovery deliverable |
 | [#42](https://github.com/jpalicke/leetcode-for-robots/issues/42) | Verify the first release end to end | Implementation/discovery deliverable |
 

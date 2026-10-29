@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "programming-skills",
+  "name": "LeetCode Programming Skills",
+  "platform": "leetcode",
+  "size": 33,
+  "source": {
+    "kind": "leetcode_study_plan",
+    "url": "https://leetcode.com/studyplan/programming-skills/",
+    "plan_slug": "programming-skills",
+    "retrieved_on": "2026-10-29",
+    "note": "Problem ids and slugs only; no problem text is stored."
+  },
+  "groups": [
+    {"name": "Basic Implementation", "problems": [
+      {"id": 1768, "slug": "merge-strings-alternately"},
+      {"id": 389, "slug": "find-the-difference"},
+      {"id": 28, "slug": "find-the-index-of-the-first-occurrence-in-a-string"},
+      {"id": 242, "slug": "valid-anagram"},
+      {"id": 459, "slug": "repeated-substring-pattern"},
+      {"id": 283, "slug": "move-zeroes"},
+      {"id": 66, "slug": "plus-one"},
+      {"id": 1822, "slug": "sign-of-the-product-of-an-array"},
+      {"id": 1502, "slug": "can-make-arithmetic-progression-from-sequence"},
+      {"id": 896, "slug": "monotonic-array"},
+      {"id": 13, "slug": "roman-to-integer"}
+    ]},
+    {"name": "Built-In Functions", "problems": [
+      {"id": 58, "slug": "length-of-last-word"},
+      {"id": 709, "slug": "to-lower-case"}
+    ]},
+    {"name": "Simulation", "problems": [
+      {"id": 682, "slug": "baseball-game"},
+      {"id": 657, "slug": "robot-return-to-origin"},
+      {"id": 1275, "slug": "find-winner-on-a-tic-tac-toe-game"},
+      {"id": 1041, "slug": "robot-bounded-in-circle"}
+    ]},
+    {"name": "Matrix", "problems": [
+      {"id": 1672, "slug": "richest-customer-wealth"},
+      {"id": 1572, "slug": "matrix-diagonal-sum"},
+      {"id": 54, "slug": "spiral-matrix"},
+      {"id": 73, "slug": "set-matrix-zeroes"}
+    ]},
+    {"name": "Math", "problems": [
+      {"id": 1523, "slug": "count-odd-numbers-in-an-interval-range"},
+      {"id": 1491, "slug": "average-salary-excluding-the-minimum-and-maximum-salary"},
+      {"id": 860, "slug": "lemonade-change"},
+      {"id": 976, "slug": "largest-perimeter-triangle"},
+      {"id": 1232, "slug": "check-if-it-is-a-straight-line"},
+      {"id": 67, "slug": "add-binary"},
+      {"id": 43, "slug": "multiply-strings"},
+      {"id": 50, "slug": "powx-n"}
+    ]},
+    {"name": "Linked List", "problems": [
+      {"id": 21, "slug": "merge-two-sorted-lists"},
+      {"id": 206, "slug": "reverse-linked-list"},
+      {"id": 2, "slug": "add-two-numbers"},
+      {"id": 445, "slug": "add-two-numbers-ii"}
+    ]}
+  ]
+}

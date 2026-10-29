@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "blind-75",
+  "name": "Blind 75",
+  "platform": "leetcode",
+  "size": 75,
+  "source": {
+    "kind": "neetcode_site_data",
+    "url": "https://github.com/neetcode-gh/leetcode/blob/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/.problemSiteData.json",
+    "repository": "https://github.com/neetcode-gh/leetcode",
+    "revision": "8fed5f7daa6a517e375a0562d876e4a72dfdafb8",
+    "path": ".problemSiteData.json",
+    "license": "MIT",
+    "flag": "blind75",
+    "retrieved_on": "2026-10-29",
+    "note": "Problem ids and slugs only; no problem text is stored."
+  },
+  "groups": [
+    {"name": "Arrays & Hashing", "problems": [
+      {"id": 217, "slug": "contains-duplicate"},
+      {"id": 242, "slug": "valid-anagram"},
+      {"id": 1, "slug": "two-sum"},
+      {"id": 49, "slug": "group-anagrams"},
+      {"id": 347, "slug": "top-k-frequent-elements"},
+      {"id": 238, "slug": "product-of-array-except-self"},
+      {"id": 271, "slug": "encode-and-decode-strings"},
+      {"id": 128, "slug": "longest-consecutive-sequence"}
+    ]},
+    {"name": "Two Pointers", "problems": [
+      {"id": 125, "slug": "valid-palindrome"},
+      {"id": 15, "slug": "3sum"},
+      {"id": 11, "slug": "container-with-most-water"}
+    ]},
+    {"name": "Sliding Window", "problems": [
+      {"id": 121, "slug": "best-time-to-buy-and-sell-stock"},
+      {"id": 3, "slug": "longest-substring-without-repeating-characters"},
+      {"id": 424, "slug": "longest-repeating-character-replacement"},
+      {"id": 76, "slug": "minimum-window-substring"}
+    ]},
+    {"name": "Stack", "problems": [
+      {"id": 20, "slug": "valid-parentheses"}
+    ]},
+    {"name": "Binary Search", "problems": [
+      {"id": 153, "slug": "find-minimum-in-rotated-sorted-array"},
+      {"id": 33, "slug": "search-in-rotated-sorted-array"}
+    ]},
+    {"name": "Linked List", "problems": [
+      {"id": 206, "slug": "reverse-linked-list"},
+      {"id": 21, "slug": "merge-two-sorted-lists"},
+      {"id": 143, "slug": "reorder-list"},
+      {"id": 19, "slug": "remove-nth-node-from-end-of-list"},
+      {"id": 141, "slug": "linked-list-cycle"},
+      {"id": 23, "slug": "merge-k-sorted-lists"}
+    ]},
+    {"name": "Trees", "problems": [
+      {"id": 226, "slug": "invert-binary-tree"},
+      {"id": 104, "slug": "maximum-depth-of-binary-tree"},
+      {"id": 100, "slug": "same-tree"},
+      {"id": 572, "slug": "subtree-of-another-tree"},
+      {"id": 235, "slug": "lowest-common-ancestor-of-a-binary-search-tree"},
+      {"id": 102, "slug": "binary-tree-level-order-traversal"},
+      {"id": 98, "slug": "validate-binary-search-tree"},
+      {"id": 230, "slug": "kth-smallest-element-in-a-bst"},
+      {"id": 105, "slug": "construct-binary-tree-from-preorder-and-inorder-traversal"},
+      {"id": 124, "slug": "binary-tree-maximum-path-sum"},
+      {"id": 297, "slug": "serialize-and-deserialize-binary-tree"}
+    ]},
+    {"name": "Tries", "problems": [
+      {"id": 208, "slug": "implement-trie-prefix-tree"},
+      {"id": 211, "slug": "design-add-and-search-words-data-structure"},
+      {"id": 212, "slug": "word-search-ii"}
+    ]},
+    {"name": "Heap / Priority Queue", "problems": [
+      {"id": 295, "slug": "find-median-from-data-stream"}
+    ]},
+    {"name": "Backtracking", "problems": [
+      {"id": 39, "slug": "combination-sum"},
+      {"id": 79, "slug": "word-search"}
+    ]},
+    {"name": "Graphs", "problems": [
+      {"id": 200, "slug": "number-of-islands"},
+      {"id": 133, "slug": "clone-graph"},
+      {"id": 417, "slug": "pacific-atlantic-water-flow"},
+      {"id": 207, "slug": "course-schedule"},
+      {"id": 323, "slug": "number-of-connected-components-in-an-undirected-graph"},
+      {"id": 261, "slug": "graph-valid-tree"}
+    ]},
+    {"name": "Advanced Graphs", "problems": [
+      {"id": 269, "slug": "alien-dictionary"}
+    ]},
+    {"name": "1-D Dynamic Programming", "problems": [
+      {"id": 70, "slug": "climbing-stairs"},
+      {"id": 198, "slug": "house-robber"},
+      {"id": 213, "slug": "house-robber-ii"},
+      {"id": 5, "slug": "longest-palindromic-substring"},
+      {"id": 647, "slug": "palindromic-substrings"},
+      {"id": 91, "slug": "decode-ways"},
+      {"id": 322, "slug": "coin-change"},
+      {"id": 152, "slug": "maximum-product-subarray"},
+      {"id": 139, "slug": "word-break"},
+      {"id": 300, "slug": "longest-increasing-subsequence"}
+    ]},
+    {"name": "2-D Dynamic Programming", "problems": [
+      {"id": 62, "slug": "unique-paths"},
+      {"id": 1143, "slug": "longest-common-subsequence"}
+    ]},
+    {"name": "Greedy", "problems": [
+      {"id": 53, "slug": "maximum-subarray"},
+      {"id": 55, "slug": "jump-game"}
+    ]},
+    {"name": "Intervals", "problems": [
+      {"id": 57, "slug": "insert-interval"},
+      {"id": 56, "slug": "merge-intervals"},
+      {"id": 435, "slug": "non-overlapping-intervals"},
+      {"id": 252, "slug": "meeting-rooms"},
+      {"id": 253, "slug": "meeting-rooms-ii"}
+    ]},
+    {"name": "Math & Geometry", "problems": [
+      {"id": 48, "slug": "rotate-image"},
+      {"id": 54, "slug": "spiral-matrix"},
+      {"id": 73, "slug": "set-matrix-zeroes"}
+    ]},
+    {"name": "Bit Manipulation", "problems": [
+      {"id": 191, "slug": "number-of-1-bits"},
+      {"id": 338, "slug": "counting-bits"},
+      {"id": 190, "slug": "reverse-bits"},
+      {"id": 268, "slug": "missing-number"},
+      {"id": 371, "slug": "sum-of-two-integers"}
+    ]}
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-150",
+  "name": "NeetCode 150",
+  "platform": "leetcode",
+  "size": 150,
+  "source": {
+    "kind": "neetcode_site_data",
+    "url": "https://github.com/neetcode-gh/leetcode/blob/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/.problemSiteData.json",
+    "repository": "https://github.com/neetcode-gh/leetcode",
+    "revision": "8fed5f7daa6a517e375a0562d876e4a72dfdafb8",
+    "path": ".problemSiteData.json",
+    "license": "MIT",
+    "flag": "neetcode150",
+    "retrieved_on": "2026-10-29",
+    "note": "Problem ids and slugs only; no problem text is stored."
+  },
+  "groups": [
+    {"name": "Arrays & Hashing", "problems": [
+      {"id": 217, "slug": "contains-duplicate"},
+      {"id": 242, "slug": "valid-anagram"},
+      {"id": 1, "slug": "two-sum"},
+      {"id": 49, "slug": "group-anagrams"},
+      {"id": 347, "slug": "top-k-frequent-elements"},
+      {"id": 238, "slug": "product-of-array-except-self"},
+      {"id": 36, "slug": "valid-sudoku"},
+      {"id": 271, "slug": "encode-and-decode-strings"},
+      {"id": 128, "slug": "longest-consecutive-sequence"}
+    ]},
+    {"name": "Two Pointers", "problems": [
+      {"id": 125, "slug": "valid-palindrome"},
+      {"id": 167, "slug": "two-sum-ii-input-array-is-sorted"},
+      {"id": 15, "slug": "3sum"},
+      {"id": 11, "slug": "container-with-most-water"},
+      {"id": 42, "slug": "trapping-rain-water"}
+    ]},
+    {"name": "Sliding Window", "problems": [
+      {"id": 121, "slug": "best-time-to-buy-and-sell-stock"},
+      {"id": 3, "slug": "longest-substring-without-repeating-characters"},
+      {"id": 424, "slug": "longest-repeating-character-replacement"},
+      {"id": 567, "slug": "permutation-in-string"},
+      {"id": 76, "slug": "minimum-window-substring"},
+      {"id": 239, "slug": "sliding-window-maximum"}
+    ]},
+    {"name": "Stack", "problems": [
+      {"id": 20, "slug": "valid-parentheses"},
+      {"id": 155, "slug": "min-stack"},
+      {"id": 150, "slug": "evaluate-reverse-polish-notation"},
+      {"id": 22, "slug": "generate-parentheses"},
+      {"id": 739, "slug": "daily-temperatures"},
+      {"id": 853, "slug": "car-fleet"},
+      {"id": 84, "slug": "largest-rectangle-in-histogram"}
+    ]},
+    {"name": "Binary Search", "problems": [
+      {"id": 704, "slug": "binary-search"},
+      {"id": 74, "slug": "search-a-2d-matrix"},
+      {"id": 875, "slug": "koko-eating-bananas"},
+      {"id": 153, "slug": "find-minimum-in-rotated-sorted-array"},
+      {"id": 33, "slug": "search-in-rotated-sorted-array"},
+      {"id": 981, "slug": "time-based-key-value-store"},
+      {"id": 4, "slug": "median-of-two-sorted-arrays"}
+    ]},
+    {"name": "Linked List", "problems": [
+      {"id": 206, "slug": "reverse-linked-list"},
+      {"id": 21, "slug": "merge-two-sorted-lists"},
+      {"id": 143, "slug": "reorder-list"},
+      {"id": 19, "slug": "remove-nth-node-from-end-of-list"},
+      {"id": 138, "slug": "copy-list-with-random-pointer"},
+      {"id": 2, "slug": "add-two-numbers"},
+      {"id": 141, "slug": "linked-list-cycle"},
+      {"id": 287, "slug": "find-the-duplicate-number"},
+      {"id": 146, "slug": "lru-cache"},
+      {"id": 23, "slug": "merge-k-sorted-lists"},
+      {"id": 25, "slug": "reverse-nodes-in-k-group"}
+    ]},
+    {"name": "Trees", "problems": [
+      {"id": 226, "slug": "invert-binary-tree"},
+      {"id": 104, "slug": "maximum-depth-of-binary-tree"},
+      {"id": 543, "slug": "diameter-of-binary-tree"},
+      {"id": 110, "slug": "balanced-binary-tree"},
+      {"id": 100, "slug": "same-tree"},
+      {"id": 572, "slug": "subtree-of-another-tree"},
+      {"id": 235, "slug": "lowest-common-ancestor-of-a-binary-search-tree"},
+      {"id": 102, "slug": "binary-tree-level-order-traversal"},
+      {"id": 199, "slug": "binary-tree-right-side-view"},
+      {"id": 1448, "slug": "count-good-nodes-in-binary-tree"},
+      {"id": 98, "slug": "validate-binary-search-tree"},
+      {"id": 230, "slug": "kth-smallest-element-in-a-bst"},
+      {"id": 105, "slug": "construct-binary-tree-from-preorder-and-inorder-traversal"},
+      {"id": 124, "slug": "binary-tree-maximum-path-sum"},
+      {"id": 297, "slug": "serialize-and-deserialize-binary-tree"}
+    ]},
+    {"name": "Tries", "problems": [
+      {"id": 208, "slug": "implement-trie-prefix-tree"},
+      {"id": 211, "slug": "design-add-and-search-words-data-structure"},
+      {"id": 212, "slug": "word-search-ii"}
+    ]},
+    {"name": "Heap / Priority Queue", "problems": [
+      {"id": 703, "slug": "kth-largest-element-in-a-stream"},
+      {"id": 1046, "slug": "last-stone-weight"},
+      {"id": 973, "slug": "k-closest-points-to-origin"},
+      {"id": 215, "slug": "kth-largest-element-in-an-array"},
+      {"id": 621, "slug": "task-scheduler"},
+      {"id": 355, "slug": "design-twitter"},
+      {"id": 295, "slug": "find-median-from-data-stream"}
+    ]},
+    {"name": "Backtracking", "problems": [
+      {"id": 78, "slug": "subsets"},
+      {"id": 39, "slug": "combination-sum"},
+      {"id": 46, "slug": "permutations"},
+      {"id": 90, "slug": "subsets-ii"},
+      {"id": 40, "slug": "combination-sum-ii"},
+      {"id": 79, "slug": "word-search"},
+      {"id": 131, "slug": "palindrome-partitioning"},
+      {"id": 17, "slug": "letter-combinations-of-a-phone-number"},
+      {"id": 51, "slug": "n-queens"}
+    ]},
+    {"name": "Graphs", "problems": [
+      {"id": 200, "slug": "number-of-islands"},
+      {"id": 133, "slug": "clone-graph"},
+      {"id": 695, "slug": "max-area-of-island"},
+      {"id": 417, "slug": "pacific-atlantic-water-flow"},
+      {"id": 130, "slug": "surrounded-regions"},
+      {"id": 994, "slug": "rotting-oranges"},
+      {"id": 286, "slug": "walls-and-gates"},
+      {"id": 207, "slug": "course-schedule"},
+      {"id": 210, "slug": "course-schedule-ii"},
+      {"id": 684, "slug": "redundant-connection"},
+      {"id": 323, "slug": "number-of-connected-components-in-an-undirected-graph"},
+      {"id": 261, "slug": "graph-valid-tree"},
+      {"id": 127, "slug": "word-ladder"}
+    ]},
+    {"name": "Advanced Graphs", "problems": [
+      {"id": 332, "slug": "reconstruct-itinerary"},
+      {"id": 1584, "slug": "min-cost-to-connect-all-points"},
+      {"id": 743, "slug": "network-delay-time"},
+      {"id": 778, "slug": "swim-in-rising-water"},
+      {"id": 269, "slug": "alien-dictionary"},
+      {"id": 787, "slug": "cheapest-flights-within-k-stops"}
+    ]},
+    {"name": "1-D Dynamic Programming", "problems": [
+      {"id": 70, "slug": "climbing-stairs"},
+      {"id": 746, "slug": "min-cost-climbing-stairs"},
+      {"id": 198, "slug": "house-robber"},
+      {"id": 213, "slug": "house-robber-ii"},
+      {"id": 5, "slug": "longest-palindromic-substring"},
+      {"id": 647, "slug": "palindromic-substrings"},
+      {"id": 91, "slug": "decode-ways"},
+      {"id": 322, "slug": "coin-change"},
+      {"id": 152, "slug": "maximum-product-subarray"},
+      {"id": 139, "slug": "word-break"},
+      {"id": 300, "slug": "longest-increasing-subsequence"},
+      {"id": 416, "slug": "partition-equal-subset-sum"}
+    ]},
+    {"name": "2-D Dynamic Programming", "problems": [
+      {"id": 62, "slug": "unique-paths"},
+      {"id": 1143, "slug": "longest-common-subsequence"},
+      {"id": 309, "slug": "best-time-to-buy-and-sell-stock-with-cooldown"},
+      {"id": 518, "slug": "coin-change-ii"},
+      {"id": 494, "slug": "target-sum"},
+      {"id": 97, "slug": "interleaving-string"},
+      {"id": 329, "slug": "longest-increasing-path-in-a-matrix"},
+      {"id": 115, "slug": "distinct-subsequences"},
+      {"id": 72, "slug": "edit-distance"},
+      {"id": 312, "slug": "burst-balloons"},
+      {"id": 10, "slug": "regular-expression-matching"}
+    ]},
+    {"name": "Greedy", "problems": [
+      {"id": 53, "slug": "maximum-subarray"},
+      {"id": 55, "slug": "jump-game"},
+      {"id": 45, "slug": "jump-game-ii"},
+      {"id": 134, "slug": "gas-station"},
+      {"id": 846, "slug": "hand-of-straights"},
+      {"id": 1899, "slug": "merge-triplets-to-form-target-triplet"},
+      {"id": 763, "slug": "partition-labels"},
+      {"id": 678, "slug": "valid-parenthesis-string"}
+    ]},
+    {"name": "Intervals", "problems": [
+      {"id": 57, "slug": "insert-interval"},
+      {"id": 56, "slug": "merge-intervals"},
+      {"id": 435, "slug": "non-overlapping-intervals"},
+      {"id": 252, "slug": "meeting-rooms"},
+      {"id": 253, "slug": "meeting-rooms-ii"},
+      {"id": 1851, "slug": "minimum-interval-to-include-each-query"}
+    ]},
+    {"name": "Math & Geometry", "problems": [
+      {"id": 48, "slug": "rotate-image"},
+      {"id": 54, "slug": "spiral-matrix"},
+      {"id": 73, "slug": "set-matrix-zeroes"},
+      {"id": 202, "slug": "happy-number"},
+      {"id": 66, "slug": "plus-one"},
+      {"id": 50, "slug": "powx-n"},
+      {"id": 43, "slug": "multiply-strings"},
+      {"id": 2013, "slug": "detect-squares"}
+    ]},
+    {"name": "Bit Manipulation", "problems": [
+      {"id": 136, "slug": "single-number"},
+      {"id": 191, "slug": "number-of-1-bits"},
+      {"id": 338, "slug": "counting-bits"},
+      {"id": 190, "slug": "reverse-bits"},
+      {"id": 268, "slug": "missing-number"},
+      {"id": 371, "slug": "sum-of-two-integers"},
+      {"id": 7, "slug": "reverse-integer"}
+    ]}
+  ]
+}

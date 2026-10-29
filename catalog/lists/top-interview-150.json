@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "id": "top-interview-150",
+  "name": "LeetCode Top Interview 150",
+  "platform": "leetcode",
+  "size": 150,
+  "source": {
+    "kind": "leetcode_study_plan",
+    "url": "https://leetcode.com/studyplan/top-interview-150/",
+    "plan_slug": "top-interview-150",
+    "retrieved_on": "2026-10-29",
+    "note": "Problem ids and slugs only; no problem text is stored."
+  },
+  "groups": [
+    {"name": "Array / String", "problems": [
+      {"id": 88, "slug": "merge-sorted-array"},
+      {"id": 27, "slug": "remove-element"},
+      {"id": 26, "slug": "remove-duplicates-from-sorted-array"},
+      {"id": 80, "slug": "remove-duplicates-from-sorted-array-ii"},
+      {"id": 169, "slug": "majority-element"},
+      {"id": 189, "slug": "rotate-array"},
+      {"id": 121, "slug": "best-time-to-buy-and-sell-stock"},
+      {"id": 122, "slug": "best-time-to-buy-and-sell-stock-ii"},
+      {"id": 55, "slug": "jump-game"},
+      {"id": 45, "slug": "jump-game-ii"},
+      {"id": 274, "slug": "h-index"},
+      {"id": 380, "slug": "insert-delete-getrandom-o1"},
+      {"id": 238, "slug": "product-of-array-except-self"},
+      {"id": 134, "slug": "gas-station"},
+      {"id": 135, "slug": "candy"},
+      {"id": 42, "slug": "trapping-rain-water"},
+      {"id": 13, "slug": "roman-to-integer"},
+      {"id": 12, "slug": "integer-to-roman"},
+      {"id": 58, "slug": "length-of-last-word"},
+      {"id": 14, "slug": "longest-common-prefix"},
+      {"id": 151, "slug": "reverse-words-in-a-string"},
+      {"id": 6, "slug": "zigzag-conversion"},
+      {"id": 28, "slug": "find-the-index-of-the-first-occurrence-in-a-string"},
+      {"id": 68, "slug": "text-justification"}
+    ]},
+    {"name": "Two Pointers", "problems": [
+      {"id": 125, "slug": "valid-palindrome"},
+      {"id": 392, "slug": "is-subsequence"},
+      {"id": 167, "slug": "two-sum-ii-input-array-is-sorted"},
+      {"id": 11, "slug": "container-with-most-water"},
+      {"id": 15, "slug": "3sum"}
+    ]},
+    {"name": "Sliding Window", "problems": [
+      {"id": 209, "slug": "minimum-size-subarray-sum"},
+      {"id": 3, "slug": "longest-substring-without-repeating-characters"},
+      {"id": 30, "slug": "substring-with-concatenation-of-all-words"},
+      {"id": 76, "slug": "minimum-window-substring"}
+    ]},
+    {"name": "Matrix", "problems": [
+      {"id": 36, "slug": "valid-sudoku"},
+      {"id": 54, "slug": "spiral-matrix"},
+      {"id": 48, "slug": "rotate-image"},
+      {"id": 73, "slug": "set-matrix-zeroes"},
+      {"id": 289, "slug": "game-of-life"}
+    ]},
+    {"name": "Hashmap", "problems": [
+      {"id": 383, "slug": "ransom-note"},
+      {"id": 205, "slug": "isomorphic-strings"},
+      {"id": 290, "slug": "word-pattern"},
+      {"id": 242, "slug": "valid-anagram"},
+      {"id": 49, "slug": "group-anagrams"},
+      {"id": 1, "slug": "two-sum"},
+      {"id": 202, "slug": "happy-number"},
+      {"id": 219, "slug": "contains-duplicate-ii"},
+      {"id": 128, "slug": "longest-consecutive-sequence"}
+    ]},
+    {"name": "Intervals", "problems": [
+      {"id": 228, "slug": "summary-ranges"},
+      {"id": 56, "slug": "merge-intervals"},
+      {"id": 57, "slug": "insert-interval"},
+      {"id": 452, "slug": "minimum-number-of-arrows-to-burst-balloons"}
+    ]},
+    {"name": "Stack", "problems": [
+      {"id": 20, "slug": "valid-parentheses"},
+      {"id": 71, "slug": "simplify-path"},
+      {"id": 155, "slug": "min-stack"},
+      {"id": 150, "slug": "evaluate-reverse-polish-notation"},
+      {"id": 224, "slug": "basic-calculator"}
+    ]},
+    {"name": "Linked List", "problems": [
+      {"id": 141, "slug": "linked-list-cycle"},
+      {"id": 2, "slug": "add-two-numbers"},
+      {"id": 21, "slug": "merge-two-sorted-lists"},
+      {"id": 138, "slug": "copy-list-with-random-pointer"},
+      {"id": 92, "slug": "reverse-linked-list-ii"},
+      {"id": 25, "slug": "reverse-nodes-in-k-group"},
+      {"id": 19, "slug": "remove-nth-node-from-end-of-list"},
+      {"id": 82, "slug": "remove-duplicates-from-sorted-list-ii"},
+      {"id": 61, "slug": "rotate-list"},
+      {"id": 86, "slug": "partition-list"},
+      {"id": 146, "slug": "lru-cache"}
+    ]},
+    {"name": "Binary Tree General", "problems": [
+      {"id": 104, "slug": "maximum-depth-of-binary-tree"},
+      {"id": 100, "slug": "same-tree"},
+      {"id": 226, "slug": "invert-binary-tree"},
+      {"id": 101, "slug": "symmetric-tree"},
+      {"id": 105, "slug": "construct-binary-tree-from-preorder-and-inorder-traversal"},
+      {"id": 106, "slug": "construct-binary-tree-from-inorder-and-postorder-traversal"},
+      {"id": 117, "slug": "populating-next-right-pointers-in-each-node-ii"},
+      {"id": 114, "slug": "flatten-binary-tree-to-linked-list"},
+      {"id": 112, "slug": "path-sum"},
+      {"id": 129, "slug": "sum-root-to-leaf-numbers"},
+      {"id": 124, "slug": "binary-tree-maximum-path-sum"},
+      {"id": 173, "slug": "binary-search-tree-iterator"},
+      {"id": 222, "slug": "count-complete-tree-nodes"},
+      {"id": 236, "slug": "lowest-common-ancestor-of-a-binary-tree"}
+    ]},
+    {"name": "Binary Tree BFS", "problems": [
+      {"id": 199, "slug": "binary-tree-right-side-view"},
+      {"id": 637, "slug": "average-of-levels-in-binary-tree"},
+      {"id": 102, "slug": "binary-tree-level-order-traversal"},
+      {"id": 103, "slug": "binary-tree-zigzag-level-order-traversal"}
+    ]},
+    {"name": "Binary Search Tree", "problems": [
+      {"id": 530, "slug": "minimum-absolute-difference-in-bst"},
+      {"id": 230, "slug": "kth-smallest-element-in-a-bst"},
+      {"id": 98, "slug": "validate-binary-search-tree"}
+    ]},
+    {"name": "Graph General", "problems": [
+      {"id": 200, "slug": "number-of-islands"},
+      {"id": 130, "slug": "surrounded-regions"},
+      {"id": 133, "slug": "clone-graph"},
+      {"id": 399, "slug": "evaluate-division"},
+      {"id": 207, "slug": "course-schedule"},
+      {"id": 210, "slug": "course-schedule-ii"}
+    ]},
+    {"name": "Graph BFS", "problems": [
+      {"id": 909, "slug": "snakes-and-ladders"},
+      {"id": 433, "slug": "minimum-genetic-mutation"},
+      {"id": 127, "slug": "word-ladder"}
+    ]},
+    {"name": "Trie", "problems": [
+      {"id": 208, "slug": "implement-trie-prefix-tree"},
+      {"id": 211, "slug": "design-add-and-search-words-data-structure"},
+      {"id": 212, "slug": "word-search-ii"}
+    ]},
+    {"name": "Backtracking", "problems": [
+      {"id": 17, "slug": "letter-combinations-of-a-phone-number"},
+      {"id": 77, "slug": "combinations"},
+      {"id": 46, "slug": "permutations"},
+      {"id": 39, "slug": "combination-sum"},
+      {"id": 52, "slug": "n-queens-ii"},
+      {"id": 22, "slug": "generate-parentheses"},
+      {"id": 79, "slug": "word-search"}
+    ]},
+    {"name": "Divide & Conquer", "problems": [
+      {"id": 108, "slug": "convert-sorted-array-to-binary-search-tree"},
+      {"id": 148, "slug": "sort-list"},
+      {"id": 427, "slug": "construct-quad-tree"},
+      {"id": 23, "slug": "merge-k-sorted-lists"}
+    ]},
+    {"name": "Kadane's Algorithm", "problems": [
+      {"id": 53, "slug": "maximum-subarray"},
+      {"id": 918, "slug": "maximum-sum-circular-subarray"}
+    ]},
+    {"name": "Binary Search", "problems": [
+      {"id": 35, "slug": "search-insert-position"},
+      {"id": 74, "slug": "search-a-2d-matrix"},
+      {"id": 162, "slug": "find-peak-element"},
+      {"id": 33, "slug": "search-in-rotated-sorted-array"},
+      {"id": 34, "slug": "find-first-and-last-position-of-element-in-sorted-array"},
+      {"id": 153, "slug": "find-minimum-in-rotated-sorted-array"},
+      {"id": 4, "slug": "median-of-two-sorted-arrays"}
+    ]},
+    {"name": "Heap", "problems": [
+      {"id": 215, "slug": "kth-largest-element-in-an-array"},
+      {"id": 502, "slug": "ipo"},
+      {"id": 373, "slug": "find-k-pairs-with-smallest-sums"},
+      {"id": 295, "slug": "find-median-from-data-stream"}
+    ]},
+    {"name": "Bit Manipulation", "problems": [
+      {"id": 67, "slug": "add-binary"},
+      {"id": 190, "slug": "reverse-bits"},
+      {"id": 191, "slug": "number-of-1-bits"},
+      {"id": 136, "slug": "single-number"},
+      {"id": 137, "slug": "single-number-ii"},
+      {"id": 201, "slug": "bitwise-and-of-numbers-range"}
+    ]},
+    {"name": "Math", "problems": [
+      {"id": 9, "slug": "palindrome-number"},
+      {"id": 66, "slug": "plus-one"},
+      {"id": 172, "slug": "factorial-trailing-zeroes"},
+      {"id": 69, "slug": "sqrtx"},
+      {"id": 50, "slug": "powx-n"},
+      {"id": 149, "slug": "max-points-on-a-line"}
+    ]},
+    {"name": "1D DP", "problems": [
+      {"id": 70, "slug": "climbing-stairs"},
+      {"id": 198, "slug": "house-robber"},
+      {"id": 139, "slug": "word-break"},
+      {"id": 322, "slug": "coin-change"},
+      {"id": 300, "slug": "longest-increasing-subsequence"}
+    ]},
+    {"name": "Multidimensional DP", "problems": [
+      {"id": 120, "slug": "triangle"},
+      {"id": 64, "slug": "minimum-path-sum"},
+      {"id": 63, "slug": "unique-paths-ii"},
+      {"id": 5, "slug": "longest-palindromic-substring"},
+      {"id": 97, "slug": "interleaving-string"},
+      {"id": 72, "slug": "edit-distance"},
+      {"id": 123, "slug": "best-time-to-buy-and-sell-stock-iii"},
+      {"id": 188, "slug": "best-time-to-buy-and-sell-stock-iv"},
+      {"id": 221, "slug": "maximal-square"}
+    ]}
+  ]
+}

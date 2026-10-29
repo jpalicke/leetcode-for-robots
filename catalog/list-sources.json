@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "site_data": {
+    "repository": "https://github.com/neetcode-gh/leetcode",
+    "revision": "8fed5f7daa6a517e375a0562d876e4a72dfdafb8",
+    "path": ".problemSiteData.json",
+    "license": "MIT"
+  },
+  "lists": [
+    {"id": "top-interview-150", "name": "LeetCode Top Interview 150", "kind": "leetcode_study_plan", "plan_slug": "top-interview-150", "size": 150},
+    {"id": "leetcode-75", "name": "LeetCode 75", "kind": "leetcode_study_plan", "plan_slug": "leetcode-75", "size": 75},
+    {"id": "top-100-liked", "name": "LeetCode Top 100 Liked", "kind": "leetcode_study_plan", "plan_slug": "top-100-liked", "size": 100},
+    {"id": "programming-skills", "name": "LeetCode Programming Skills", "kind": "leetcode_study_plan", "plan_slug": "programming-skills", "size": 33},
+    {"id": "binary-search", "name": "LeetCode Binary Search", "kind": "leetcode_study_plan", "plan_slug": "binary-search", "size": 32},
+    {"id": "dynamic-programming", "name": "LeetCode Dynamic Programming", "kind": "leetcode_study_plan", "plan_slug": "dynamic-programming", "size": 46},
+    {"id": "graph-theory", "name": "LeetCode Graph Theory", "kind": "leetcode_study_plan", "plan_slug": "graph-theory", "size": 36},
+    {"id": "blind-75", "name": "Blind 75", "kind": "neetcode_site_data", "flag": "blind75", "size": 75},
+    {"id": "neetcode-150", "name": "NeetCode 150", "kind": "neetcode_site_data", "flag": "neetcode150", "size": 150},
+    {"id": "neetcode-all", "name": "NeetCode All", "kind": "neetcode_site_data", "flag": "*", "size": 450}
+  ]
+}
