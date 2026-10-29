@@ -16,8 +16,17 @@ from practice.cli import main
 from practice.menu import MenuEnvironment
 from practice.menu_commands import make_environment
 from practice.paths import REFERENCES_DIR, REPO_ROOT
+from tools.verification import check_windows_path
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
+
+@pytest.fixture
+def tmp_path(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """Keep unique fixture paths short enough for preserved reference filenames."""
+    path = tmp_path_factory.mktemp("t")
+    check_windows_path(path, REFERENCES_DIR, extra=20)
+    return path
 
 
 @pytest.fixture

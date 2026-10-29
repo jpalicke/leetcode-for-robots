@@ -3,15 +3,21 @@
 
 import os
 import shutil
-import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
+from tools.verification import check_windows_path, run_check
 
-def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
+
+def test_clean_checkout_runs_locked_checks() -> None:
     root = Path(__file__).resolve().parents[2]
-    checkout = tmp_path / "checkout"
-    checkout.mkdir()
+    with tempfile.TemporaryDirectory(prefix="lc-") as temporary:
+        _check_checkout(root, Path(temporary))
+
+
+def _check_checkout(root: Path, checkout: Path) -> None:
+    check_windows_path(checkout, root / "references")
     for name in ("pyproject.toml", "uv.lock", ".python-version", "README.md"):
         shutil.copy2(root / name, checkout / name)
     for folder in ("src", "catalog", "curriculum", "problems", "references", "tools"):
@@ -71,15 +77,5 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
     for command in commands:
         # The full nested test suite needs a separate bound from short checks.
         command_timeout = 600 if command[-1] == "pytest" else 120
-        result = subprocess.run(
-            command,
-            cwd=checkout,
-            env=environment,
-            capture_output=True,
-            text=True,
-            timeout=command_timeout,
-            check=False,
-        )
-        assert result.returncode == 0, f"{command!r}\n{result.stdout}\n{result.stderr}"
-        assert "warning:" not in result.stderr.lower(), result.stderr
+        run_check(command, checkout, environment, command_timeout)
     assert not (checkout / ".practice").exists()
