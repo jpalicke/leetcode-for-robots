@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "hints": [
+    {"level": 0, "file": "0.md", "content_class": "hint", "spoiler": true, "names_technique": false},
+    {"level": 1, "file": "1.md", "content_class": "hint", "spoiler": true, "names_technique": false},
+    {"level": 2, "file": "2.md", "content_class": "hint", "spoiler": true, "names_technique": false},
+    {"level": 3, "file": "3.md", "content_class": "hint", "spoiler": true, "names_technique": true}
+  ]
+}

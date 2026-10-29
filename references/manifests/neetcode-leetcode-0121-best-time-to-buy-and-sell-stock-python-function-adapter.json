@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python-function-adapter",
+  "kind": "adaptation",
+  "title": "NeetCode 121. Best Time to Buy and Sell Stock, wrapped as a plain function for the local runner",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "adaptations/neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python-function-adapter/0121-best-time-to-buy-and-sell-stock-function.py",
+    "sha256": "0e8644030944e74757633b75ae9bec32fbc27ccde8e27f7af7ed55617c24ae20"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": "neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python",
+  "transformation": "Added the typing import the upstream file omits, kept the Solution class byte for byte, and added a top-level maxProfit function that calls it so the runner can find a plain callable.",
+  "acquisition": {
+    "acquired_at": "2026-10-29T02:14:40+00:00",
+    "method": "local_adaptation",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "0e8644030944e74757633b75ae9bec32fbc27ccde8e27f7af7ed55617c24ae20",
+      "run_at": "2026-10-29T02:14:40+00:00",
+      "suite_sha256": "15b338891ed190b5785f23342b00f6d278d0c8278f4b6778efd1d6cd82fc5c03",
+      "suite_version": "leetcode-121-v1",
+      "runner": "practice run"
+    }
+  }
+}

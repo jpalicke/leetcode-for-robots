@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python",
+  "kind": "upstream",
+  "title": "NeetCode: 121. Best Time to Buy and Sell Stock (Python)",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "upstream/neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python/0121-best-time-to-buy-and-sell-stock.py",
+    "sha256": "a288a089e6233c0a84e28b91c7107255beb6b13b5920c41a8336a47409fadec2"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T02:14:39+00:00",
+    "method": "http_fetch",
+    "fetched_urls": [
+      "https://raw.githubusercontent.com/neetcode-gh/leetcode/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/python/0121-best-time-to-buy-and-sell-stock.py",
+      "https://raw.githubusercontent.com/neetcode-gh/leetcode/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/LICENSE"
+    ],
+    "actor": "Claude Code agent running practice sources add for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "published",
+      "url": "https://github.com/neetcode-gh/leetcode/blob/8fed5f7daa6a517e375a0562d876e4a72dfdafb8/python/0121-best-time-to-buy-and-sell-stock.py",
+      "repository": "https://github.com/neetcode-gh/leetcode",
+      "revision": "8fed5f7daa6a517e375a0562d876e4a72dfdafb8",
+      "path": "python/0121-best-time-to-buy-and-sell-stock.py"
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "none",
+      "code_sha256": null,
+      "run_at": null,
+      "suite_sha256": null,
+      "suite_version": null,
+      "runner": null
+    }
+  }
+}
