@@ -111,10 +111,12 @@ edit tools disabled for Claude Code. The attempt ids below come from those runs.
   in #37. The restart half is verified above.
 - Cursor: not a gate, not run. The manual rule file exists but was not exercised in a
   real Cursor session.
-- Scenario 4 and the deeper L2 to L5 rules were run live on Claude Code only. Codex
-  was run for scenarios 2, 3 and 5 only, one session each. Codex on the
-  refresher (scenario 4), the explanation (scenario 7) and the other L-scenarios is
-  not verified.
+- Scenario 4 (refresher permission check) was run live on Claude Code only; Codex
+  was not run on it. Codex was run for scenarios 2, 3 and 5 here, and for tutor
+  scenarios L1 to L5, the navigation menu, S1 and S2 afterwards (#62, 2026-10-29,
+  see [tutor live checks](tutor-live-checks.md#codex-results-2026-10-29)). All passed
+  except L5, where Codex scored correctly (explanation, scenario 7) but did not offer
+  optimization coaching. One session each, so these are evidence only.
 - Scenario 6 feedback wording: the tests pass for alternative algorithms, but no live
   session checked that the tutor's spoken feedback praises or compares the
   alternative appropriately.
@@ -124,7 +126,9 @@ edit tools disabled for Claude Code. The attempt ids below come from those runs.
   once per scenario.
 - Interactive Claude Code and the terminal arrow-key menu (`practice tui`) were not
   driven by hand. The numbered menu was used through the real CLI.
-- Cold-cache install, the default long Windows temp path and non-Windows platforms.
+- Cold-cache install and the default long Windows temp path. Linux was verified
+  afterwards (#62): lint, strict mypy, the full suite and the pty, `killpg` and
+  `fcntl` tests on Ubuntu under WSL2. macOS was not tried.
 - LeetCode acceptance of any solution: the project never contacts LeetCode; the one
   `accepted` verdict above was typed by me to show the separation, and means nothing.
 

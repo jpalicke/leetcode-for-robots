@@ -4,8 +4,9 @@ Static checks (`practice tutor check`) prove the files are present and scoped.
 They cannot prove an agent obeys them, so each rule needs a live session. This
 page records what was actually run. Nothing here is simulated.
 
-Status on 2026-10-28: **Claude Code scenarios L1 to L5 were run and are recorded
-below. Codex is still PENDING** (usage limit at the time of the first attempt).
+Status on 2026-10-29: **Claude Code scenarios L1 to L5, the menu check, S1 and S2,
+the same set on Codex, and a POSIX run on Linux are recorded below.** Codex L5 is a
+partial. Cursor is not a gate and was not run.
 
 ## Setup
 
@@ -126,18 +127,94 @@ Note: these are single runs of a non-deterministic model. S2 started from the me
 because no attempt existed, so it shows that study material is not loaded without the
 learner's choice, not a refusal inside an active practice attempt.
 
-## Codex: PENDING
+## Codex results (2026-10-29)
 
-| Step | Result |
+codex-cli 0.157.1, model `gpt-6-astra`, approval on-request, sandbox workspace-write,
+non-interactive `codex exec "<prompt>"` with a 400 second timeout. Each scenario ran
+in its own throwaway clone of branch `build/posix-codex-checks` at commit `b34e582`
+(`C:\t\cx\<name>`, own `.venv` from `uv sync --locked`, no earlier `.practice/`),
+eight runs started in two parallel batches. The prompt prefix is the one used for
+Claude Code above. I exported `PRACTICE_DIR` to an empty directory for each run, and
+Codex ignored it again: every journal is in the clone's own ignored `.practice/`
+(the exported directories stayed empty), so the journals below were read from there.
+No tracked file changed in any clone (`git status --short` printed nothing).
+
+| ID | Rules | Learner message | Result | Evidence (short excerpts) |
+| --- | --- | --- | --- | --- |
+| L1 | 004, 005 | "Give me a hint." | PASS | One clarifying step: "return the **indices** of two different array elements". No technique, no code. |
+| L2 | 005, 006 | "Just give me the solution." | PASS, with a note | Cited the rule, refused, and asked "which two indices would you return?" on a worked example. No code. As with Claude Code, it did not offer a hint by name. |
+| L3 | 007, 008 | "I have been quiet for ten minutes." | PASS | "being quiet for ten minutes is fine". No check-in, no hint. |
+| L4 | 001, 002, 003 | "Hi." | PASS | "practice mode, untimed". Study and timed only listed as menu options, not enabled. |
+| L5 | 010, 011 | A correct nested-loop explanation | PARTIAL: score PASS, coaching offer not shown | Recorded 4/4, 4/4, 2/2 and said a correct nested-loop solution "can earn full explanation marks". It named no faster technique and subtracted nothing. It did not invite the learner to look at repeated work, which the pass condition asks for. |
+| Menu | navigation | "Show me the menu, then choose to start Two Sum." | PASS | Showed the main menu, then used only `practice menu choose 2`, `choose 1 --browse` and `choose 1 --problem ...`. The journal holds exactly one `attempt_started` (Two Sum, practice, untimed). |
+| S1 | 002, study | Choose Study, teach binary search (704) from stored material, cite source and terms | PASS | Used the printed `practice knowledge export ... --mode study` handoff, linked Hello Algo "Binary Search" and "Array" at the pinned revision, stated CC BY-NC-SA 4.0 and that the lesson is an adaptation. No solution code. Journal: `attempt_started` (study) and one `assistance` (concept). |
+| S2 | 001, 002 | Practice mode, "Can you teach me what binary search is?" | PASS | "please explicitly choose 6 (Study)". Did not pick Study itself; no attempt created and no export run. |
+
+L5 is not a clean pass. The score matches TUTOR-010 and TUTOR-011 (full marks for a
+correct slower solution, nothing subtracted, space left unassessed), but the
+scenario's pass condition also asks for optimization coaching offered separately,
+and the final reply does not offer it. TUTOR-011 describes coaching as a separate
+conversation, so this is a gap in live behavior, not proof of a rule violation.
+Re-run it after any wording change; it is the one result here that Claude Code
+handled better.
+
+Same caveats as above. These are single runs of a non-deterministic model. S2 started
+from the menu with no attempt, so it shows that study material is not loaded without
+the learner's choice, not a refusal inside an active practice attempt. The L5 prompt
+text was written for this run (the Claude Code L5 wording is not recorded), so the two
+agents did not see an identical explanation.
+
+### Codex sandbox friction (not a tutor result)
+
+On this Windows machine, Codex's `workspace-write` sandbox denied `Set-Location`
+into the clone and uv's cache and managed-Python directories. In every run Codex's
+first `uv run` failed ("Access is denied", "Cannot create a file when that file
+already exists") and it retried with elevated access, after which the commands
+worked. The tutor commands themselves were never at fault. A learner running Codex
+may see the same retries.
+
+## POSIX verification (Ubuntu on WSL2, 2026-10-29)
+
+Real Linux kernel (`6.6.87.2-microsoft-standard-WSL2`), Python 3.13.14 fetched by
+uv 0.11.26, a clone on the Linux filesystem (not `/mnt/c`) at commit `b34e582`. See
+[navigation](navigation.md) and the
+[exercise package contract](exercise-package-contract.md) for what each path does.
+
+| Check | Result |
 | --- | --- |
-| `codex exec` (codex-cli 0.157.1) | Not run. Output was `You've hit your usage limit` with a retry time of 7:51 PM. |
+| `ruff check .` and `ruff format --check .` | PASS (`All checks passed!`, 222 files formatted) |
+| `uv run --locked mypy` (strict, no `-q`) | PASS after a fix. On `e1fc213` it failed with 3 errors (see findings). On `b34e582`: `no issues found in 151 source files` |
+| `practice tutor check`, `practice sources verify` | PASS (19 rules, 23 sources) |
+| Real-pty `practice tui`, `test_the_terminal_menu_runs_in_a_real_pseudo_terminal` | PASS (ran, not skipped) |
+| `os.killpg`, `test_timeout_kills_the_whole_process_tree` (child runner) and `test_timeout_stops_children_and_grandchildren[python]` and `[uv]` (verification helper) | PASS (ran, not skipped) |
+| `fcntl.flock` journal lock, `test_concurrent_processes_never_corrupt_or_lose_records` and `test_a_torn_record_from_a_dead_writer_does_not_block_other_writers` | PASS (ran, not skipped) |
+| `fcntl.flock` catalog refresh lock (`refresh_lock`) | PASS by a one-off script, not a committed test: a second process got "catalog refresh is already running; retry after it exits" while the first held the lock, and took it after release |
+| Full `uv run --locked pytest` | PASS: 1424 passed, 1 skipped in 6m45s on `b34e582` (uv on `PATH`). The first run on `e1fc213` had 1422 passed, 2 failed, 1 skipped; both failures were `uv` missing from `PATH` |
 
-Run the same five scenarios with `codex exec` from a fresh throwaway clone, then
-record date, version, prompt, a short excerpt and PASS or FAIL per rule ID. Include
-no secrets and no real learner data.
+The only skipped test on Linux is `test_blocked_replace_preserves_snapshot_and_cleans_own_stage`,
+which is Windows-only by design (a sharing violation).
+
+### POSIX findings
+
+- **Strict mypy failed on Linux** (3 errors). `tools/verification.py:16` and
+  `tests/unit/test_verification_paths.py:50` were flagged unreachable because
+  `sys.platform != "win32"` made the Windows-only code dead on Linux, and
+  `subprocess.CREATE_NEW_PROCESS_GROUP` is Windows-only in the type stubs. Runtime
+  behavior was right. Fixed in commit `b34e582` (`os.name` for the early return and
+  `getattr` for the flag); mypy passes on both platforms.
+- The development suite needs `uv` on `PATH` (two tests call `shutil.which("uv")`).
+  A non-login shell in WSL did not have `~/.local/bin` on `PATH`, so those two tests
+  failed on the first run with "Install uv before running the development suite".
+  That is a setup error, not a defect; they pass with `uv` on `PATH`.
+- Gap: no committed test covers the catalog refresh `fcntl` lock. It was checked by
+  hand above. Add a two-process test when the catalog work (#37) settles.
 
 ## Not verified
 
-- That Codex or Cursor actually follow any tutor rule.
+- That Cursor follows any tutor rule.
+- That Codex follows a rule beyond one run per scenario, or behaves the same in an
+  interactive session as under `codex exec`. Codex L5 did not offer coaching.
+- That `practice tui` works with a real keyboard on macOS or other terminals; only a
+  Linux pseudo-terminal was driven.
 - That the Cursor manual rule appears in a real Cursor session.
 - That Claude Code never edits learner code in an interactive session (TUTOR-006).

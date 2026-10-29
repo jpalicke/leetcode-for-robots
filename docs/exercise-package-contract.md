@@ -120,8 +120,9 @@ the arguments, so any valid algorithm and order passes.
 5. One time limit covers the whole run (`--timeout`, default 10 seconds). On
    timeout the whole process tree is killed: `taskkill /F /T` on Windows (also
    ends the launcher process uv virtual environments use), a process group
-   `SIGKILL` on POSIX. The POSIX path is written but only the Windows path has
-   been exercised by the suite so far.
+   `SIGKILL` on POSIX. Both paths are exercised: the Windows path on Windows and
+   the POSIX path on Linux (Ubuntu on WSL2, 2026-10-29; see
+   [tutor live checks](tutor-live-checks.md#posix-verification-ubuntu-on-wsl2-2026-10-29)).
 
 **This is not a security sandbox.** The child has the learner's own permissions
 and can read files, use the network and spawn processes. The time limit only

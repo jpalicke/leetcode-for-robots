@@ -73,4 +73,8 @@ with code 2 and points to `practice menu`, instead of waiting for keys.
 Unit tests cover the core. Integration tests compare the journals written through
 the menu and through the plain commands, and drive `run_tui` with the library's pipe
 input. End-to-end tests run the numbered flow on Two Sum as a subprocess and, on
-POSIX only, `practice tui` in a real pseudo-terminal.
+POSIX only, `practice tui` in a real pseudo-terminal. That test is skipped on
+Windows. It was run and passed on Linux (Ubuntu on WSL2, 2026-10-29), and the menu
+was driven with `codex exec` as well as Claude Code; see
+[tutor live checks](tutor-live-checks.md). A real keyboard session on macOS or in
+another terminal emulator has not been tried.
