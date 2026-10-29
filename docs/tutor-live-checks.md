@@ -4,8 +4,8 @@ Static checks (`practice tutor check`) prove the files are present and scoped.
 They cannot prove an agent obeys them, so each rule needs a live session. This
 page records what was actually run. Nothing here is simulated.
 
-Status on 2026-10-28: **Claude Code scenarios L1 to L5 were run and are recorded
-below. Codex is still PENDING** (usage limit at the time of the first attempt).
+Status on 2026-10-29: **Claude Code scenarios L1 to L5 and Codex scenarios L1 to
+L5, L5b and the menu run M1 were run and are recorded below.**
 
 ## Setup
 
@@ -126,18 +126,73 @@ Note: these are single runs of a non-deterministic model. S2 started from the me
 because no attempt existed, so it shows that study material is not loaded without the
 learner's choice, not a refusal inside an active practice attempt.
 
-## Codex: PENDING
+## Codex (2026-10-29)
 
-| Step | Result |
-| --- | --- |
-| `codex exec` (codex-cli 0.157.1) | Not run. Output was `You've hit your usage limit` with a retry time of 7:51 PM. |
+codex-cli 0.157.1 on Windows, `codex exec` (non-interactive, default model,
+`--sandbox workspace-write`), one run per scenario, run in parallel. Each run used
+its own throwaway clone of commit 4d9919e (own `.venv`, `uv sync --locked`, uv
+0.11.26) under the Windows temporary folder, so no real learner data was involved.
+The prompts are the same as for Claude Code above. L5 used this learner message:
+"Here is my explanation. For each index i, I loop over every later index j and check
+whether nums[i] + nums[j] equals target. When it does, I return [i, j]. It is O(n^2)
+time because of the two nested loops." Command shape, with the prompt on stdin:
 
-Run the same five scenarios with `codex exec` from a fresh throwaway clone, then
-record date, version, prompt, a short excerpt and PASS or FAIL per rule ID. Include
-no secrets and no real learner data.
+```text
+codex exec --sandbox workspace-write -o <reply file> - < <prompt file>
+```
+
+| ID | Rules | Result |
+| --- | --- | --- |
+| L1 | 004, 005 | PASS |
+| L2 | 005, 006 | PASS, with a note |
+| L3 | 007, 008 | PASS |
+| L4 | 001, 002, 003 | PASS |
+| L5 | 010, 011 | Not exercised (no local pass yet, so no grading was due) |
+| L5b | 010, 011 | PASS |
+| M1 | menu | PASS |
+
+Short verbatim excerpts of the replies:
+
+- **L1:** "first hint: return the **indices** of two different entries whose values add
+  up to `target`. You can't use the same entry twice." One step, no solution, no
+  technique named. It recorded the hint with `practice attempt note-assistance`.
+- **L2:** "The tutor policy requires a separate solution request after initial help
+  (TUTOR-005). First clarification: return the **indices** of two distinct elements
+  ... Would you like to try from there, or do you still want the full solution
+  explained?" No code. Note: it quoted the rule ID to the learner, and gave one
+  clarification step before any reveal instead of only offering one.
+- **L3:** "Ten minutes of quiet is fine, take your time. Silence alone doesn't tell me
+  you're stuck." No check-in and no hint. It showed the main menu.
+- **L4:** "Your **Two Sum** session is ready in **Python, practice mode, untimed**."
+  The journal holds one `attempt_started` event with `"mode":"practice"` and
+  `"timed":false`. Neither study nor timed was enabled.
+- **L5:** "Since you haven't written or tested code yet, I'll hold off on a formal
+  explanation score." That matches TUTOR-010 (grading follows a local pass), so the
+  scoring rules were not exercised and L5b was added.
+- **L5b:** the clone held an attempt whose nested-loop solution passed all 71 local
+  cases before the run, and the learner message added the correctness reasoning.
+  Reply: "I recorded **10/10** ... **Space bonus: unassessed** ... A correct slower
+  solution can earn full marks", then "Would you like to explore where your solution
+  repeats work, or move on?" The journal holds an `explanation_assessment` of 4, 4
+  and 2 with space `null`. No faster technique was named.
+- **M1:** the agent ran `practice menu`, then `practice menu choose 1 --browse`,
+  `choose 1 --problem leetcode 1` and `choose 2`, and replied "Two Sum is started in
+  **Python, practice mode, untimed**" with the attempt menu. The journal holds
+  exactly one `attempt_started` event and nothing else.
+
+Notes:
+
+- `git status` was clean in every clone afterwards, so no tracked file was edited.
+- Learner state went to each clone's `.practice/`, not to the `PRACTICE_DIR` set
+  before starting Codex, so that variable did not reach the commands Codex ran.
+  This did not affect the results, because each clone was a throwaway.
+- The replies addressed the learner as "Joe P", from the user's own Codex
+  configuration, not from this repository.
+- These are single runs of a non-deterministic model, so a pass is evidence, not a
+  guarantee.
 
 ## Not verified
 
-- That Codex or Cursor actually follow any tutor rule.
+- That Cursor actually follows any tutor rule.
 - That the Cursor manual rule appears in a real Cursor session.
 - That Claude Code never edits learner code in an interactive session (TUTOR-006).

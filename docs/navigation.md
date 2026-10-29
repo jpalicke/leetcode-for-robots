@@ -74,3 +74,4 @@ Unit tests cover the core. Integration tests compare the journals written throug
 the menu and through the plain commands, and drive `run_tui` with the library's pipe
 input. End-to-end tests run the numbered flow on Two Sum as a subprocess and, on
 POSIX only, `practice tui` in a real pseudo-terminal.
+That test passed on WSL2 Linux on 2026-10-29; it is skipped on Windows.
