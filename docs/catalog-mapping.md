@@ -4,8 +4,8 @@ Every one of the 4096 problems in `catalog/problems.json` belongs to exactly one
 preparation ticket. The mapping is a committed plan, not a set of hand-made issues.
 This page covers how the plan is built, how to read it and how to change it.
 
-Status: the plan exists and is checked. No GitHub tickets have been created from it
-yet. That happens only after a person has read the plan and asked for it.
+Status: the plan exists and is checked. Creating the GitHub tickets is a separate,
+deliberate step that a person runs after reading the plan (see the last section).
 
 ## Files
 
@@ -64,5 +64,27 @@ a new LeetCode topic cannot silently change a class.
 
 ## Creating the GitHub tickets
 
-Not built yet. The follow-up must be duplicate-safe, resumable and rate-limited, and
-it runs only on request.
+`tools/create_catalog_tickets.py` turns the plan into GitHub issues. It is a dry run
+unless you pass `--apply`, so nothing is written by accident.
+
+```text
+uv run --locked python tools/create_catalog_tickets.py            # dry run, read-only
+uv run --locked python tools/create_catalog_tickets.py --apply    # create and link
+```
+
+It needs a GitHub token in `GITHUB_TOKEN` for `--apply`. The dry run reads with the
+token when there is one.
+
+- **Which tickets:** every planned class ticket whose `issue` is `null`. The six
+  starters keep their own issues and are never touched.
+- **Duplicate-safe:** before creating, it searches the repository for an issue with
+  exactly the planned title and adopts it. Two matches stop the run.
+- **Resumable:** the new issue number is written into `ticket-plan.json` after each
+  ticket. A crash leaves what was done, and a rerun finishes the rest. A ticket that
+  has an issue but is not yet under the parent is linked on the next run.
+- **Linked:** each class ticket is added as a sub-issue of #1 (`--parent` changes it).
+- **Rate-limited:** one request at a time, `--delay` seconds apart (default 2).
+- **Body:** the text of `plan_catalog.py render <ticket>`, minus its title line.
+
+After an `--apply`, commit the updated `catalog/ticket-plan.json` so the issue
+numbers are recorded, and run `plan_catalog.py check`.
