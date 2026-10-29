@@ -39,9 +39,36 @@ every other command work without it. Add no further runtime dependency without
 approval.
 
 The first sync needs package-index access. The clean-checkout end-to-end test
-then uses the populated uv cache to install into a separate environment offline.
+allows its locked sync to populate the uv cache while installing a separate
+environment; subsequent verification commands use that environment offline.
 Keep uv on PATH when running the suite. It checks setup only; these tests do not
 establish that the future practice application or tutor behavior works.
+
+On Windows, the suite uses compact, unique `t0`, `t1`, ... fixture directories
+through the public `tmp_path_factory.mktemp` API. Pytest still retains session
+folders under its usual base directory, but the directory name no longer records
+the test name; failure tracebacks show the actual path. The independent checkout
+uses a separate `lc-...` directory directly under Python's OS temporary directory
+and removes it after verification. Ordinary Windows user temporary paths work
+without manually selecting a short drive-root directory or enabling long paths.
+
+Preserved reference names remain unchanged. A preflight rejects Windows fixture
+paths that would exceed the portable 259 UTF-16 code-unit file-path budget,
+including a 20-code-unit allowance for fixture subfolders. Non-BMP characters
+such as emoji consume two UTF-16 code units each. If a custom temporary root is too
+long, set `TEMP` and `TMP` to a shorter writable directory before starting pytest.
+`--basetemp` controls pytest fixture storage only; it does not change the clean
+checkout's OS temporary root. No drive mapping or registry change is required.
+See [pytest temporary directories](https://docs.pytest.org/en/stable/how-to/tmp_path.html)
+and [Python temporary-directory selection](https://docs.python.org/3/library/tempfile.html#tempfile.gettempdir).
+
+Each verification command has a deadline: 600 seconds for the nested unit and
+integration suite, 120 seconds for other checks. On timeout the harness terminates
+the command's process tree and reports the command, deadline, captured stdout and
+stderr, and any cleanup failure. Cleanup gets at most 10 seconds for Windows
+`taskkill` and 5 seconds to reap the launcher. File-backed capture avoids waiting
+for descendant processes to close inherited output pipes. The learner solution
+runner is separate. See [Python subprocess timeouts](https://docs.python.org/3/library/subprocess.html#subprocess.Popen.communicate).
 
 The suite also runs real solution files in real child processes, including a
 timeout that must leave no stray processes. `tests/fixtures/` holds the Two Sum

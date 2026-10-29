@@ -49,5 +49,6 @@ select = ["E", "F", "I", "UP", "B"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = ["--strict-config", "--strict-markers", "--import-mode=importlib"]
 filterwarnings = ["error"]
