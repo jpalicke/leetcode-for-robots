@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "platform": "leetcode",
+  "concepts": [
+    {
+      "id": "arrays",
+      "name": "Arrays",
+      "prerequisites": []
+    },
+    {
+      "id": "strings",
+      "name": "Strings",
+      "prerequisites": [
+        "arrays"
+      ]
+    },
+    {
+      "id": "lookup",
+      "name": "Lookup structures",
+      "prerequisites": [
+        "arrays"
+      ]
+    },
+    {
+      "id": "sequences",
+      "name": "Sequence processing",
+      "prerequisites": [
+        "arrays",
+        "strings",
+        "lookup"
+      ]
+    },
+    {
+      "id": "linked",
+      "name": "Linked structures",
+      "prerequisites": [
+        "sequences"
+      ]
+    },
+    {
+      "id": "trees",
+      "name": "Trees",
+      "prerequisites": [
+        "linked"
+      ]
+    },
+    {
+      "id": "graphs",
+      "name": "Graphs",
+      "prerequisites": [
+        "trees",
+        "lookup"
+      ]
+    },
+    {
+      "id": "dp",
+      "name": "Dynamic programming",
+      "prerequisites": [
+        "graphs",
+        "sequences"
+      ]
+    }
+  ],
+  "starters": [
+    1,
+    217,
+    242,
+    20,
+    704,
+    121
+  ],
+  "placements": [
+    {
+      "problem_id": 1,
+      "concept": "arrays",
+      "prerequisites": []
+    },
+    {
+      "problem_id": 217,
+      "concept": "lookup",
+      "prerequisites": [
+        "arrays"
+      ]
+    },
+    {
+      "problem_id": 242,
+      "concept": "strings",
+      "prerequisites": [
+        "arrays"
+      ]
+    },
+    {
+      "problem_id": 20,
+      "concept": "sequences",
+      "prerequisites": [
+        "arrays",
+        "strings",
+        "lookup"
+      ]
+    },
+    {
+      "problem_id": 704,
+      "concept": "sequences",
+      "prerequisites": [
+        "arrays",
+        "strings",
+        "lookup"
+      ]
+    },
+    {
+      "problem_id": 121,
+      "concept": "sequences",
+      "prerequisites": [
+        "arrays",
+        "strings",
+        "lookup"
+      ]
+    }
+  ]
+}
