@@ -18,6 +18,8 @@ from practice.attempts import (
 )
 from practice.catalog import DEFAULT_CATALOG_PATH, CatalogError, Entry, load_catalog
 from practice.classification import CONTENT_CLASSES
+from practice.curriculum import DEFAULT_CURRICULUM_PATH
+from practice.curriculum_commands import run_curriculum_command
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.menu_commands import make_environment, run_menu_command
 from practice.package import PackageError, load_package
@@ -82,6 +84,14 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument(
         "--json", action="store_true", help="print the full result as JSON"
     )
+    curriculum = commands.add_parser(
+        "curriculum", help="check the map or list next objectives"
+    )
+    actions = curriculum.add_subparsers(dest="curriculum_command", required=True)
+    for action in ("check", "next"):
+        sub = actions.add_parser(action)
+        sub.add_argument("--file", type=Path, default=DEFAULT_CURRICULUM_PATH)
+        sub.add_argument("--json", action="store_true")
     add_attempt_commands(commands)
     ready = commands.add_parser(
         "readiness", help="report whether a problem's package is ready to practice"
@@ -375,6 +385,8 @@ def run_command(args: argparse.Namespace) -> int:
 
 def main(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
+    if args.command == "curriculum":
+        return run_curriculum_command(args)
     if args.command == "run":
         return run_command(args)
     if args.command == "tutor":

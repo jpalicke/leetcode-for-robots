@@ -14,7 +14,7 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
     checkout.mkdir()
     for name in ("pyproject.toml", "uv.lock", ".python-version", "README.md"):
         shutil.copy2(root / name, checkout / name)
-    for folder in ("src", "catalog", "problems", "references", "tools"):
+    for folder in ("src", "catalog", "curriculum", "problems", "references", "tools"):
         shutil.copytree(
             root / folder,
             checkout / folder,
@@ -54,6 +54,8 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
             "tests/fixtures/two_sum_solutions/correct_hash_map.py",
         ],
         [uv, "run", "--locked", "--offline", "practice", "progress"],
+        [uv, "run", "--locked", "--offline", "practice", "curriculum", "check"],
+        [uv, "run", "--locked", "--offline", "practice", "curriculum", "next"],
     ]
     for command in commands:
         result = subprocess.run(
