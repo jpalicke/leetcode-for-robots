@@ -206,7 +206,8 @@ def test_the_statement_is_original_and_links_the_source() -> None:
     assert "-1" in text
     assert "Given an array of integers nums which is sorted" not in text
     assert "O(log n)" in text  # The requirement is stated...
-    assert "does not check" in text  # ...with the honest limit of the local tests.
+    assert "different entries" in text  # ...with what the local run counts...
+    assert "not a proof" in text  # ...and the honest limit of that check.
 
 
 def test_notes_cover_the_required_approaches_and_pitfalls() -> None:
@@ -229,4 +230,12 @@ def test_the_readiness_record_matches_the_package() -> None:
     assert record["slug"] == "binary-search"
     assert record["verification"]["verified"]
     not_verified = " ".join(record["verification"]["not_verified"])
-    assert "O(log n)" in not_verified  # The local tests cannot enforce it.
+    assert "does not prove" in not_verified  # A pass under the budget is not a proof.
+    verified = " ".join(item["fact"] for item in record["verification"]["verified"])
+    assert "probe budget" in verified  # The requirement is enforced locally.
+    metadata = json.loads((PACKAGE / "problem.json").read_text(encoding="utf-8"))
+    assert metadata["probe_budget"] == {
+        "argument": "nums",
+        "growth": "log2",
+        "slack": 2,
+    }

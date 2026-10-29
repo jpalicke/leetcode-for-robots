@@ -1,5 +1,5 @@
 {
-  "version": "leetcode-704-v1",
+  "version": "leetcode-704-v2",
   "seed": 20261029,
   "generator": "tools/build_binary_search_suite.py",
   "cases": [

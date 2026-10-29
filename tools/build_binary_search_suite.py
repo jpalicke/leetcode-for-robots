@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 SEED = 20261029
-SUITE_VERSION = "leetcode-704-v1"
+SUITE_VERSION = "leetcode-704-v2"
 MAX_LENGTH = 10**4
 LOW, HIGH = -9999, 9999  # The page's bounds are strict: -10^4 < value < 10^4.
 REPO_ROOT = Path(__file__).resolve().parents[1]

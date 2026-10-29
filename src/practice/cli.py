@@ -22,6 +22,7 @@ from practice.clock import ClockError
 from practice.curriculum import DEFAULT_CURRICULUM_PATH
 from practice.curriculum_commands import run_curriculum_command
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
+from practice.knowledge import run_knowledge_command
 from practice.menu_commands import make_environment, run_menu_command
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
@@ -117,6 +118,20 @@ def build_parser() -> argparse.ArgumentParser:
     add_review_commands(commands)
     add_recommend_command(commands)
     add_menu_commands(commands)
+    knowledge = commands.add_parser(
+        "knowledge", help="export selected public knowledge"
+    )
+    exports = knowledge.add_subparsers(dest="knowledge_command", required=True)
+    export = exports.add_parser("export", help="write deterministic source-aware JSON")
+    export.add_argument("platform")
+    export.add_argument("problem_id")
+    export.add_argument("--language", default="python")
+    export.add_argument("--mode", choices=("practice", "study"), default="practice")
+    reveal = export.add_mutually_exclusive_group()
+    reveal.add_argument("--hint-level", type=int, default=None)
+    reveal.add_argument("--reveal-solution", action="store_true")
+    export.add_argument("--source", action="append", default=[], metavar="ID")
+    export.add_argument("--output", type=Path, default=None)
     return parser
 
 
@@ -477,6 +492,9 @@ def main(argv: list[str]) -> int:
 
 def dispatch(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
+    if args.command == "knowledge":
+        private = resolve_practice_dir(args.practice_dir, os.environ)
+        return run_knowledge_command(args, private)
     if args.command == "curriculum":
         return run_curriculum_command(args)
     if args.command == "run":

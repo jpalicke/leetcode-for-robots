@@ -33,6 +33,10 @@
         "against": "the live LeetCode GraphQL content field"
       },
       {
+        "fact": "The package declares a probe budget: a solution may look at no more than bit_length(len(nums)) + 2 different entries of nums per case (16 at 10,000 entries), counted by the runner's counting list. A correct answer that reads more fails with the count. Checked by the logarithmic and linear fixtures in tests/integration/test_binary_search_solutions.py.",
+        "against": "problem.json probe_budget, src/practice/_worker.py ProbeList and src/practice/runner.py; no LeetCode source"
+      },
+      {
         "fact": "The page lists two examples: nums = [-1,0,3,5,9,12] with target 9 gives 4, and with target 2 gives -1. They are cases platform-example-1 and 2 in the suite.",
         "against": "the live LeetCode GraphQL content field"
       },
@@ -42,7 +46,7 @@
       }
     ],
     "not_verified": [
-      "The problem requires O(log n) time. The local runner checks answers and total run time only, and at 10^4 entries a linear scan finishes instantly, so a correct O(n) answer passes locally. The requirement is stated to the learner but not enforced.",
+      "Passing the probe budget shows a solution read few entries on these inputs. It does not prove an asymptotic running time, and the counter cannot see code that reads the list through C routines that bypass it (for example the heapq functions) or reads it before the function is called.",
       "The rendered problem page was not viewed in a browser; only the GraphQL fields were read.",
       "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
       "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",

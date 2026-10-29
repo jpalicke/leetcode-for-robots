@@ -149,7 +149,7 @@ demonstration file, compares it with upstream's own Git blob ids, checks
 
 ## The demonstration import
 
-Five files so far, all from the same repository and commit and under one license
+Six files so far, all from the same repository and commit and under one license
 notice. The first is the NeetCode solution to LeetCode 1 Two Sum in Python, from
 `neetcode-gh/leetcode` (MIT), pinned to commit
 `8fed5f7daa6a517e375a0562d876e4a72dfdafb8`, path `python/0001-two-sum.py`, with
@@ -157,6 +157,8 @@ the repository `LICENSE` from the same commit. The second is the NeetCode soluti
 to LeetCode 217 Contains Duplicate, path `python/0217-contains-duplicate.py`, and the
 third is LeetCode 242 Valid Anagram, path `python/0242-valid-anagram.py`, and the
 fourth is LeetCode 20 Valid Parentheses, path `python/0020-valid-parentheses.py`, and the
-fifth is LeetCode 704 Binary Search, path `python/0704-binary-search.py`. Their
+fifth is LeetCode 704 Binary Search, path `python/0704-binary-search.py`, and the
+sixth is LeetCode 121 Best Time to Buy and Sell Stock, path
+`python/0121-best-time-to-buy-and-sell-stock.py`. Their
 platform acceptance and local validation are all `none`; the runnable adapters carry
 the validation evidence.

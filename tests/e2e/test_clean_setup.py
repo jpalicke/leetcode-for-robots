@@ -56,15 +56,28 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
         [uv, "run", "--locked", "--offline", "practice", "progress"],
         [uv, "run", "--locked", "--offline", "practice", "curriculum", "check"],
         [uv, "run", "--locked", "--offline", "practice", "curriculum", "next"],
+        [
+            uv,
+            "run",
+            "--locked",
+            "--offline",
+            "practice",
+            "knowledge",
+            "export",
+            "leetcode",
+            "1",
+        ],
     ]
     for command in commands:
+        # The full nested test suite needs a separate bound from short checks.
+        command_timeout = 600 if command[-1] == "pytest" else 120
         result = subprocess.run(
             command,
             cwd=checkout,
             env=environment,
             capture_output=True,
             text=True,
-            timeout=600,
+            timeout=command_timeout,
             check=False,
         )
         assert result.returncode == 0, f"{command!r}\n{result.stdout}\n{result.stderr}"

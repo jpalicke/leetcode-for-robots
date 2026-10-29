@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "original-leetcode-0121-highest-price-ahead-python",
+  "kind": "original",
+  "title": "Original: 121. Best Time to Buy and Sell Stock, right to left with the highest price ahead",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "original/original-leetcode-0121-highest-price-ahead-python/best_time_highest_price_ahead.py",
+    "sha256": "893b597e69e9cf32a248322f734ad1e78aeb748a7ff6257348e2965143931def"
+  },
+  "license": null,
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T02:14:48+00:00",
+    "method": "authored",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "893b597e69e9cf32a248322f734ad1e78aeb748a7ff6257348e2965143931def",
+      "run_at": "2026-10-29T02:14:48+00:00",
+      "suite_sha256": "15b338891ed190b5785f23342b00f6d278d0c8278f4b6778efd1d6cd82fc5c03",
+      "suite_version": "leetcode-121-v1",
+      "runner": "practice run"
+    }
+  }
+}
