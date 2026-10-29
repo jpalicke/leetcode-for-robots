@@ -44,9 +44,8 @@ def test_successful_verification_command(tmp_path: Path) -> None:
     run_check([sys.executable, "-c", "print('verified')"], tmp_path, {}, 10)
 
 
+@pytest.mark.skipif(sys.platform != "win32", reason="checks the Windows path budget")
 def test_windows_path_budget_counts_utf16_units(tmp_path: Path) -> None:
-    if sys.platform != "win32":
-        return
     longest = max(
         (
             path.relative_to(REFERENCES_DIR.parent)

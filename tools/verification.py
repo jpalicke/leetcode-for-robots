@@ -7,12 +7,17 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from typing import Any
 
 
 def check_windows_path(root: Path, references: Path, *, extra: int = 0) -> None:
     """Reject unsupported destinations before a partial Windows reference copy."""
-    if sys.platform != "win32":
-        return
+    if sys.platform == "win32":
+        check_path_budget(root, references, extra=extra)
+
+
+def check_path_budget(root: Path, references: Path, *, extra: int = 0) -> None:
+    """Reject a destination whose longest reference path reaches 260 code units."""
     longest = max(
         (
             path.relative_to(references.parent)
@@ -35,6 +40,14 @@ def check_windows_path(root: Path, references: Path, *, extra: int = 0) -> None:
         )
 
 
+def own_process_group() -> dict[str, Any]:
+    """Put the check in its own group so the whole tree can be stopped."""
+    if sys.platform == "win32":
+        return {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+    else:
+        return {"start_new_session": True}
+
+
 def run_check(
     command: list[str], cwd: Path, environment: dict[str, str], timeout: float
 ) -> None:
@@ -47,10 +60,7 @@ def run_check(
             stdin=subprocess.DEVNULL,
             stdout=output,
             stderr=errors,
-            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
-            if sys.platform == "win32"
-            else 0,
-            start_new_session=sys.platform != "win32",
+            **own_process_group(),
         )
         failure = ""
         try:
