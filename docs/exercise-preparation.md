@@ -2,8 +2,8 @@
 
 How a problem becomes a committed, learner-facing exercise package, and how to
 tell that it is ready. LeetCode 1 (Two Sum) is the worked example. LeetCode 217
-(Contains Duplicate) follows the same layout with a boolean answer and the `exact`
-checker.
+(Contains Duplicate) and 242 (Valid Anagram) follow the same layout with a boolean
+answer and the `exact` checker; 242 takes two string arguments.
 
 ## Pipeline
 
@@ -79,8 +79,8 @@ readiness report then says `NOT READY` and names that blocker, even though every
 other check passes. Clear it only after re-reading the signature, return type and
 constraints and correcting the package to match. A person who has read the page may
 supply those facts; record them as reported by that person, not as fetched.
-LeetCode 217 was in this state until its owner confirmed the signature and
-constraints.
+LeetCode 217 was in this state until its owner confirmed the signature,
+constraints and examples. LeetCode 242 is in this state now.
 
 ## Known limits
 

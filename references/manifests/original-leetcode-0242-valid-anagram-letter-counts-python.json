@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "original-leetcode-0242-valid-anagram-letter-counts-python",
+  "kind": "original",
+  "title": "Original: 242. Valid Anagram by counting letters up and down",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "original/original-leetcode-0242-valid-anagram-letter-counts-python/valid_anagram_letter_counts.py",
+    "sha256": "e47c1d44c1710551287b08e7f3ec65f462bda6b51b821dcf07805aaaf4917052"
+  },
+  "license": null,
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T01:01:39+00:00",
+    "method": "authored",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "e47c1d44c1710551287b08e7f3ec65f462bda6b51b821dcf07805aaaf4917052",
+      "run_at": "2026-10-29T01:01:40+00:00",
+      "suite_sha256": "9890991bf94137e100b30ea51e0462e12dc532a95bd9108c287bcd72f81bf7b9",
+      "suite_version": "leetcode-242-v1",
+      "runner": "practice run"
+    }
+  }
+}

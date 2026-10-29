@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "platform": "leetcode",
+  "problem_id": "242",
+  "slug": "valid-anagram",
+  "title": "Valid Anagram",
+  "difficulty": "easy",
+  "language": "python",
+  "files": {
+    "statement": {"path": "statement.md", "content_class": "statement_summary"},
+    "notes": {"path": "notes.md", "content_class": "reference_solution"},
+    "hints": "hints/index.json",
+    "starter": "starter.py"
+  },
+  "references": {
+    "upstream": ["neetcode-leetcode-0242-valid-anagram-python"],
+    "adaptations": ["neetcode-leetcode-0242-valid-anagram-python-function-adapter"],
+    "originals": ["original-leetcode-0242-valid-anagram-letter-counts-python"]
+  },
+  "verification": {
+    "checked_on": "2026-10-29",
+    "verified": [
+      {
+        "fact": "Problem 242 is titled Valid Anagram, slug valid-anagram, difficulty easy, not premium.",
+        "against": "catalog/leetcode.json (snapshot 2026-10-28)"
+      },
+      {
+        "fact": "The upstream NeetCode file python/0242-valid-anagram.py exists at revision 8fed5f7daa6a517e375a0562d876e4a72dfdafb8 and is preserved byte for byte with its MIT notice. Its method is isAnagram(self, s: str, t: str) -> bool.",
+        "against": "raw.githubusercontent.com, compared with the preserved copy (the upstream file is a third party's account of the signature, not the platform's)"
+      }
+    ],
+    "not_verified": [
+      "leetcode.com was unreachable from the environment that prepared this package (the egress proxy refused the connection), so this tooling never read the problem page or the GraphQL endpoint.",
+      "The Python3 signature isAnagram(self, s: str, t: str) -> bool, the bounds 1 <= s.length, t.length <= 5 * 10^4, and the input alphabet (lowercase English letters) come from the preparer's knowledge of the published problem, not from a fetch or a report. The suite and statement are built to those bounds.",
+      "The examples listed on the problem page were not read; the suite has no platform-example cases yet.",
+      "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
+      "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",
+      "The class-method form is not run locally: the runner calls a top-level function, so learners paste the body into class Solution when they submit."
+    ]
+  },
+  "blockers": [
+    "Page facts pending: read the Python3 signature, constraints and listed examples from leetcode.com (or have the project owner report them), correct statement.md and tools/build_valid_anagram_suite.py if they differ, add the examples as platform-example cases, rebuild and revalidate the references, remove the PENDING line from statement.md, then remove this blocker."
+  ]
+}

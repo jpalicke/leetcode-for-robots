@@ -1,0 +1,13 @@
+{
+  "platform": "leetcode",
+  "id": "242",
+  "title": "Valid Anagram",
+  "language": "python",
+  "callable": {
+    "adapter": "function",
+    "name": "isAnagram",
+    "parameters": ["s", "t"]
+  },
+  "checker": "exact",
+  "allow_none": false
+}
