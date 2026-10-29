@@ -1,6 +1,7 @@
 # ABOUTME: Integration tests loading real catalog files from disk and running the CLI.
 # ABOUTME: Corruption cases are deliberately damaged copies of the committed snapshot.
 
+import json
 from pathlib import Path
 
 import pytest
@@ -22,7 +23,7 @@ def real_text() -> str:
 def test_committed_snapshot_loads_from_disk() -> None:
     catalog = load_catalog(DEFAULT_CATALOG_PATH)
 
-    assert len(catalog.entries) == 4096
+    assert len(catalog.entries) == len(json.loads(real_text())["entries"]) > 0
 
 
 def test_truncated_file_is_rejected(tmp_path: Path) -> None:

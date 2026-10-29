@@ -267,7 +267,7 @@ when available, not a prerequisite. Track publication, local validation, and
 platform acceptance separately. Detailed import procedures belong in the
 implementation plan; source research is recorded in reference-sources.md.
 
-Proposal: retain catalog IDs, titles, slugs, difficulty, access flags, source URL,
+Catalog refresh retains IDs, titles, slugs, difficulty, access flags, source URL,
 and fetch timestamp. Track preparation readiness separately from catalog metadata.
 The snapshot fetched on 2026-10-28 contains 4,096 entries; counts may change.
 
@@ -277,6 +277,14 @@ problems or overwrite attempts. The unofficial endpoint used during discovery,
 `https://leetcode.com/api/problems/all/`, is a data source, not a guaranteed
 supported integration contract. Its `frontend_question_id` is the learner-visible ID
 and differs from the internal `question_id`; keep them distinct.
+
+`practice catalog refresh [--source URL] [--json]` publishes the validated snapshot,
+field-level added/changed/removed diff, and durable pending coverage identities for
+#15 in one catalog envelope via a staged, fsynced atomic replacement. Repeated
+no-op refreshes retain pending changes/removals until coverage reconciliation.
+OS locks serialize cooperating writers; failures preserve old bytes and downstream
+data. See [the refresh contract](catalog-refresh.md) for validation, endpoint limits,
+concurrency boundaries, JSON shape, and interruption recovery.
 
 Store each problem statement as a link to LeetCode plus our own short original
 summary (task, signature, constraints and original examples), not copied text.
