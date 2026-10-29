@@ -90,11 +90,12 @@ class Handler(BaseHTTPRequestHandler):
         state = self._state()
         self._note()
         parts = urlsplit(self.path)
-        if parts.path == "/search/issues":
-            query = parse_qs(parts.query)["q"][0]
-            title = query.split('"')[1]
-            hits = [i for i in state.issues if title in i["title"]]
-            self._send(200, {"total_count": len(hits), "items": hits})
+        if parts.path == f"/repos/{REPO}/issues":
+            query = parse_qs(parts.query)
+            page = int(query["page"][0])
+            size = int(query["per_page"][0])
+            ordered = sorted(state.issues, key=lambda i: i["number"])
+            self._send(200, ordered[(page - 1) * size : page * size])
         elif parts.path == f"/repos/{REPO}/issues/1/sub_issues":
             subs = [i for i in state.issues if i["number"] in state.linked]
             self._send(200, subs)
@@ -353,6 +354,32 @@ def test_a_title_that_only_contains_the_planned_one_is_not_adopted(
     assert work.run("--apply").returncode == 0
     assert work.to_create()[0]["issue"] != 77
     assert 77 not in fake.linked
+
+
+def test_a_pull_request_with_the_planned_title_is_not_adopted(
+    work: Work, fake: Fake
+) -> None:
+    title = work.to_create()[0]["title"]
+    fake.issues.append(
+        {"number": 77, "id": 9077, "title": title, "body": "", "pull_request": {}}
+    )
+    assert work.run("--apply").returncode == 0
+    assert work.to_create()[0]["issue"] != 77
+    assert 77 not in fake.linked
+
+
+def test_a_matching_issue_beyond_the_first_page_is_still_adopted(
+    work: Work, fake: Fake
+) -> None:
+    for number in range(200, 305):
+        fake.issues.append(
+            {"number": number, "id": 9000 + number, "title": f"other {number}"}
+        )
+    title = work.to_create()[0]["title"]
+    fake.issues.append({"number": 400, "id": 9400, "title": title, "body": ""})
+    assert work.run("--apply").returncode == 0
+    assert [i["title"] for i in fake.issues].count(title) == 1
+    assert work.to_create()[0]["issue"] == 400
 
 
 def test_two_issues_with_the_planned_title_stop_the_run(work: Work, fake: Fake) -> None:

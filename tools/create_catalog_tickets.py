@@ -8,7 +8,6 @@ import sys
 import time
 from pathlib import Path
 from typing import Any
-from urllib.parse import quote
 
 from practice.paths import REPO_ROOT
 from practice.source_fetch import FetchError, address_refusal, fetch_url
@@ -47,6 +46,7 @@ class GitHub:
         self.delay = delay
         self.last: float | None = None
         self.requests = 0
+        self.known: list[dict[str, Any]] | None = None
 
     def _pause(self) -> None:
         if self.last is not None:
@@ -79,19 +79,36 @@ class GitHub:
         except ValueError as error:
             raise ToolError(f"{url} did not answer with JSON ({error})") from error
 
+    def all_issues(self) -> list[dict[str, Any]]:
+        """Every issue in the repository, open or closed, pull requests left out."""
+        if self.known is None:
+            found: list[dict[str, Any]] = []
+            for page in range(1, MAX_PAGES + 1):
+                batch = self.call(
+                    f"/repos/{self.repo}/issues?state=all&per_page={PAGE_SIZE}"
+                    f"&page={page}"
+                )
+                if not isinstance(batch, list):
+                    raise ToolError("the issue list answered with an unexpected shape")
+                found += [
+                    i for i in batch if isinstance(i, dict) and "pull_request" not in i
+                ]
+                if len(batch) < PAGE_SIZE:
+                    break
+            else:
+                raise ToolError(f"more than {MAX_PAGES * PAGE_SIZE} issues to list")
+            self.known = found
+        return self.known
+
     def find_by_title(self, title: str) -> list[dict[str, Any]]:
-        """Issues in the repository whose title is exactly `title`."""
-        query = quote(f'repo:{self.repo} is:issue in:title "{title}"', safe="")
-        found = self.call(f"/search/issues?q={query}&per_page={PAGE_SIZE}")
-        items = found.get("items") if isinstance(found, dict) else None
-        if not isinstance(items, list):
-            raise ToolError("the issue search answered with an unexpected shape")
-        return [i for i in items if isinstance(i, dict) and i.get("title") == title]
+        """Issues whose title is exactly `title`."""
+        return [i for i in self.all_issues() if i.get("title") == title]
 
     def create(self, title: str, body: str) -> dict[str, Any]:
         made = self.call(f"/repos/{self.repo}/issues", {"title": title, "body": body})
         if not isinstance(made, dict) or "number" not in made or "id" not in made:
             raise ToolError(f"creating {title!r} answered with an unexpected shape")
+        self.all_issues().append(made)
         return made
 
     def linked(self, parent: int) -> set[int]:

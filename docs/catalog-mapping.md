@@ -77,8 +77,8 @@ token when there is one.
 
 - **Which tickets:** every planned class ticket whose `issue` is `null`. The six
   starters keep their own issues and are never touched.
-- **Duplicate-safe:** before creating, it searches the repository for an issue with
-  exactly the planned title and adopts it. Two matches stop the run.
+- **Duplicate-safe:** before creating, it lists the repository's issues, open and
+  closed, and adopts one with exactly the planned title. Pull requests are ignored. Two matches stop the run.
 - **Resumable:** the new issue number is written into `ticket-plan.json` after each
   ticket. A crash leaves what was done, and a rerun finishes the rest. A ticket that
   has an issue but is not yet under the parent is linked on the next run.
