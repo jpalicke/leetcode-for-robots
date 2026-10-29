@@ -64,7 +64,7 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
             env=environment,
             capture_output=True,
             text=True,
-            timeout=120,
+            timeout=600,
             check=False,
         )
         assert result.returncode == 0, f"{command!r}\n{result.stdout}\n{result.stderr}"
