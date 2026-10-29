@@ -31,19 +31,40 @@ class _RefuseRedirects(urllib.request.HTTPRedirectHandler):
         )
 
 
-def fetch_url(url: str, *, max_bytes: int = MAX_FETCH_BYTES) -> bytes:
+def address_refusal(url: str) -> str | None:
+    """Why this address may not be fetched, or None when it may."""
     parts = urlsplit(url)
-    loopback = parts.hostname in LOOPBACK_HOSTS
-    if parts.scheme != "https" and not (parts.scheme == "http" and loopback):
-        raise FetchError(
-            f"cannot fetch {url}: only https URLs (or http on a loopback address) "
-            "are fetched"
-        )
+    if parts.scheme == "https":
+        return None
+    if parts.scheme == "http" and parts.hostname in LOOPBACK_HOSTS:
+        return None
+    return "only https URLs (or http on a loopback address) are fetched"
+
+
+def fetch_url(
+    url: str,
+    *,
+    max_bytes: int = MAX_FETCH_BYTES,
+    data: bytes | None = None,
+    headers: dict[str, str] | None = None,
+) -> bytes:
+    """GET the address, or POST `data` to it, and return the body.
+
+    Only https (or http on a loopback address), no redirects, size-capped.
+    """
+    refusal = address_refusal(url)
+    if refusal:
+        raise FetchError(f"cannot fetch {url}: {refusal}")
+    loopback = urlsplit(url).hostname in LOOPBACK_HOSTS
     handlers: list[urllib.request.BaseHandler] = [_RefuseRedirects()]
     if loopback:
         handlers.append(urllib.request.ProxyHandler({}))
     opener = urllib.request.build_opener(*handlers)
-    request = urllib.request.Request(url, headers={"User-Agent": "practice-sources"})
+    request = urllib.request.Request(
+        url,
+        data=data,
+        headers={"User-Agent": "practice-sources", **(headers or {})},
+    )
     try:
         with opener.open(request, timeout=FETCH_TIMEOUT_SECONDS) as response:
             return _read_limited(response, url, max_bytes)
