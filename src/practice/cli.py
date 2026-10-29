@@ -22,6 +22,8 @@ from practice.clock import ClockError
 from practice.curriculum import DEFAULT_CURRICULUM_PATH
 from practice.curriculum_commands import run_curriculum_command
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
+from practice.lists import DEFAULT_LISTS_DIR
+from practice.lists_commands import run_lists_command
 from practice.menu_commands import make_environment, run_menu_command
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
@@ -74,6 +76,12 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_CURRICULUM_PATH,
         help="curriculum file for recommendations (default: curriculum/core.json)",
     )
+    parser.add_argument(
+        "--lists-dir",
+        type=Path,
+        default=DEFAULT_LISTS_DIR,
+        help="curated problem lists (default: catalog/lists/)",
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     find = commands.add_parser("search", help="find problems by ID, title or slug")
     find.add_argument(
@@ -101,6 +109,16 @@ def build_parser() -> argparse.ArgumentParser:
         sub = actions.add_parser(action)
         sub.add_argument("--file", type=Path, default=DEFAULT_CURRICULUM_PATH)
         sub.add_argument("--json", action="store_true")
+    lists = commands.add_parser(
+        "lists", help="browse curated problem lists such as Blind 75"
+    )
+    lists.add_argument("--json", action="store_true", help="print the summary as JSON")
+    list_actions = lists.add_subparsers(dest="lists_command")
+    show = list_actions.add_parser("show", help="show one list with a status each")
+    show.add_argument("list_id", help="a list id from `practice lists`")
+    show.add_argument("--json", action="store_true", default=argparse.SUPPRESS)
+    check = list_actions.add_parser("check", help="validate every list file")
+    check.add_argument("--json", action="store_true", default=argparse.SUPPRESS)
     add_attempt_commands(commands)
     ready = commands.add_parser(
         "readiness", help="report whether a problem's package is ready to practice"
@@ -464,6 +482,8 @@ def dispatch(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "curriculum":
         return run_curriculum_command(args)
+    if args.command == "lists":
+        return run_lists_command(args)
     if args.command == "run":
         return run_command(args)
     if args.command == "tutor":

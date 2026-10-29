@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "id": "dynamic-programming",
+  "name": "LeetCode Dynamic Programming",
+  "platform": "leetcode",
+  "size": 46,
+  "source": {
+    "kind": "leetcode_study_plan",
+    "url": "https://leetcode.com/studyplan/dynamic-programming/",
+    "plan_slug": "dynamic-programming",
+    "retrieved_on": "2026-10-29",
+    "note": "Problem ids and slugs only; no problem text is stored."
+  },
+  "groups": [
+    {"name": "Fibonacci style", "problems": [
+      {"id": 70, "slug": "climbing-stairs"},
+      {"id": 509, "slug": "fibonacci-number"},
+      {"id": 1137, "slug": "n-th-tribonacci-number"},
+      {"id": 746, "slug": "min-cost-climbing-stairs"},
+      {"id": 198, "slug": "house-robber"},
+      {"id": 740, "slug": "delete-and-earn"}
+    ]},
+    {"name": "Matrix", "problems": [
+      {"id": 62, "slug": "unique-paths"},
+      {"id": 64, "slug": "minimum-path-sum"},
+      {"id": 63, "slug": "unique-paths-ii"},
+      {"id": 120, "slug": "triangle"},
+      {"id": 931, "slug": "minimum-falling-path-sum"},
+      {"id": 221, "slug": "maximal-square"}
+    ]},
+    {"name": "On Strings", "problems": [
+      {"id": 5, "slug": "longest-palindromic-substring"},
+      {"id": 139, "slug": "word-break"},
+      {"id": 516, "slug": "longest-palindromic-subsequence"},
+      {"id": 72, "slug": "edit-distance"},
+      {"id": 712, "slug": "minimum-ascii-delete-sum-for-two-strings"},
+      {"id": 115, "slug": "distinct-subsequences"}
+    ]},
+    {"name": "Longest Increasing Subsequence", "problems": [
+      {"id": 300, "slug": "longest-increasing-subsequence"},
+      {"id": 673, "slug": "number-of-longest-increasing-subsequence"},
+      {"id": 646, "slug": "maximum-length-of-pair-chain"},
+      {"id": 1218, "slug": "longest-arithmetic-subsequence-of-given-difference"},
+      {"id": 1027, "slug": "longest-arithmetic-subsequence"},
+      {"id": 354, "slug": "russian-doll-envelopes"},
+      {"id": 1964, "slug": "find-the-longest-valid-obstacle-course-at-each-position"}
+    ]},
+    {"name": "Longest Common Subsequence", "problems": [
+      {"id": 1143, "slug": "longest-common-subsequence"},
+      {"id": 1035, "slug": "uncrossed-lines"},
+      {"id": 1312, "slug": "minimum-insertion-steps-to-make-a-string-palindrome"}
+    ]},
+    {"name": "Best Time to Buy & Sell Stock / State Machine", "problems": [
+      {"id": 309, "slug": "best-time-to-buy-and-sell-stock-with-cooldown"},
+      {"id": 714, "slug": "best-time-to-buy-and-sell-stock-with-transaction-fee"},
+      {"id": 123, "slug": "best-time-to-buy-and-sell-stock-iii"},
+      {"id": 188, "slug": "best-time-to-buy-and-sell-stock-iv"}
+    ]},
+    {"name": "On Trees", "problems": [
+      {"id": 96, "slug": "unique-binary-search-trees"},
+      {"id": 95, "slug": "unique-binary-search-trees-ii"},
+      {"id": 337, "slug": "house-robber-iii"},
+      {"id": 124, "slug": "binary-tree-maximum-path-sum"}
+    ]},
+    {"name": "Knapsack", "problems": [
+      {"id": 279, "slug": "perfect-squares"},
+      {"id": 518, "slug": "coin-change-ii"},
+      {"id": 377, "slug": "combination-sum-iv"},
+      {"id": 474, "slug": "ones-and-zeroes"}
+    ]},
+    {"name": "General 1D", "problems": [
+      {"id": 2140, "slug": "solving-questions-with-brainpower"},
+      {"id": 322, "slug": "coin-change"},
+      {"id": 2466, "slug": "count-ways-to-build-good-strings"},
+      {"id": 91, "slug": "decode-ways"},
+      {"id": 983, "slug": "minimum-cost-for-tickets"},
+      {"id": 790, "slug": "domino-and-tromino-tiling"}
+    ]}
+  ]
+}
