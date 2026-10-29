@@ -1,0 +1,13 @@
+{
+  "platform": "leetcode",
+  "id": "704",
+  "title": "Binary Search",
+  "language": "python",
+  "callable": {
+    "adapter": "function",
+    "name": "search",
+    "parameters": ["nums", "target"]
+  },
+  "checker": "exact",
+  "allow_none": false
+}

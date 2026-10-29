@@ -4,8 +4,8 @@ How a problem becomes a committed, learner-facing exercise package, and how to
 tell that it is ready. LeetCode 1 (Two Sum) is the worked example. LeetCode 217
 (Contains Duplicate), 242 (Valid Anagram) and 20 (Valid Parentheses) follow the same
 layout with a boolean answer and the `exact` checker; 242 takes two string arguments.
-Package 20 is the first whose page facts were fetched from the live endpoint rather
-than reported by a person, and its `readiness.json` says which.
+704 (Binary Search) uses `exact` on an integer index. Packages 20 and 704 are those whose page facts were fetched from the live endpoint rather
+than reported by a person, and each `readiness.json` says which.
 
 ## Pipeline
 
@@ -89,3 +89,9 @@ constraints and examples, and so was LeetCode 242.
 The runner reports only total duration, not per-case timing, so a slow but correct
 solution shows up as a longer run, or a timeout. The hidden LeetCode tests are not
 available, so a local pass never proves a platform pass.
+
+A complexity requirement is not a test. LeetCode 704 asks for `O(log n)`, but the
+runner checks answers and total run time, and 10,000 entries is small enough that a
+linear scan passes. Record such a requirement under `not_verified` and say it in the
+statement and notes, as package 704 does; a fixture that passes locally for that
+reason (`linear_scan.py`) keeps the limit visible in the tests.

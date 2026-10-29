@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0704-binary-search-python-function-adapter",
+  "kind": "adaptation",
+  "title": "NeetCode 704. Binary Search, wrapped as a plain function for the local runner",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "adaptations/neetcode-leetcode-0704-binary-search-python-function-adapter/0704-binary-search-function.py",
+    "sha256": "1470d305f81d0e6bd9a8eab96a9aad6d94061ed663993eb63b6c1bde526d363d"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0704-binary-search-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": "neetcode-leetcode-0704-binary-search-python",
+  "transformation": "Added the typing import the upstream file omits, kept the Solution class byte for byte, and added a top-level search function that calls it so the runner can find a plain callable.",
+  "acquisition": {
+    "acquired_at": "2026-10-29T02:03:39+00:00",
+    "method": "local_adaptation",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "1470d305f81d0e6bd9a8eab96a9aad6d94061ed663993eb63b6c1bde526d363d",
+      "run_at": "2026-10-29T02:03:40+00:00",
+      "suite_sha256": "969a6cac7bdbe763500e44751c2d5c38a69bdba166ce3e7529ba48abf92e8bb7",
+      "suite_version": "leetcode-704-v1",
+      "runner": "practice run"
+    }
+  }
+}
