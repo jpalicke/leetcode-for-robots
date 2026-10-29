@@ -1,6 +1,7 @@
 # ABOUTME: Checks Windows path budgets against the preserved reference filenames.
 # ABOUTME: Verifies compact per-test paths remain unique and reject unsafe roots.
 
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -45,7 +46,7 @@ def test_successful_verification_command(tmp_path: Path) -> None:
 
 
 def test_windows_path_budget_counts_utf16_units(tmp_path: Path) -> None:
-    if sys.platform != "win32":
+    if os.name != "nt":
         return
     longest = max(
         (

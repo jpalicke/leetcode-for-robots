@@ -11,7 +11,7 @@ from pathlib import Path
 
 def check_windows_path(root: Path, references: Path, *, extra: int = 0) -> None:
     """Reject unsupported destinations before a partial Windows reference copy."""
-    if sys.platform != "win32":
+    if os.name != "nt":
         return
     longest = max(
         (
@@ -47,7 +47,7 @@ def run_check(
             stdin=subprocess.DEVNULL,
             stdout=output,
             stderr=errors,
-            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP
+            creationflags=getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
             if sys.platform == "win32"
             else 0,
             start_new_session=sys.platform != "win32",
