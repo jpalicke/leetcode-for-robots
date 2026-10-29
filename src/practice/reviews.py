@@ -140,11 +140,29 @@ def _first_passes(history: History) -> dict[str, Attempt]:
     """Map the event ID of each attempt's first passing run to that attempt."""
     found: dict[str, Attempt] = {}
     for attempt in history.attempts:
-        for event in attempt.events:
-            if event["type"] == "test_run" and event["status"] == "passed":
-                found[event["event_id"]] = attempt
-                break
+        run = first_pass(attempt)
+        if run is not None:
+            found[run["event_id"]] = attempt
     return found
+
+
+def first_pass(attempt: Attempt) -> dict[str, Any] | None:
+    """The first passing local run of an attempt, or None when it never passed."""
+    for event in attempt.events:
+        if event["type"] == "test_run" and event["status"] == "passed":
+            return event
+    return None
+
+
+def assistance_before(attempt: Attempt, event_id: str) -> list[str]:
+    """The kind of each help event delivered before the given event, in order."""
+    kinds: list[str] = []
+    for event in attempt.events:
+        if event["event_id"] == event_id:
+            break
+        if event["type"] == "assistance":
+            kinds.append(event["kind"])
+    return kinds
 
 
 def _apply_pass(
@@ -184,12 +202,7 @@ def judge_pass(attempt: Attempt, view: AttemptView, pass_event_id: str) -> Outco
     shorten it by a step. Concept help, or a pass that has gone stale after an
     edit, holds it. Anything else is an independent success.
     """
-    kinds: set[str] = set()
-    for event in attempt.events:
-        if event["event_id"] == pass_event_id:
-            break
-        if event["type"] == "assistance":
-            kinds.add(event["kind"])
+    kinds = set(assistance_before(attempt, pass_event_id))
     if "reveal" in kinds or _misunderstood(view):
         return "reset"
     if "hint" in kinds:
@@ -199,12 +212,19 @@ def judge_pass(attempt: Attempt, view: AttemptView, pass_event_id: str) -> Outco
     return "advance"
 
 
-def _misunderstood(view: AttemptView) -> bool:
+def latest_core_total(view: AttemptView) -> int | None:
+    """The newest fully graded explanation score out of 10, else None."""
     for explanation in reversed(view.explanations):
         total = explanation.scores.core_total
         if total is not None:
-            return total < EXPLANATION_CORE_THRESHOLD
-    return False  # Nothing was fully assessed, which is never held against anyone.
+            return total
+    return None
+
+
+def _misunderstood(view: AttemptView) -> bool:
+    total = latest_core_total(view)
+    # Nothing fully assessed is never held against anyone.
+    return total is not None and total < EXPLANATION_CORE_THRESHOLD
 
 
 def _move(rung: int, outcome: Outcome) -> int:

@@ -19,15 +19,22 @@ practice menu choose N --problem PLATFORM ID   a problem's menu (start or resume
 practice menu choose N --attempt ID            an attempt's menu
 practice menu choose N --attempt ID --confirm-reveal
 practice menu choose N --reviews               the due reviews: start or resume one
+practice menu choose N --recommend             the recommendation: start a pick
 ```
 
 Put `choose N` before the flags. Every menu prints the exact command to use next.
 `practice search sum of` also works without quotes.
 
 Main menu: resume your active attempt; browse and select a problem; progress and
-notes; reviews; then recommendations, study and timed practice. The last three are
-listed as "Not available yet." and do nothing. They are wired in later by #19, #39,
-#40 and #41. Timed practice is never offered as runnable.
+notes; reviews; recommendation; then study and timed practice. The last two are
+listed as "Not available yet." and do nothing. They are wired in later by #40 and
+#41. Timed practice is never offered as runnable.
+
+Recommendation: choosing it opens a screen that shows the pick, why, and the
+evidence, then offers items to start the recommended problem (or resume or review it),
+start an alternative, browse for another problem, or go back. It uses the same core as
+`practice recommend` (see `docs/recommendations.md`) and writes nothing until you start
+something. `practice menu --recommend` prints the screen in the numbered menu.
 
 Reviews: the main menu notes how many reviews are due. Choosing Reviews opens the
 reviews screen, which lists upcoming reviews for information and offers one item per

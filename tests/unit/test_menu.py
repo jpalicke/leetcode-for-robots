@@ -66,7 +66,7 @@ def test_main_menu_with_no_history_has_the_documented_items(
     assert item(menu, "progress").available
 
 
-@pytest.mark.parametrize("key", ["recommendations", "study", "timed"])
+@pytest.mark.parametrize("key", ["study", "timed"])
 def test_future_features_are_listed_but_say_not_available_yet(
     menu_env: MenuEnvironment, key: str
 ) -> None:
@@ -77,7 +77,7 @@ def test_future_features_are_listed_but_say_not_available_yet(
     assert "not available yet" in entry.reason.lower()
 
 
-@pytest.mark.parametrize("key", ["recommendations", "study", "timed"])
+@pytest.mark.parametrize("key", ["study", "timed"])
 def test_choosing_a_future_feature_does_nothing_and_does_not_claim_success(
     menu_env: MenuEnvironment, key: str
 ) -> None:
@@ -384,3 +384,41 @@ def test_menu_text_leaks_no_technique_hint_or_answer(
         assert find_technique_terms(text) == [], (screen, text)
         for line in withheld:
             assert line not in text
+
+
+def test_recommend_screen_offers_the_pick_then_browse_and_main(
+    menu_env: MenuEnvironment,
+) -> None:
+    before = journal_bytes(menu_env)
+
+    menu = build_menu(menu_env, Screen("recommend"))
+
+    assert menu.title == "Recommendation"
+    assert keys(menu) == ["start", "browse", "main"]
+    assert item(menu, "start").label == "Recommended: Start 1  Two Sum [easy]"
+    assert item(menu, "start").problem == ("leetcode", "1")
+    assert any("next curriculum objective" in line for line in menu.lines)
+    assert journal_bytes(menu_env) == before
+
+
+def test_choosing_the_recommended_item_starts_that_problem(
+    menu_env: MenuEnvironment,
+) -> None:
+    result = choose(menu_env, Screen("recommend"), 1)
+
+    assert result.code == 0
+    assert "Started attempt" in result.stdout
+    assert result.next_screen.kind == "attempt"
+
+
+def test_recommend_screen_with_nothing_ready_says_so(
+    menu_env: MenuEnvironment, tmp_path: Path
+) -> None:
+    empty = MenuEnvironment(
+        **{**menu_env.__dict__, "problems_dir": tmp_path / "no-problems"}
+    )
+
+    menu = build_menu(empty, Screen("recommend"))
+
+    assert keys(menu) == ["browse", "main"]
+    assert any("Nothing to recommend" in line for line in menu.lines)

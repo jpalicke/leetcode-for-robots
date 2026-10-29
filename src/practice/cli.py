@@ -26,6 +26,7 @@ from practice.menu_commands import make_environment, run_menu_command
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
 from practice.readiness_commands import run_readiness_command
+from practice.recommend_commands import run_recommend_command
 from practice.request_commands import run_request_command
 from practice.review_commands import run_review_command
 from practice.rubric import APPROACH_MAX, CORRECTNESS_MAX, SPACE_BONUS_MAX, TIME_MAX
@@ -66,6 +67,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=REPO_ROOT / "problems",
         help="where exercise packages live (default: problems/)",
+    )
+    parser.add_argument(
+        "--curriculum",
+        type=Path,
+        default=DEFAULT_CURRICULUM_PATH,
+        help="curriculum file for recommendations (default: curriculum/core.json)",
     )
     commands = parser.add_subparsers(dest="command", required=True)
     find = commands.add_parser("search", help="find problems by ID, title or slug")
@@ -108,8 +115,29 @@ def build_parser() -> argparse.ArgumentParser:
     add_tutor_commands(commands)
     add_request_command(commands)
     add_review_commands(commands)
+    add_recommend_command(commands)
     add_menu_commands(commands)
     return parser
+
+
+def add_recommend_command(
+    commands: "argparse._SubParsersAction[argparse.ArgumentParser]",
+) -> None:
+    recommend = commands.add_parser(
+        "recommend",
+        help="suggest what to practice next, with a plain reason",
+        description="Shows one recommended problem and a few alternatives, each "
+        "with the reason it was picked. It starts nothing and writes nothing. "
+        "Starting any other problem is always allowed.",
+    )
+    recommend.add_argument("--json", action="store_true", help="print JSON")
+    recommend.add_argument(
+        "--choose",
+        type=int,
+        default=None,
+        metavar="N",
+        help="show pick N in full (1 is the recommendation) and how to start it",
+    )
 
 
 def add_review_commands(
@@ -175,6 +203,9 @@ def add_menu_commands(
         help="list problems; words search the catalog, none lists packages",
     )
     menu.add_argument("--reviews", action="store_true", help="the menu of due reviews")
+    menu.add_argument(
+        "--recommend", action="store_true", help="the menu with the recommendation"
+    )
     menu.add_argument(
         "--confirm-reveal",
         action="store_true",
@@ -447,6 +478,9 @@ def dispatch(argv: list[str]) -> int:
         return run_readiness_command(args, args.references)
     if args.command == "sources":
         return run_sources_command(args, args.references)
+    if args.command == "recommend":
+        practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
+        return run_recommend_command(args, practice_dir)
     if args.command == "review":
         practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
         return run_review_command(args, practice_dir)
@@ -475,7 +509,12 @@ def dispatch(argv: list[str]) -> int:
 def run_menu_entry(args: argparse.Namespace) -> int:
     practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
     env = make_environment(
-        practice_dir, args.catalog, args.problems_dir, args.references, main
+        practice_dir,
+        args.catalog,
+        args.problems_dir,
+        args.references,
+        main,
+        args.curriculum,
     )
     if args.command == "menu":
         return run_menu_command(args, env)

@@ -84,5 +84,5 @@ future callers. It returns unmastered concepts whose direct prerequisites are
 mastered, and associated problems whose explicit prerequisites are mastered.
 Callers supply their own mastery assertions; this ticket neither infers them from
 attempts nor reads history. Empty objectives are allowed for concepts whose
-exercise selection is still pending. Recommendation scheduling/history adaptation,
-study lessons and menu integration belong to separate tickets.
+exercise selection is still pending. Recommendations from history are described in
+`docs/recommendations.md`. Study lessons belong to a separate ticket.
