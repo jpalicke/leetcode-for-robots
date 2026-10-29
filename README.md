@@ -17,6 +17,17 @@ See [development setup](docs/development.md) to install dependencies and run che
 
 ## Usage
 
+Export public knowledge as deterministic, source-aware JSON for future retrieval:
+
+```text
+uv run --locked practice knowledge export leetcode 1
+uv run --locked practice knowledge export leetcode 1 --hint-level 2
+```
+
+The default exports only the statement summary. Solutions, selected references and
+study material need explicit scope; learner data is always excluded. See
+[knowledge export](docs/knowledge-export.md) for reveal rules and the JSON contract.
+
 Validate the curriculum map and list the next eligible objectives without learner history:
 
 ```text
