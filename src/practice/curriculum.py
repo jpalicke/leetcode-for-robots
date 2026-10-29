@@ -57,6 +57,13 @@ class Curriculum:
     starters: tuple[int, ...]
     placements: tuple[Placement, ...]
 
+    def label_for(self, concept_id: str) -> str:
+        """The learner-safe name of a concept's objective, such as "Objective 3"."""
+        for index, concept in enumerate(self.concepts, 1):
+            if concept.id == concept_id:
+                return f"Objective {index}"
+        raise CurriculumError("unknown concept")
+
     def next_objectives(self, mastered: Iterable[str] = ()) -> tuple[Objective, ...]:
         known = {c.id for c in self.concepts}
         completed = set(mastered)
@@ -64,7 +71,7 @@ class Curriculum:
             raise CurriculumError("unknown mastered concept")
         return tuple(
             Objective(
-                f"Objective {index}",
+                self.label_for(concept.id),
                 tuple(
                     p.problem
                     for p in self.placements
@@ -72,7 +79,7 @@ class Curriculum:
                     and all(required in completed for required in p.prerequisites)
                 ),
             )
-            for index, concept in enumerate(self.concepts, 1)
+            for concept in self.concepts
             if concept.id not in completed
             and all(required in completed for required in concept.prerequisites)
         )

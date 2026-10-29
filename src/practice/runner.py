@@ -5,10 +5,10 @@ import hashlib
 import json
 import time
 from dataclasses import asdict, dataclass, field
-from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal
 
+from practice import clock
 from practice.checkers import CHECKERS, Checker
 from practice.child import ChildReport, run_worker
 from practice.package import Case, ExercisePackage
@@ -65,7 +65,7 @@ def run_exercise(
 ) -> RunResult:
     """Run the solution against the package. Raises OSError if it cannot be read."""
     code = solution.read_bytes()
-    run_at = datetime.now(UTC).isoformat(timespec="seconds")
+    run_at = clock.now().isoformat(timespec="seconds")
     started = time.monotonic()
     suite = package.suite
     cases = suite.cases if suite is not None else ()

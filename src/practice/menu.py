@@ -7,8 +7,16 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
+from practice import clock
 from practice.attempt_commands import describe_attempt
 from practice.catalog import Catalog, CatalogError, Entry, load_catalog
+from practice.curriculum import (
+    DEFAULT_CURRICULUM_PATH,
+    CurriculumError,
+    load_curriculum,
+)
+from practice.exercises import Exercise
+from practice.exercises import exercise_status as package_status
 from practice.history import (
     STATUS_LABELS,
     Attempt,
@@ -19,8 +27,13 @@ from practice.history import (
     load_history,
     view_attempt,
 )
-from practice.package import PackageError, load_package
-from practice.readiness import check_readiness
+from practice.recommendations import Candidate, Recommendation, build_recommendation
+from practice.reviews import (
+    ReviewItem,
+    ReviewSchedule,
+    describe_review,
+    load_schedule,
+)
 from practice.search import search
 
 MAX_RESULTS = 20
@@ -63,13 +76,14 @@ class MenuEnvironment:
     problems_dir: Path
     references: Path
     run: CommandRunner
+    curriculum_path: Path = DEFAULT_CURRICULUM_PATH
 
 
 @dataclass(frozen=True)
 class Screen:
     """Which menu is showing. It is all the state a stateless front end needs."""
 
-    kind: str  # "main", "browse", "problem" or "attempt".
+    kind: str  # "main", "browse", "problem", "attempt", "reviews" or "recommend".
     words: tuple[str, ...] = ()  # browse: the search words; empty lists packages.
     platform: str = ""
     problem_id: str = ""
@@ -88,6 +102,7 @@ class Item:
     problem: tuple[str, str] | None = None
     attempt_id: str | None = None
     confirm: bool = False  # Needs an explicit confirmation before it acts.
+    language: str = "python"  # Which language track a review item belongs to.
 
 
 @dataclass(frozen=True)
@@ -107,19 +122,14 @@ class StepResult:
     next_screen: Screen
 
 
-@dataclass(frozen=True)
-class Exercise:
-    package_dir: Path
-    ready: bool
-    reason: str  # Why it is pending, starting with "Pending"; empty when ready.
-
-
 def build_menu(env: MenuEnvironment, screen: Screen) -> Menu:
     builders = {
         "main": _main_menu,
         "browse": _browse_menu,
         "problem": _problem_menu,
         "attempt": _attempt_menu,
+        "reviews": _reviews_menu,
+        "recommend": _recommend_menu,
     }
     builder = builders.get(screen.kind)
     if builder is None:
@@ -149,29 +159,7 @@ def choose(
 
 def exercise_status(env: MenuEnvironment, platform: str, problem_id: str) -> Exercise:
     """Whether a problem has a ready package. Anything else is pending."""
-    directory = env.problems_dir / f"{platform}-{problem_id}"
-    if not directory.is_dir():
-        return Exercise(directory, False, "Pending: no exercise package yet.")
-    report = check_readiness(directory, env.references)
-    if not report.ready:
-        failing = ", ".join(check.name for check in report.checks if not check.ok)
-        return Exercise(
-            directory,
-            False,
-            f"Pending: the exercise is not ready (failing: {failing}).",
-        )
-    try:
-        package = load_package(directory)
-    except PackageError as error:
-        return Exercise(directory, False, f"Pending: {error}.")
-    if (package.platform, package.problem_id) != (platform, problem_id):
-        return Exercise(
-            directory,
-            False,
-            f"Pending: the package describes {package.platform} "
-            f"{package.problem_id}, not {platform} {problem_id}.",
-        )
-    return Exercise(directory, True, "")
+    return package_status(env.problems_dir, env.references, platform, problem_id)
 
 
 # Menus
@@ -184,6 +172,9 @@ def _main_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         "Free-text chat still works at any time; this menu is a shortcut.",
         "Practice mode and untimed are the defaults.",
     ]
+    due = _due_reviews(env)
+    if due:
+        lines.append(f"{len(due)} review(s) due.")
     if active is None:
         lines.insert(0, "No unfinished attempt.")
         resume = Item(
@@ -202,13 +193,8 @@ def _main_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         resume,
         Item("browse", "Browse and select a problem"),
         Item("progress", "Progress and notes"),
-        Item("reviews", "Review problems that are due", False, NOT_AVAILABLE_YET),
-        Item(
-            "recommendations",
-            "Get a recommendation for what to practice next",
-            False,
-            NOT_AVAILABLE_YET,
-        ),
+        Item("reviews", "Review problems that are due"),
+        Item("recommendations", "Get a recommendation for what to practice next"),
         Item("study", "Study a concept (study mode)", False, NOT_AVAILABLE_YET),
         Item(
             "timed",
@@ -271,6 +257,122 @@ def _problem_menu(env: MenuEnvironment, screen: Screen) -> Menu:
     )
     items.append(Item("main", "Back to the main menu"))
     return Menu(screen, "Problem", tuple(lines), tuple(items), tuple(history.notices))
+
+
+def _reviews_menu(env: MenuEnvironment, screen: Screen) -> Menu:
+    """Due reviews to start, then upcoming ones for information. No code is shown."""
+    schedule = _schedule(env)
+    today = clock.today()
+    due, upcoming = schedule.due(today), schedule.upcoming(today)
+    lines = [f"Reviews as of {today.isoformat()}"]
+    if not schedule.items:
+        lines.append("No reviews scheduled yet. Pass a problem to schedule one.")
+    lines.append("Reviews start from a blank file. Earlier solutions are never shown.")
+    if upcoming:
+        lines.append("Upcoming:")
+        lines.extend(f"  {describe_review(item)}" for item in upcoming)
+    items = [_review_item(env, item) for item in due]
+    items.append(Item("main", "Back to the main menu"))
+    notices = tuple(schedule.notices)
+    return Menu(screen, "Reviews due", tuple(lines), tuple(items), notices)
+
+
+def _recommendation(env: MenuEnvironment) -> Recommendation:
+    catalog = _catalog(env)
+    try:
+        curriculum = load_curriculum(env.curriculum_path, catalog)
+        return build_recommendation(
+            env.practice_dir,
+            catalog,
+            curriculum,
+            lambda platform, problem_id: (
+                exercise_status(env, platform, problem_id).ready
+            ),
+            clock.today(),
+        )
+    except (CurriculumError, clock.ClockError) as error:
+        raise MenuError(str(error)) from error
+
+
+def _recommend_menu(env: MenuEnvironment, screen: Screen) -> Menu:
+    """The recommendation and its reason, then a way to start it or choose another."""
+    result = _recommendation(env)
+    if result.primary is None:
+        lines = [result.message]
+    else:
+        lines = ["Recommended next:", *_describe(result.primary)]
+        if result.alternatives:
+            lines.append("Other options:")
+            for candidate in result.alternatives:
+                lines.extend(_describe(candidate))
+    lines.append("This only suggests. You can start any other problem instead.")
+    items = [_recommended_item(c, first) for first, c in _ranked(result)]
+    items.append(Item("browse", "Pick another problem: browse and select"))
+    items.append(Item("main", "Back to the main menu"))
+    return Menu(screen, "Recommendation", tuple(lines), tuple(items))
+
+
+def _ranked(result: Recommendation) -> list[tuple[bool, Candidate]]:
+    return [(number == 0, c) for number, c in enumerate(result.candidates)]
+
+
+def _describe(candidate: Candidate) -> list[str]:
+    return [
+        f"  {candidate.problem_id}  {candidate.label}",
+        f"    Why: {candidate.reason_phrase}. {candidate.detail}",
+        f"    Evidence: {candidate.evidence.text}",
+    ]
+
+
+_VERBS = {"start": "Start", "resume": "Resume", "review": "Start the review of"}
+_ITEM_KEYS = {"start": "start", "resume": "review-resume", "review": "review-start"}
+
+
+def _recommended_item(candidate: Candidate, primary: bool) -> Item:
+    verb = _VERBS[candidate.action]
+    prefix = "Recommended: " if primary else "Instead: "
+    label = f"{prefix}{verb} {candidate.problem_id}  {candidate.label}"
+    return Item(
+        _ITEM_KEYS[candidate.action],
+        label,
+        problem=(candidate.platform, candidate.problem_id),
+        attempt_id=candidate.attempt_id,
+    )
+
+
+def _review_item(env: MenuEnvironment, review: ReviewItem) -> Item:
+    exercise = exercise_status(env, review.platform, review.problem_id)
+    name = f"{review.problem_id}  {review.title}  due {review.due_on.isoformat()}"
+    problem = (review.platform, review.problem_id)
+    if review.open_attempt_id:
+        return Item(
+            "review-resume",
+            f"Resume your review attempt ({name})",
+            exercise.ready,
+            None if exercise.ready else exercise.reason,
+            problem=problem,
+            attempt_id=review.open_attempt_id,
+            language=review.language,
+        )
+    return Item(
+        "review-start",
+        f"Start the review ({name})",
+        exercise.ready,
+        None if exercise.ready else exercise.reason,
+        problem=problem,
+        language=review.language,
+    )
+
+
+def _schedule(env: MenuEnvironment) -> ReviewSchedule:
+    try:
+        return load_schedule(env.practice_dir)
+    except clock.ClockError as error:
+        raise MenuError(str(error)) from error
+
+
+def _due_reviews(env: MenuEnvironment) -> list[ReviewItem]:
+    return _schedule(env).due(clock.today())
 
 
 def _attempt_menu(env: MenuEnvironment, screen: Screen) -> Menu:
@@ -476,6 +578,33 @@ def _notes(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
     )
 
 
+def _reviews(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    return StepResult(0, "", "", Screen("reviews"))
+
+
+def _review_start(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    assert item.problem is not None
+    platform, problem_id = item.problem
+    argv = ["review", "start", platform, problem_id, "--language", item.language]
+    result = env.run([*argv, *_package_flags(env, platform, problem_id)])
+    if result.code != 0:
+        return StepResult(result.code, result.stdout, result.stderr, screen)
+    follow = _active(load_history(env.practice_dir), platform, problem_id)
+    return StepResult(0, result.stdout, result.stderr, follow)
+
+
+def _review_resume(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    assert item.problem is not None and item.attempt_id is not None
+    platform, problem_id = item.problem
+    result = env.run(["attempt", "resume", platform, problem_id])
+    follow = Screen("attempt", attempt_id=item.attempt_id)
+    return StepResult(result.code, result.stdout, result.stderr, follow)
+
+
+def _recommendations(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    return StepResult(0, "", "", Screen("recommend"))
+
+
 def _main(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
     return StepResult(0, "", "", MAIN)
 
@@ -492,5 +621,9 @@ _ACTIONS: dict[str, Callable[[MenuEnvironment, Screen, Item], StepResult]] = {
     "explain-approach": _request("explain-my-approach"),
     "explain-solution": _request("explain-solution", "--reveal", "solution"),
     "notes": _notes,
+    "reviews": _reviews,
+    "recommendations": _recommendations,
+    "review-start": _review_start,
+    "review-resume": _review_resume,
     "main": _main,
 }

@@ -5,9 +5,10 @@ import hashlib
 import os
 import uuid
 from dataclasses import dataclass
-from datetime import UTC, date, datetime
+from datetime import date
 from pathlib import Path
 
+from practice import clock
 from practice.catalog import Catalog
 from practice.history import (
     Attempt,
@@ -46,6 +47,7 @@ def start_attempt(
     language: str,
     mode: str,
     timed: bool,
+    review: bool = False,
 ) -> StartedAttempt:
     """Create a new blank attempt. Earlier attempts and their code are untouched."""
     if language not in LANGUAGES:
@@ -69,7 +71,7 @@ def start_attempt(
         raise AttemptError(f"the package is for {package.language}, not {language}")
 
     starter, starter_source = _starter_for(package)
-    attempt_id = f"{datetime.now(UTC):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
+    attempt_id = f"{clock.now():%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
     code_path = attempt_code_path(practice_dir, platform, problem_id, attempt_id)
     try:
         code_path.parent.mkdir(parents=True)
@@ -79,9 +81,11 @@ def start_attempt(
             os.fsync(handle.fileno())
     except OSError as error:
         raise AttemptError(f"cannot create {code_path}: {error}") from error
+    marker = {"review": True} if review else {}
     _append(
         practice_dir,
         "attempt_started",
+        **marker,
         attempt_id=attempt_id,
         platform=platform,
         problem_id=problem_id,
@@ -160,7 +164,7 @@ def record_verdict(
     if not source.strip():
         raise AttemptError("a verdict needs a source, such as where you saw it")
     if verdict_date is None:
-        verdict_date = datetime.now(UTC).date().isoformat()
+        verdict_date = clock.today().isoformat()
     try:
         date.fromisoformat(verdict_date)
     except ValueError as error:

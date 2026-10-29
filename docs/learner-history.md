@@ -48,6 +48,12 @@ stays one reportable bad line and never corrupts a later record.
 | `platform_verdict` | `accepted`, `rejected` or `not_submitted`, plus source and date, recorded separately |
 | `explanation_assessment` | rubric scores (null means not assessed), `evidence`, `feedback`, optional `coaching`, `code_sha256` |
 | `attempt_finished` | closes the attempt for resume; code and history stay |
+| `review_skipped` | platform, problem and language of a review the learner postponed |
+| `review_rescheduled` | the same identity plus `due_on`, the date the learner chose |
+
+An `attempt_started` event also carries `review: true` when the attempt was begun
+with `practice review start`. It is left out otherwise. The review schedule is never
+stored: it is derived from these events each time (see `docs/spaced-review.md`).
 
 Unknown event types are ignored so newer journals still read.
 
@@ -98,8 +104,9 @@ practice attempt explain ATTEMPT_ID [--approach 0-4] [--correctness 0-4] [--time
 ## Commands and exit codes
 
 `attempt start|resume|list|test|note-assistance|verdict|explain|finish`, `progress`,
-`notes`. Attempt ids may be shortened to a unique prefix. Exit codes: 0 ok,
+`notes`, and `review list|start|skip|reschedule`. Attempt ids may be shortened to a unique prefix. Exit codes: 0 ok,
 1 nothing to resume or the tested attempt did not pass, 2 usage error or unknown
 or ambiguous attempt, 3 invalid catalog, package or journal.
 
-Out of scope here: review scheduling, recommendations and paste-ready requests.
+Out of scope here: recommendations and paste-ready requests. Review scheduling is
+documented in `docs/spaced-review.md`.

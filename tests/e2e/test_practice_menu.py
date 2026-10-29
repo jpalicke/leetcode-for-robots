@@ -66,7 +66,8 @@ def test_the_numbered_flow_runs_two_sum_end_to_end(
     main_menu = practice(learner, problems, "menu")
     assert main_menu.returncode == 0, main_menu.stderr
     assert "1. Resume your active attempt" in main_menu.stdout
-    assert "Not available yet." in main_menu.stdout
+    assert "5. Get a recommendation" in main_menu.stdout
+    assert "Not available yet." in main_menu.stdout  # Study and timed practice.
 
     browse = practice(learner, problems, "menu", "choose", "2")
     assert browse.returncode == 0, browse.stderr
@@ -122,7 +123,7 @@ def test_a_problem_without_a_package_is_pending_and_never_started(
 
 
 def test_unavailable_future_items_do_nothing(learner: Path, problems: Path) -> None:
-    result = practice(learner, problems, "menu", "choose", "4")
+    result = practice(learner, problems, "menu", "choose", "6")
 
     assert result.returncode == 1
     assert "Not available yet." in result.stdout

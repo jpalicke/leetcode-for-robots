@@ -6,6 +6,7 @@ import sys
 from collections.abc import Callable
 from pathlib import Path
 
+from practice.curriculum import DEFAULT_CURRICULUM_PATH
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_USAGE
 from practice.history import AttemptError
 from practice.menu import (
@@ -28,6 +29,7 @@ def make_environment(
     problems_dir: Path,
     references: Path,
     command: Callable[[list[str]], int],
+    curriculum_path: Path = DEFAULT_CURRICULUM_PATH,
 ) -> MenuEnvironment:
     """An environment whose actions run the practice CLI against these folders."""
     shared = [
@@ -37,12 +39,16 @@ def make_environment(
         str(catalog_path),
         "--references",
         str(references),
+        "--curriculum",
+        str(curriculum_path),
     ]
 
     def run(argv: list[str]) -> CommandResult:
         return capture_command(command, [*shared, *argv])
 
-    return MenuEnvironment(practice_dir, catalog_path, problems_dir, references, run)
+    return MenuEnvironment(
+        practice_dir, catalog_path, problems_dir, references, run, curriculum_path
+    )
 
 
 def screen_flags(screen: Screen) -> str:
@@ -51,6 +57,10 @@ def screen_flags(screen: Screen) -> str:
         return f" --attempt {screen.attempt_id}"
     if screen.kind == "problem":
         return f" --problem {screen.platform} {screen.problem_id}"
+    if screen.kind == "reviews":
+        return " --reviews"
+    if screen.kind == "recommend":
+        return " --recommend"
     if screen.kind == "browse":
         return " --browse" + "".join(f" {word}" for word in screen.words)
     return ""
@@ -79,6 +89,10 @@ def screen_from_args(args: argparse.Namespace) -> Screen:
         return Screen("problem", platform=platform, problem_id=problem_id)
     if args.browse is not None:
         return Screen("browse", words=tuple(args.browse))
+    if args.reviews:
+        return Screen("reviews")
+    if args.recommend:
+        return Screen("recommend")
     return MAIN
 
 

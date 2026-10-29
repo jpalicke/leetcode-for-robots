@@ -18,15 +18,29 @@ practice menu choose N --browse [WORDS]
 practice menu choose N --problem PLATFORM ID   a problem's menu (start or resume)
 practice menu choose N --attempt ID            an attempt's menu
 practice menu choose N --attempt ID --confirm-reveal
+practice menu choose N --reviews               the due reviews: start or resume one
+practice menu choose N --recommend             the recommendation: start a pick
 ```
 
 Put `choose N` before the flags. Every menu prints the exact command to use next.
 `practice search sum of` also works without quotes.
 
 Main menu: resume your active attempt; browse and select a problem; progress and
-notes; then reviews, recommendations, study and timed practice. The last four are
-listed as "Not available yet." and do nothing. They are wired in later by #18, #19,
-#39, #40 and #41. Timed practice is never offered as runnable.
+notes; reviews; recommendation; then study and timed practice. The last two are
+listed as "Not available yet." and do nothing. They are wired in later by #40 and
+#41. Timed practice is never offered as runnable.
+
+Recommendation: choosing it opens a screen that shows the pick, why, and the
+evidence, then offers items to start the recommended problem (or resume or review it),
+start an alternative, browse for another problem, or go back. It uses the same core as
+`practice recommend` (see `docs/recommendations.md`) and writes nothing until you start
+something. `practice menu --recommend` prints the screen in the numbered menu.
+
+Reviews: the main menu notes how many reviews are due. Choosing Reviews opens the
+reviews screen, which lists upcoming reviews for information and offers one item per
+due review, to start it or, if a review attempt is already open, to resume it. These
+run `practice review start` and `practice attempt resume`, so they follow the rules in
+`docs/spaced-review.md`. The screen never shows earlier solution code or a technique.
 
 Attempt menu: run tests; request a hint; request an explanation conversation about
 your approach; request the full solution explanation; progress and notes; main menu.
