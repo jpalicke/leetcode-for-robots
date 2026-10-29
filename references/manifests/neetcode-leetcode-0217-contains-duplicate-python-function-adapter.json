@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0217-contains-duplicate-python-function-adapter",
+  "kind": "adaptation",
+  "title": "NeetCode 217. Contains Duplicate, wrapped as a plain function for the local runner",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "adaptations/neetcode-leetcode-0217-contains-duplicate-python-function-adapter/0217-contains-duplicate-function.py",
+    "sha256": "e19fe702807cb445bf8cac572f5749695df45edf2d7d1a1fbebf1c4739b832e9"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0217-contains-duplicate-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": "neetcode-leetcode-0217-contains-duplicate-python",
+  "transformation": "Added the typing import the upstream file omits, kept the Solution class byte for byte, and added a top-level containsDuplicate function that calls it so the runner can find a plain callable.",
+  "acquisition": {
+    "acquired_at": "2026-10-29T00:35:05+00:00",
+    "method": "local_adaptation",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "e19fe702807cb445bf8cac572f5749695df45edf2d7d1a1fbebf1c4739b832e9",
+      "run_at": "2026-10-29T00:51:51+00:00",
+      "suite_sha256": "52e41162203054f20546120742f64c05307b4d534fc51cc301bbed7cccc516ac",
+      "suite_version": "leetcode-217-v2",
+      "runner": "practice run"
+    }
+  }
+}

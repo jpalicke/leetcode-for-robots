@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "original-leetcode-0217-contains-duplicate-sorted-neighbours-python",
+  "kind": "original",
+  "title": "Original: 217. Contains Duplicate by sorting and comparing neighbours",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "original/original-leetcode-0217-contains-duplicate-sorted-neighbours-python/contains_duplicate_sorted_neighbours.py",
+    "sha256": "c78b1c8c53ebc4b4138bbfff4bd2b205d6aee04ced9a938cca6f64366950f7ad"
+  },
+  "license": null,
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T00:35:05+00:00",
+    "method": "authored",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "c78b1c8c53ebc4b4138bbfff4bd2b205d6aee04ced9a938cca6f64366950f7ad",
+      "run_at": "2026-10-29T00:51:51+00:00",
+      "suite_sha256": "52e41162203054f20546120742f64c05307b4d534fc51cc301bbed7cccc516ac",
+      "suite_version": "leetcode-217-v2",
+      "runner": "practice run"
+    }
+  }
+}

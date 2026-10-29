@@ -119,7 +119,13 @@ def test_changed_reference_code_makes_evidence_stale(
     copies: tuple[Path, Path],
 ) -> None:
     package, references = copies
-    code = next((references / "original").rglob("*.py"))
+    code = next(
+        (
+            references
+            / "original"
+            / "original-leetcode-0001-two-sum-sorted-pointers-python"
+        ).rglob("*.py")
+    )
     code.write_text(code.read_text(encoding="utf-8") + "\n# edited\n", encoding="utf-8")
     report = check_readiness(package, references)
     assert "references" in failed(report)

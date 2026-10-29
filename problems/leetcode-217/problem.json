@@ -1,0 +1,13 @@
+{
+  "platform": "leetcode",
+  "id": "217",
+  "title": "Contains Duplicate",
+  "language": "python",
+  "callable": {
+    "adapter": "function",
+    "name": "containsDuplicate",
+    "parameters": ["nums"]
+  },
+  "checker": "exact",
+  "allow_none": false
+}
