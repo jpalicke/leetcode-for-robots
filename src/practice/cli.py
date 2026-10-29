@@ -19,6 +19,7 @@ from practice.attempts import (
 from practice.catalog import DEFAULT_CATALOG_PATH, CatalogError, Entry, load_catalog
 from practice.classification import CONTENT_CLASSES
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
+from practice.menu_commands import make_environment, run_menu_command
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
 from practice.readiness_commands import run_readiness_command
@@ -56,9 +57,19 @@ def build_parser() -> argparse.ArgumentParser:
         default=REFERENCES_DIR,
         help="preserved reference sources and manifests (default: references/)",
     )
+    parser.add_argument(
+        "--problems-dir",
+        type=Path,
+        default=REPO_ROOT / "problems",
+        help="where exercise packages live (default: problems/)",
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     find = commands.add_parser("search", help="find problems by ID, title or slug")
-    find.add_argument("query", help="a problem ID, a title fragment or a slug")
+    find.add_argument(
+        "query",
+        nargs="+",
+        help="a problem ID, a title fragment or a slug; several words need no quotes",
+    )
     run = commands.add_parser("run", help="run a solution against an exercise package")
     run.add_argument("package", type=Path, help="the exercise package directory")
     run.add_argument("solution", type=Path, help="the Python file with the solution")
@@ -84,7 +95,47 @@ def build_parser() -> argparse.ArgumentParser:
     add_sources_commands(commands)
     add_tutor_commands(commands)
     add_request_command(commands)
+    add_menu_commands(commands)
     return parser
+
+
+def add_menu_commands(
+    commands: "argparse._SubParsersAction[argparse.ArgumentParser]",
+) -> None:
+    menu = commands.add_parser(
+        "menu",
+        help="show the numbered chat menu, or run one item with: menu choose N",
+        description="Prints a menu of numbered items. `practice menu choose N` runs "
+        "item N and prints the result and the next menu. The screen is spelled in "
+        "flags, so each call stands alone. Put `choose N` before the flags.",
+    )
+    menu.add_argument(
+        "steps", nargs="*", metavar="choose N", help="run item N of the menu"
+    )
+    menu.add_argument("--attempt", default=None, help="the menu for this attempt")
+    menu.add_argument(
+        "--problem",
+        nargs=2,
+        metavar=("PLATFORM", "ID"),
+        default=None,
+        help="the menu for one problem",
+    )
+    menu.add_argument(
+        "--browse",
+        nargs="*",
+        metavar="WORD",
+        default=None,
+        help="list problems; words search the catalog, none lists packages",
+    )
+    menu.add_argument(
+        "--confirm-reveal",
+        action="store_true",
+        help="confirm an item that reveals the full solution",
+    )
+    commands.add_parser(
+        "tui",
+        help="interactive arrow-key menu (needs a terminal; else use: menu)",
+    )
 
 
 def add_attempt_commands(
@@ -332,6 +383,8 @@ def main(argv: list[str]) -> int:
     if args.command == "request":
         practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
         return run_request_command(args, practice_dir)
+    if args.command in ("menu", "tui"):
+        return run_menu_entry(args)
     if args.command == "readiness":
         return run_readiness_command(args, args.references)
     if args.command == "sources":
@@ -345,9 +398,10 @@ def main(argv: list[str]) -> int:
         print(f"practice: error: {error}", file=sys.stderr)
         return EXIT_BAD_INPUT
 
-    matches = search(catalog, args.query)
+    query = " ".join(args.query)
+    matches = search(catalog, query)
     if not matches:
-        print(f"No LeetCode problems match {args.query!r}.")
+        print(f"No LeetCode problems match {query!r}.")
         return EXIT_NOT_PASSED
     for entry in matches[:MAX_RESULTS]:
         print(format_entry(entry))
@@ -355,6 +409,22 @@ def main(argv: list[str]) -> int:
     if hidden > 0:
         print(f"... and {hidden} more. Refine your query to narrow the results.")
     return 0
+
+
+def run_menu_entry(args: argparse.Namespace) -> int:
+    practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
+    env = make_environment(
+        practice_dir, args.catalog, args.problems_dir, args.references, main
+    )
+    if args.command == "menu":
+        return run_menu_command(args, env)
+    # Imported here so only an interactive session loads the terminal library.
+    from practice.menu_tui import NOT_A_TERMINAL, run_tui, stdio_is_terminal
+
+    if not stdio_is_terminal():
+        print(NOT_A_TERMINAL, file=sys.stderr)
+        return EXIT_USAGE
+    return run_tui(env)
 
 
 def run() -> None:

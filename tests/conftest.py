@@ -11,6 +11,12 @@ from typing import Any, cast
 
 import pytest
 
+from practice.catalog import DEFAULT_CATALOG_PATH
+from practice.cli import main
+from practice.menu import MenuEnvironment
+from practice.menu_commands import make_environment
+from practice.paths import REFERENCES_DIR, REPO_ROOT
+
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 
@@ -52,6 +58,39 @@ def leetcode_two_sum_package(tmp_path: Path, two_sum_package: Path) -> Path:
     metadata.update(platform="leetcode", id="1")
     metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
     return package
+
+
+STUB_ONLY_ID = "217"  # Contains Duplicate: a package with no suite, so pending.
+
+
+@pytest.fixture
+def stub_only_id() -> str:
+    return STUB_ONLY_ID
+
+
+@pytest.fixture
+def problems_dir(tmp_path: Path) -> Path:
+    """A private problems folder: the real Two Sum package and a stub-only one."""
+    root = tmp_path / "problems"
+    shutil.copytree(REPO_ROOT / "problems" / "leetcode-1", root / "leetcode-1")
+    stub = root / f"leetcode-{STUB_ONLY_ID}"
+    stub.mkdir()
+    metadata = json.loads((FIXTURES / "two_sum" / "problem.json").read_text("utf-8"))
+    metadata.update(platform="leetcode", id=STUB_ONLY_ID, title="Contains Duplicate")
+    (stub / "problem.json").write_text(json.dumps(metadata), encoding="utf-8")
+    return root
+
+
+@pytest.fixture
+def menu_env(tmp_path: Path, problems_dir: Path) -> MenuEnvironment:
+    """A menu environment over a temp practice folder, running the real CLI."""
+    return make_environment(
+        tmp_path / "learner",
+        DEFAULT_CATALOG_PATH,
+        problems_dir,
+        REFERENCES_DIR,
+        main,
+    )
 
 
 class _UpstreamHTTPServer(ThreadingHTTPServer):

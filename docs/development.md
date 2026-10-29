@@ -28,6 +28,14 @@ uv run --locked practice tutor check
 needed. `uv.lock` records the exact resolved development dependencies. Keep it
 versioned; ordinary setup and checks use `--locked` to reject a stale lockfile.
 
+The one runtime dependency is `prompt-toolkit`, bounded to `>=3.0.52,<4`. It gives
+`practice tui` arrow-key selection that also works with number keys. It is pure
+Python, runs on Windows and POSIX terminals, and ships a pipe input that the tests
+use to drive the real menu without any mock. Only `src/practice/menu_tui.py`
+imports it, and a test enforces that, so the shared menu, the numbered menu and
+every other command work without it. Add no further runtime dependency without
+approval.
+
 The first sync needs package-index access. The clean-checkout end-to-end test
 then uses the populated uv cache to install into a separate environment offline.
 Keep uv on PATH when running the suite. It checks setup only; these tests do not

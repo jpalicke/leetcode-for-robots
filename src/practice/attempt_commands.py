@@ -104,7 +104,7 @@ def _resume(args: argparse.Namespace, practice_dir: Path) -> int:
         return EXIT_NOT_PASSED
     view = view_attempt(attempt, practice_dir)
     print(f"Resume attempt {attempt.attempt_id}")
-    print(_describe(attempt))
+    print(describe_attempt(attempt))
     print(f"Status: {STATUS_LABELS[view.status]}")
     print(f"Code: {view.code_path}")
     if not view.code_path.is_file():
@@ -227,7 +227,7 @@ def _notes(args: argparse.Namespace, practice_dir: Path) -> int:
     attempt = find_attempt(_load(practice_dir), args.attempt_id)
     view = view_attempt(attempt, practice_dir)
     print(f"Attempt {attempt.attempt_id}")
-    print(_describe(attempt))
+    print(describe_attempt(attempt))
     print(f"Status: {STATUS_LABELS[view.status]}")
     print("Timeline:")
     for event in attempt.events:
@@ -322,7 +322,7 @@ def _verdict_text(verdict: dict[str, object] | None) -> str:
     return f"{verdict['status']} ({verdict['date']}, {verdict['source']})"
 
 
-def _describe(attempt: Attempt) -> str:
+def describe_attempt(attempt: Attempt) -> str:
     return (
         f"{attempt.platform} {attempt.problem_id}  {attempt.title}  "
         f"({attempt.language}, {attempt.mode}, {_timing(attempt.timed)})"
