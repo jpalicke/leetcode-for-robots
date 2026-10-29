@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0242-valid-anagram-python-function-adapter",
+  "kind": "adaptation",
+  "title": "NeetCode 242. Valid Anagram, wrapped as a plain function for the local runner",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "adaptations/neetcode-leetcode-0242-valid-anagram-python-function-adapter/0242-valid-anagram-function.py",
+    "sha256": "d0c9e1a03022f655f65c0fd4f47122f118623d11fcccd955fa787d03ef893bf6"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0242-valid-anagram-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": "neetcode-leetcode-0242-valid-anagram-python",
+  "transformation": "Kept the upstream file byte for byte, including its trailing comment, and appended a top-level isAnagram function that calls Solution().isAnagram so the runner can find a plain callable.",
+  "acquisition": {
+    "acquired_at": "2026-10-29T01:01:39+00:00",
+    "method": "local_adaptation",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "d0c9e1a03022f655f65c0fd4f47122f118623d11fcccd955fa787d03ef893bf6",
+      "run_at": "2026-10-29T01:07:39+00:00",
+      "suite_sha256": "92e527a811f3497c396e0a99e799aa37f9bed8d7041521a3f117589548cf4a4a",
+      "suite_version": "leetcode-242-v2",
+      "runner": "practice run"
+    }
+  }
+}
