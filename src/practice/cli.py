@@ -21,6 +21,7 @@ from practice.classification import CONTENT_CLASSES
 from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
+from practice.readiness_commands import run_readiness_command
 from practice.runner import RunResult, run_exercise
 from practice.search import search
 from practice.source_commands import run_sources_command
@@ -68,6 +69,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--json", action="store_true", help="print the full result as JSON"
     )
     add_attempt_commands(commands)
+    ready = commands.add_parser(
+        "readiness", help="report whether a problem's package is ready to practice"
+    )
+    ready.add_argument("platform")
+    ready.add_argument("problem_id")
+    ready.add_argument(
+        "--package", type=Path, default=None, help="package directory to check"
+    )
+    ready.add_argument("--json", action="store_true", help="print the report as JSON")
     add_sources_commands(commands)
     add_tutor_commands(commands)
     return parser
@@ -164,6 +174,12 @@ def add_sources_commands(
     local.add_argument("--derived-from", default=None, help="upstream id (adaptation)")
     local.add_argument("--transformation", default=None, help="what was changed")
 
+    validate = actions.add_parser(
+        "validate", help="run a preserved file against a package and record the result"
+    )
+    validate.add_argument("source_id")
+    validate.add_argument("--package", type=Path, required=True)
+    validate.add_argument("--timeout", type=float, default=10.0)
     actions.add_parser("verify", help="check every manifest, hash and notice")
     show = actions.add_parser("show", help="show the citation record for a source")
     show.add_argument("source_id")
@@ -244,6 +260,8 @@ def main(argv: list[str]) -> int:
     if args.command == "tutor":
         practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
         return run_tutor_command(args, practice_dir, REPO_ROOT)
+    if args.command == "readiness":
+        return run_readiness_command(args, args.references)
     if args.command == "sources":
         return run_sources_command(args, args.references)
     if args.command in ("attempt", "progress", "notes"):

@@ -1,0 +1,13 @@
+{
+  "platform": "leetcode",
+  "id": "1",
+  "title": "Two Sum",
+  "language": "python",
+  "callable": {
+    "adapter": "function",
+    "name": "twoSum",
+    "parameters": ["nums", "target"]
+  },
+  "checker": "indices_sum_to_target",
+  "allow_none": false
+}

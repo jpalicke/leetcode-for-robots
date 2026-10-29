@@ -14,6 +14,10 @@ problem.json   metadata and the callable contract
 tests.json     the test suite
 ```
 
+Prepared packages add files the runner ignores: `starter.py`, `statement.md`,
+`notes.md` (a spoiler), `hints/` with an `index.json`, and `readiness.json`. See
+[exercise preparation](exercise-preparation.md).
+
 ### problem.json
 
 ```json
@@ -140,7 +144,7 @@ practice run PACKAGE_DIR SOLUTION_FILE [--timeout SECONDS] [--json]
 ## Test fixture
 
 `tests/fixtures/two_sum/` is a small Two Sum package used only by the runner
-tests. The real Two Sum exercise package is a separate ticket. Its solution
+tests. The real Two Sum package lives in `problems/leetcode-1/`. Its solution
 variants live in `tests/fixtures/two_sum_solutions/`: correct (hash map), an
 alternate valid algorithm that answers in reverse order, wrong answer, two stubs,
 runtime error, malformed output, import error, infinite loop and a noisy correct

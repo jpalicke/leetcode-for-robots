@@ -1,4 +1,4 @@
-# ABOUTME: Command handlers for `practice sources`: add, add-local, verify, show, list.
+# ABOUTME: Handlers for `practice sources`: add, add-local, validate, verify, list.
 # ABOUTME: Source problems exit 3 and a missing source id exits 1, as elsewhere.
 
 import argparse
@@ -17,6 +17,7 @@ from practice.sources import (
     citation,
     list_source_ids,
     load_manifest,
+    validate_source,
     verify_references,
 )
 
@@ -36,6 +37,7 @@ def _dispatch(args: argparse.Namespace, references: Path) -> int:
     handlers = {
         "add": _add,
         "add-local": _add_local,
+        "validate": _validate,
         "verify": _verify,
         "show": _show,
         "list": _list,
@@ -89,6 +91,17 @@ def _add_local(args: argparse.Namespace, references: Path) -> int:
     print(f"registered {manifest.kind} {manifest.id}")
     print(f"  file    {manifest.file.path}  sha256 {manifest.file.sha256}")
     return 0
+
+
+def _validate(args: argparse.Namespace, references: Path) -> int:
+    manifest = validate_source(references, args.source_id, args.package, args.timeout)
+    recorded = manifest.evidence.local_validation
+    print(f"{manifest.id}: local validation {recorded.status}")
+    print(f"  code sha256   {recorded.code_sha256}")
+    print(f"  suite         {recorded.suite_version}  sha256 {recorded.suite_sha256}")
+    print(f"  run at        {recorded.run_at}")
+    print("  platform acceptance is a separate fact and was not touched")
+    return 0 if recorded.status == "passed" else EXIT_NOT_PASSED
 
 
 def _verify(args: argparse.Namespace, references: Path) -> int:

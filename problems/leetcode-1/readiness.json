@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "platform": "leetcode",
+  "problem_id": "1",
+  "slug": "two-sum",
+  "title": "Two Sum",
+  "difficulty": "easy",
+  "language": "python",
+  "files": {
+    "statement": {"path": "statement.md", "content_class": "statement_summary"},
+    "notes": {"path": "notes.md", "content_class": "reference_solution"},
+    "hints": "hints/index.json",
+    "starter": "starter.py"
+  },
+  "references": {
+    "upstream": ["neetcode-leetcode-0001-two-sum-python"],
+    "adaptations": ["neetcode-leetcode-0001-two-sum-python-function-adapter"],
+    "originals": ["original-leetcode-0001-two-sum-sorted-pointers-python"]
+  },
+  "verification": {
+    "checked_on": "2026-10-28",
+    "verified": [
+      {
+        "fact": "Problem 1 is titled Two Sum, slug two-sum, difficulty easy, not premium.",
+        "against": "catalog/leetcode.json (snapshot 2026-10-28) and the live LeetCode GraphQL question endpoint"
+      },
+      {
+        "fact": "The method is twoSum(nums, target); nums is integer[], target is integer, the return is integer[] of size 2.",
+        "against": "the live LeetCode GraphQL metaData field"
+      },
+      {
+        "fact": "Constraints: 2 <= nums.length <= 10^4, -10^9 <= nums[i] <= 10^9, -10^9 <= target <= 10^9, and only one valid answer exists.",
+        "against": "the live LeetCode GraphQL content field (the HTML problem page itself answered 403 to a plain HTTP client)"
+      },
+      {
+        "fact": "The statement allows returning the answer in any order and forbids using the same element twice.",
+        "against": "the live LeetCode GraphQL content field"
+      }
+    ],
+    "not_verified": [
+      "The rendered problem page was not viewed in a browser; only the GraphQL fields were read.",
+      "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
+      "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",
+      "The class-method form is not run locally: the runner calls a top-level function, so learners paste the body into class Solution when they submit."
+    ]
+  },
+  "blockers": []
+}

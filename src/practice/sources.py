@@ -2,6 +2,7 @@
 # ABOUTME: Upstream bytes are stored and hashed, never executed, adapted or normalized.
 
 import json
+import math
 import shutil
 from collections.abc import Callable
 from dataclasses import dataclass, replace
@@ -11,7 +12,8 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from practice.classification import is_spoiler
-from practice.runner import RunResult
+from practice.package import PackageError, load_package
+from practice.runner import RunResult, run_exercise
 from practice.source_fetch import (
     Fetcher,
     FetchError,
@@ -572,3 +574,21 @@ def record_validation(references: Path, source_id: str, result: RunResult) -> Ma
     updated = _validated(replace(manifest, evidence=evidence))
     manifest_path(references, source_id).write_bytes(_manifest_bytes(updated))
     return updated
+
+
+def validate_source(
+    references: Path, source_id: str, package: Path, timeout: float = 10.0
+) -> Manifest:
+    """Run the preserved file of one source against a package and record the result."""
+    if not (math.isfinite(timeout) and timeout > 0):
+        raise SourceError("the timeout must be a number of seconds above zero")
+    manifest = load_manifest(references, source_id)
+    try:
+        exercise = load_package(package)
+    except PackageError as error:
+        raise SourceError(f"cannot validate {source_id}: {error}") from error
+    try:
+        result = run_exercise(exercise, references / manifest.file.path, timeout)
+    except OSError as error:
+        raise SourceError(f"cannot read {manifest.file.path}: {error}") from error
+    return record_validation(references, source_id, result)
