@@ -2,7 +2,8 @@
 
 Prepared for Joe P. Checked 2026-10-28. Research and planning only.
 One file has been imported as a demonstration of the intake path
-([source intake](source-intake.md)): the NeetCode Python Two Sum solution. No
+([source intake](source-intake.md)): the NeetCode Python Two Sum and Contains
+Duplicate solutions. No
 upstream suite was executed, and no candidate implementation has been
 independently verified as accepted on LeetCode.
 Joe P approved the six-source initial pool in section 4. Detailed verification and import procedures remain under discussion.

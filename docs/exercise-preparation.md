@@ -1,7 +1,9 @@
 # Exercise preparation
 
 How a problem becomes a committed, learner-facing exercise package, and how to
-tell that it is ready. LeetCode 1 (Two Sum) is the worked example.
+tell that it is ready. LeetCode 1 (Two Sum) is the worked example. LeetCode 217
+(Contains Duplicate) follows the same layout with a boolean answer and the `exact`
+checker.
 
 ## Pipeline
 
@@ -67,6 +69,15 @@ validation `none`; the adapter carries the evidence.
 4. Add references, run `sources validate`, then `readiness`.
 5. Add an e2e test that drives the CLI in a subprocess with a temporary
    `PRACTICE_DIR` and no `--package` flag.
+
+## When the platform cannot be reached
+
+Step 1 needs the live problem. If it cannot be read, record what was checked
+(the catalog snapshot, the preserved upstream file) under `verified`, record what
+was taken from memory under `not_verified`, and add a line to `blockers`. The
+readiness report then says `NOT READY` and names that blocker, even though every
+other check passes. Clear it only after re-reading the signature, return type and
+constraints and correcting the package to match. LeetCode 217 is in this state.
 
 ## Known limits
 

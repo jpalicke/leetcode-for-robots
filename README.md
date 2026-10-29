@@ -4,7 +4,7 @@ Practice data structures and algorithms locally with a coding-agent tutor.
 The learner writes the solution; the tutor offers questions, gradual hints,
 realistic tests, explanation feedback, and review suggestions.
 
-**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner, private attempt history and the first real exercise package (LeetCode 1, Two Sum) are available.
+**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner, private attempt history and two real exercise packages (LeetCode 1, Two Sum, and LeetCode 217, Contains Duplicate) are available.
 The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
@@ -74,6 +74,11 @@ uv run --locked practice attempt test ATTEMPT_ID       # stub until you write a 
 uv run --locked practice progress leetcode 1           # local result, no platform verdict
 uv run --locked practice readiness leetcode 1          # is the package ready, and on what evidence
 ```
+
+LeetCode 217, Contains Duplicate, is committed the same way under
+`problems/leetcode-217`. Its `readiness` report is `NOT READY` on purpose: its
+statement and constraints could not be re-read from leetcode.com when it was
+prepared, so a blocker stays listed in its `readiness.json` until someone does.
 
 A blank starter reports `STUB`, never a pass. A local pass is not a LeetCode
 acceptance; record that yourself with `attempt verdict`. See

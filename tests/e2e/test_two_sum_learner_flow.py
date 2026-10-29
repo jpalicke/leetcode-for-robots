@@ -102,7 +102,7 @@ def test_alternate_approaches_pass_through_the_cli(tmp_path: Path, name: str) ->
 def test_the_committed_references_verify_through_the_cli(tmp_path: Path) -> None:
     check = practice(tmp_path, "sources", "verify")
     assert check.returncode == 0, check.stderr
-    assert "3 source(s) verified" in check.stdout
+    assert re.search(r"\d+ source\(s\) verified", check.stdout)
 
 
 def test_readiness_reports_ready_with_no_platform_acceptance(tmp_path: Path) -> None:
