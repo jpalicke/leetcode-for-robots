@@ -77,7 +77,10 @@ Step 1 needs the live problem. If it cannot be read, record what was checked
 was taken from memory under `not_verified`, and add a line to `blockers`. The
 readiness report then says `NOT READY` and names that blocker, even though every
 other check passes. Clear it only after re-reading the signature, return type and
-constraints and correcting the package to match. LeetCode 217 is in this state.
+constraints and correcting the package to match. A person who has read the page may
+supply those facts; record them as reported by that person, not as fetched.
+LeetCode 217 was in this state until its owner confirmed the signature and
+constraints.
 
 ## Known limits
 

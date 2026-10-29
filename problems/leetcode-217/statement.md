@@ -38,9 +38,8 @@ To try your answer on LeetCode, put the body inside the class method.
 
 ## Constraints
 
-These are the bounds this project's tests are built to, taken from the published
-problem. They have not been re-checked against the live page from this project's
-tooling (see `readiness.json`).
+These are the published bounds, confirmed against the LeetCode problem page by the
+project owner (see `readiness.json`).
 
 - `1 <= len(nums) <= 100_000`
 - `-1_000_000_000 <= nums[i] <= 1_000_000_000`

@@ -27,17 +27,22 @@
       {
         "fact": "The upstream NeetCode file python/0217-contains-duplicate.py exists at revision 8fed5f7daa6a517e375a0562d876e4a72dfdafb8 and is preserved byte for byte with its MIT notice.",
         "against": "raw.githubusercontent.com, compared with the preserved copy"
+      },
+      {
+        "fact": "Constraints: 1 <= nums.length <= 10^5 and -10^9 <= nums[i] <= 10^9.",
+        "against": "the constraints jpalicke read from the LeetCode problem page and reported in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
+      },
+      {
+        "fact": "The Python3 method is containsDuplicate(self, nums: list[int]) -> bool, so the function takes one list of integers and returns a boolean.",
+        "against": "the signature jpalicke read from the LeetCode Python3 problem page and reported in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
       }
     ],
     "not_verified": [
-      "leetcode.com was unreachable from the environment that prepared this package (the egress proxy refused the connection), so neither the problem page nor the GraphQL endpoint was read.",
-      "The method name containsDuplicate(nums), the boolean return, and the bounds 1 <= nums.length <= 10^5 and -10^9 <= nums[i] <= 10^9 come from the preparer's knowledge of the published problem, not from a fetch. The suite and statement are built to those bounds.",
+      "leetcode.com was unreachable from the environment that prepared this package (the egress proxy refused the connection), so this tooling never read the problem page or the GraphQL endpoint. The signature and constraints above were confirmed by a person who read the page; the statement text itself, the examples and the output contract beyond the return type were not compared with the page.",
       "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
       "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",
       "The class-method form is not run locally: the runner calls a top-level function, so learners paste the body into class Solution when they submit."
     ]
   },
-  "blockers": [
-    "Live verification pending: re-read the signature, return type and constraints from leetcode.com (for example the GraphQL metaData and content fields used for LeetCode 1), correct statement.md and tools/build_contains_duplicate_suite.py if they differ, rebuild and revalidate the references, then remove this blocker."
-  ]
+  "blockers": []
 }

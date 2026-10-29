@@ -76,9 +76,9 @@ uv run --locked practice readiness leetcode 1          # is the package ready, a
 ```
 
 LeetCode 217, Contains Duplicate, is committed the same way under
-`problems/leetcode-217`. Its `readiness` report is `NOT READY` on purpose: its
-statement and constraints could not be re-read from leetcode.com when it was
-prepared, so a blocker stays listed in its `readiness.json` until someone does.
+`problems/leetcode-217`. Its signature and constraints were confirmed by the
+project owner from the LeetCode page; the tooling itself could not reach
+leetcode.com, and `readiness.json` says so.
 
 A blank starter reports `STUB`, never a pass. A local pass is not a LeetCode
 acceptance; record that yourself with `attempt verdict`. See
