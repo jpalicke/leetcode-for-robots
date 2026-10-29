@@ -128,6 +128,13 @@ def test_the_suite_covers_the_named_risks() -> None:
     assert len(ids) == len(cases())
 
 
+def is_mirror_image(text: str) -> bool:
+    """True if the second half mirrors the first, openers turned into closers."""
+    half = len(text) // 2
+    expected = "".join(CLOSERS.get(c, "?") for c in reversed(text[:half]))
+    return len(text) % 2 == 0 and text[half:] == expected
+
+
 def test_the_trap_cases_really_trip_the_shortcuts_they_name() -> None:
     by_id = {case["id"]: case["args"][0] for case in cases()}
     crossing = by_id["crossing-pairs"]
@@ -135,12 +142,13 @@ def test_the_trap_cases_really_trip_the_shortcuts_they_name() -> None:
     assert reduces_to_nothing(crossing) is False
     sequential = by_id["sequential-all-kinds"]
     assert reduces_to_nothing(sequential) is True
-    assert sequential != "".join(
-        CLOSERS[c] for c in reversed(sequential[: len(sequential) // 2])
-    )
+    assert is_mirror_image(sequential) is False  # Only fully nested strings mirror.
+    assert is_mirror_image(by_id["nested-all-kinds"]) is True
     nested = by_id["nested-all-kinds"]
     assert reduces_to_nothing(nested) is True
-    assert len(PAIR_PATTERN.sub("", nested)) > 0  # One pass of removal is not enough.
+    assert PAIR_PATTERN.sub("", nested) != ""  # One pass of removal is not enough.
+    assert reduces_to_nothing(by_id["mirror-only-would-fail"]) is True
+    assert is_mirror_image(by_id["mirror-only-would-fail"]) is False
 
 
 def test_the_committed_suite_is_what_the_generator_builds() -> None:

@@ -1,0 +1,13 @@
+{
+  "platform": "leetcode",
+  "id": "20",
+  "title": "Valid Parentheses",
+  "language": "python",
+  "callable": {
+    "adapter": "function",
+    "name": "isValid",
+    "parameters": ["s"]
+  },
+  "checker": "exact",
+  "allow_none": false
+}

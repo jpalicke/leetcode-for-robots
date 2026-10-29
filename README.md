@@ -4,7 +4,7 @@ Practice data structures and algorithms locally with a coding-agent tutor.
 The learner writes the solution; the tutor offers questions, gradual hints,
 realistic tests, explanation feedback, and review suggestions.
 
-**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner, private attempt history and three real exercise packages (LeetCode 1, Two Sum; 217, Contains Duplicate; and 242, Valid Anagram) are available.
+**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner, private attempt history and four real exercise packages (LeetCode 1, Two Sum; 217, Contains Duplicate; 242, Valid Anagram; and 20, Valid Parentheses) are available.
 The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
@@ -94,6 +94,10 @@ leetcode.com, and `readiness.json` says so.
 LeetCode 242, Valid Anagram, is under `problems/leetcode-242`. Its signature,
 constraints and examples were confirmed by the project owner from the LeetCode page,
 and `readiness.json` records that they were reported by a person, not fetched.
+
+LeetCode 20, Valid Parentheses, is under `problems/leetcode-20`. Its signature,
+constraints and examples were read from LeetCode's GraphQL endpoint when it was
+prepared, and `readiness.json` records that they were fetched.
 
 A blank starter reports `STUB`, never a pass. A local pass is not a LeetCode
 acceptance; record that yourself with `attempt verdict`. See

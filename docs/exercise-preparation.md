@@ -2,8 +2,10 @@
 
 How a problem becomes a committed, learner-facing exercise package, and how to
 tell that it is ready. LeetCode 1 (Two Sum) is the worked example. LeetCode 217
-(Contains Duplicate) and 242 (Valid Anagram) follow the same layout with a boolean
-answer and the `exact` checker; 242 takes two string arguments.
+(Contains Duplicate), 242 (Valid Anagram) and 20 (Valid Parentheses) follow the same
+layout with a boolean answer and the `exact` checker; 242 takes two string arguments.
+Package 20 is the first whose page facts were fetched from the live endpoint rather
+than reported by a person, and its `readiness.json` says which.
 
 ## Pipeline
 
