@@ -19,7 +19,8 @@ uv run --locked practice tutor check
 ```
 
 Use `--locked` everywhere. Do not pass `-q` to mypy. Never edit `uv.lock` by hand.
-Python 3.13 and zero runtime dependencies: `dependencies` stays empty.
+Python 3.13. The one runtime dependency is `prompt-toolkit` (bounded range), imported
+only by `src/practice/menu_tui.py`. Add no other runtime dependency without approval.
 
 ## Delivery
 

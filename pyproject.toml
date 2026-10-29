@@ -7,7 +7,9 @@ version = "0.1.0"
 description = "Local DSA practice with a coding-agent tutor"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
-dependencies = []
+dependencies = [
+    "prompt-toolkit>=3.0.52,<4",
+]
 
 [project.scripts]
 practice = "practice.cli:run"

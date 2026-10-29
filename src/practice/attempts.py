@@ -18,6 +18,7 @@ from practice.history import (
 )
 from practice.journal import JournalError
 from practice.package import ExercisePackage
+from practice.rubric import ExplanationScores, RubricError
 from practice.runner import RunResult, run_exercise
 
 LANGUAGES = ("python",)
@@ -177,6 +178,44 @@ def record_verdict(
         source=source.strip(),
         date=verdict_date,
         code_sha256=hash_file(code_path),
+    )
+
+
+def record_explanation(
+    practice_dir: Path,
+    attempt: Attempt,
+    scores: ExplanationScores,
+    evidence: str,
+    feedback: str,
+    coaching: str | None,
+) -> None:
+    """Record an explanation assessment of the code as it is now.
+
+    It never changes completion, and earlier assessments are kept: a later one is
+    a revision. Hints used and timing play no part in the scores.
+    """
+    try:
+        scores.validate()
+    except RubricError as error:
+        raise AttemptError(str(error)) from error
+    if not evidence.strip() or not feedback.strip():
+        raise AttemptError("an assessment needs both evidence and feedback")
+    code_path = attempt_code_path(
+        practice_dir, attempt.platform, attempt.problem_id, attempt.attempt_id
+    )
+    fields: dict[str, object] = {
+        **scores.to_fields(),
+        "evidence": evidence.strip(),
+        "feedback": feedback.strip(),
+        "code_sha256": hash_file(code_path),
+    }
+    if coaching and coaching.strip():
+        fields["coaching"] = coaching.strip()
+    _append(
+        practice_dir,
+        "explanation_assessment",
+        attempt_id=attempt.attempt_id,
+        **fields,
     )
 
 

@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from practice.journal import Journal
+from practice.rubric import ExplanationScores, RubricError
 
 JOURNAL_FILE = "journal.jsonl"
 ATTEMPTS_DIR = "attempts"
@@ -45,6 +46,26 @@ class History:
     notices: list[str]  # Problems found while reading; shown, never hidden.
 
 
+@dataclass(frozen=True)
+class ExplanationView:
+    """One recorded explanation assessment, judged against the code as it is now."""
+
+    event_id: str
+    at: str
+    sequence: int  # 1 for the initial assessment, then in journal order.
+    scores: ExplanationScores
+    evidence: str
+    feedback: str
+    coaching: str | None  # Optimization coaching: separate, never scored.
+    code_sha256: str | None
+    is_current: bool  # The assessed code is the code as it is now.
+    code_passed: bool  # A local run passed on exactly the assessed code.
+
+    @property
+    def label(self) -> str:
+        return "initial" if self.sequence == 1 else f"revision {self.sequence - 1}"
+
+
 @dataclass
 class AttemptView:
     attempt: Attempt
@@ -54,6 +75,11 @@ class AttemptView:
     latest_run: dict[str, Any] | None
     latest_pass: dict[str, Any] | None
     verdict: dict[str, Any] | None
+    explanations: list[ExplanationView] = field(default_factory=list)
+
+    @property
+    def latest_explanation(self) -> ExplanationView | None:
+        return self.explanations[-1] if self.explanations else None
 
 
 @dataclass
@@ -126,6 +152,15 @@ def build_history(records: list[dict[str, Any]]) -> History:
                     f"unknown attempt {attempt_id}"
                 )
                 continue
+            if record["type"] == "explanation_assessment":
+                try:
+                    ExplanationScores.from_record(record)
+                except RubricError as error:
+                    notices.append(
+                        f"event {record['event_id']} (explanation_assessment) "
+                        f"has an invalid score ({error}); ignored"
+                    )
+                    continue
             attempt.events.append(record)
             if record["type"] == "attempt_finished":
                 attempt.finished_at = attempt.finished_at or record["at"]
@@ -186,7 +221,33 @@ def view_attempt(attempt: Attempt, practice_dir: Path) -> AttemptView:
         latest_run=runs[-1] if runs else None,
         latest_pass=passes[-1] if passes else None,
         verdict=verdicts[-1] if verdicts else None,
+        explanations=_explanation_views(attempt, current),
     )
+
+
+def _explanation_views(attempt: Attempt, current: str | None) -> list[ExplanationView]:
+    """Every assessment in journal order, so revisions are never overwritten."""
+    passed_code = {
+        e["code_sha256"]
+        for e in attempt.events
+        if e["type"] == "test_run" and e["status"] == "passed"
+    }
+    assessments = [e for e in attempt.events if e["type"] == "explanation_assessment"]
+    return [
+        ExplanationView(
+            event_id=event["event_id"],
+            at=event["at"],
+            sequence=number,
+            scores=ExplanationScores.from_record(event),
+            evidence=event.get("evidence", ""),
+            feedback=event.get("feedback", ""),
+            coaching=event.get("coaching"),
+            code_sha256=event.get("code_sha256"),
+            is_current=current is not None and event.get("code_sha256") == current,
+            code_passed=event.get("code_sha256") in passed_code,
+        )
+        for number, event in enumerate(assessments, start=1)
+    ]
 
 
 def hash_file(path: Path) -> str | None:

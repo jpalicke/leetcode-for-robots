@@ -27,6 +27,7 @@ PRIVATE_STATE_DIR = ".practice"
 PRIVATE_STATE_PATHS = (
     ".practice/journal.jsonl",
     ".practice/attempts/leetcode-1/attempt/solution.py",
+    ".practice/requests/attempt-1-hint.md",
 )
 
 # Names of the techniques behind the starter problems. Tutor text must never say

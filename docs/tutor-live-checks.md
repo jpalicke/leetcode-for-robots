@@ -72,6 +72,33 @@ Short verbatim excerpts of the replies:
 - The runs were non-interactive (`-p`) with edit tools disabled, so they do not
   test rule TUTOR-006 (never editing learner code) in a real editing session.
 
+## Navigation menu, Claude Code (2026-10-29)
+
+Claude Code 2.1.312, non-interactive, run from a throwaway clone of commit c85f235
+(own `.venv`, `uv sync --locked`, empty temporary `PRACTICE_DIR`, so no real learner
+data). Command shape:
+
+```text
+claude -p "Start a practice session: read tutor/START.md and follow it. Show me the menu, then choose to start Two Sum." --allowedTools Read "Bash(uv run --locked practice *)" --disallowedTools Edit Write
+```
+
+Result: **PASS, with a note.** The agent ran the menu, chose browse, chose Two Sum,
+and chose Start, through `practice menu choose N ...` commands only. The journal
+holds exactly one `attempt_started` event (practice mode, untimed, Two Sum) and
+nothing else. Excerpt of the reply:
+
+- "I opened the browse list, picked Two Sum, and started a new attempt."
+- It then printed the attempt menu ("1. Run my tests", "2. Request a hint (one
+  gradual step)", ... "6. Back to the main menu") and the line
+  "Choose with: practice menu choose N --attempt <id>".
+- It restated the problem in its own words, named no technique, gave no hint, and
+  told the learner to reply with a number or plain words.
+
+Note: `-p` prints only the final message, so the first main menu was shown to the
+agent but not repeated in the final reply. Whether it displayed the main menu to the
+learner in between is therefore not verified here. This is one run of a
+non-deterministic model.
+
 ## Codex: PENDING
 
 | Step | Result |

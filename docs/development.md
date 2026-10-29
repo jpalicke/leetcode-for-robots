@@ -4,6 +4,8 @@ The repository currently provides development tooling, `practice search` and
 `practice run` (see the [exercise package contract](exercise-package-contract.md)) and
 private attempt history (see [learner history](learner-history.md)) and
 preserved reference sources (see [source intake](source-intake.md)).
+Paste-ready requests for an existing tutor chat are described in
+[tutor requests](tutor-requests.md).
 The tutor contract (a development `CLAUDE.md`, a separate scoped tutor policy and
 `practice tutor check`) is described in the [tutor contract](tutor-contract.md).
 The first real exercise package (LeetCode 1) is committed under `problems/` and
@@ -25,6 +27,14 @@ uv run --locked practice tutor check
 `.python-version` selects Python 3.13.14. uv can acquire that interpreter when
 needed. `uv.lock` records the exact resolved development dependencies. Keep it
 versioned; ordinary setup and checks use `--locked` to reject a stale lockfile.
+
+The one runtime dependency is `prompt-toolkit`, bounded to `>=3.0.52,<4`. It gives
+`practice tui` arrow-key selection that also works with number keys. It is pure
+Python, runs on Windows and POSIX terminals, and ships a pipe input that the tests
+use to drive the real menu without any mock. Only `src/practice/menu_tui.py`
+imports it, and a test enforces that, so the shared menu, the numbered menu and
+every other command work without it. Add no further runtime dependency without
+approval.
 
 The first sync needs package-index access. The clean-checkout end-to-end test
 then uses the populated uv cache to install into a separate environment offline.
