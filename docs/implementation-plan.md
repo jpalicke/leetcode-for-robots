@@ -139,7 +139,7 @@ outcome unless explicitly marked as a tracking parent.
 | Curriculum and prerequisite map | Ordered concepts and prerequisites for the starters, validated, no technique labels in practice mode | Catalog |
 | Study-mode lessons | Cited, classified teaching units for the starter concepts, opted into from both menus ([study mode](study-mode.md)) | Source intake; export; tutor contract |
 | Optional timed practice | Per-attempt opt-in timing that resets and never affects explanation scores | Navigation; history |
-| First-release acceptance | Clean-clone run of the spec scenarios with recorded evidence | Other v0.1 tickets |
+| First-release acceptance | Clean-clone run of the spec scenarios with recorded evidence ([first-release acceptance](first-release-acceptance.md)) | Other v0.1 tickets |
 | Future refinements (tracking parent) | Separate discovery tickets for RAG, C++, Rust, Go, CodeFights and HackerRank; each defines its own implementation work | First-release baseline as relevant |
 
 Node-based, mutation, stateful and interactive execution contracts get separate

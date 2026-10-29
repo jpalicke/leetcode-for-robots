@@ -190,6 +190,7 @@ touched by it. Intake itself never runs the code and claims nothing about correc
 - [Source intake and provenance manifests](docs/source-intake.md)
 - [Development backlog proposal](docs/development-backlog.md)
 - [Ticket-based implementation plan](docs/implementation-plan.md)
+- [First-release acceptance evidence](docs/first-release-acceptance.md)
 
 ## Planned scope
 
