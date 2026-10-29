@@ -91,8 +91,13 @@ The runner reports only total duration, not per-case timing, so a slow but corre
 solution shows up as a longer run, or a timeout. The hidden LeetCode tests are not
 available, so a local pass never proves a platform pass.
 
-A complexity requirement is not a test. LeetCode 704 asks for `O(log n)`, but the
-runner checks answers and total run time, and 10,000 entries is small enough that a
-linear scan passes. Record such a requirement under `not_verified` and say it in the
-statement and notes, as package 704 does; a fixture that passes locally for that
-reason (`linear_scan.py`) keeps the limit visible in the tests.
+A complexity requirement is a test only when it is measured. Answers and total run
+time cannot show it: LeetCode 704 asks for `O(log n)`, but a plain scan of 10,000
+entries finishes instantly. Package 704 therefore declares a `probe_budget`, so the
+runner counts how many different entries of `nums` a solution reads and fails a
+correct answer that reads too many (see the [package contract](exercise-package-contract.md)).
+Give such a package linear and slicing fixtures that must fail, and keep a fixture
+that checks both ends first to show the slack is enough. Say in the statement and
+notes what is counted, and record under `not_verified` that a pass is evidence about
+reads, not a proof of running time. A requirement with no budget declared is still
+only a sentence: say so under `not_verified`.

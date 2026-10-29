@@ -46,11 +46,13 @@ project's tooling (see `readiness.json`).
 
 ## Running time
 
-The problem asks for an algorithm that runs in `O(log n)` time. This project's local
-test run does not check that. It only checks that your answers are right, and at
-10,000 entries even a plain scan of the whole list finishes almost instantly. A
-correct answer that ignores the requirement therefore passes locally. Hold yourself to
-it anyway; it is the point of the exercise. See `notes.md` for what the requirement
+The problem asks for an algorithm that runs in `O(log n)` time. `practice` checks this
+by counting how many different entries of `nums` your function looks at. A search that
+halves the range reads about 14 of 10,000 entries, and a run allows 16. A scan that
+reads most of the list fails with the count it reached, even when its answer is right.
+Copying the list or slicing it counts every entry copied, and so does `in`,
+`.index()`, `sum()` and any loop over the whole list. This is a check on what your
+code reads, not a proof of its running time. See `notes.md` for what the requirement
 means after you have tried.
 
 ## Examples (written for this project)

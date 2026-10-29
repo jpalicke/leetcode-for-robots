@@ -15,9 +15,9 @@ Walk the list from the front and return the index of the first entry equal to
 
 - Correct because it looks at every entry, so it cannot miss the target.
 - Time O(n), space O(1). It ignores the fact that the list is sorted.
-- This passes the local tests, because 10,000 entries is small. It does not meet the
-  problem's `O(log n)` requirement, and the local run cannot tell the difference.
-  `nums.index(target)` is the same thing in one call.
+- It gives the right answer but reads up to every entry, so `practice` rejects it
+  under the `O(log n)` read budget and reports how many entries it looked at.
+  `nums.index(target)` and `target in nums` are the same thing in one call.
 
 ### 2. Binary search (the usual target)
 
@@ -57,6 +57,11 @@ when the position is past the end).
 - Returning the insertion point, or `0`, or `None`, for a missing target instead of `-1`.
 - Returning the value found instead of its index.
 - Searching only one side of the first probe.
+- Recursing on slices (`nums[mid + 1:]`). The recursion depth is logarithmic, but each
+  slice copies the part it keeps, which adds up to a linear amount of work. The read
+  budget counts every copied entry, so it rejects this.
+- Believing the budget is exact. Checking `nums[0]` and `nums[-1]` before the loop is
+  fine; the limit leaves room for a couple of extra reads.
 
 ## Complexity summary
 
@@ -67,5 +72,6 @@ when the position is past the end).
 | Binary search, recursion | O(log n) | O(log n) for the call stack |
 | `bisect_left` plus a check | O(log n) | O(1) |
 
-Note: these tests check answers, not running time, so approach 1 passes them. Only
-the problem's own requirement separates it from approach 2.
+Note: the local run counts the different entries your function reads. A halving
+search reads about 14 of 10,000; a scan reads most of them. The count is evidence about
+what your code read on these inputs, not a proof of its running time.

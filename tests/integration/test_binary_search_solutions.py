@@ -95,18 +95,45 @@ def test_each_logarithmic_solution_passes(package: ExercisePackage, name: str) -
     assert outcomes(result) == {}
 
 
-@pytest.mark.parametrize("name", ["linear_scan", "list_index"])
-def test_a_linear_solution_passes_because_the_tests_check_answers_not_speed(
+@pytest.mark.parametrize("name", ["linear_scan", "list_index", "recursive_slicing"])
+def test_a_correct_answer_that_reads_too_much_fails_the_probe_budget(
     package: ExercisePackage, name: str
 ) -> None:
-    """The problem asks for O(log n); this suite cannot enforce it at 10^4 entries.
-
-    The statement, notes and readiness record all say so. If this test ever starts
-    failing, the suite has begun to measure speed and those words must change.
-    """
+    """The problem asks for O(log n). These are right, and still not accepted."""
     result = run(package, SOLUTIONS / f"{name}.py")
+    assert result.status == "failed"
+    cases = {c.case_id: c for c in result.cases}
+    over = cases["performance-missing-above"]
+    assert over.outcome == "failed"
+    assert over.probes is not None and over.probes > 1_000
+    assert over.probe_budget == 16
+    assert "correct answer, but it looked at" in over.detail
+    assert "logarithmic" in over.detail
+    # Wrong answers elsewhere in the suite are not blamed on the budget.
+    assert not any(
+        c.outcome == "failed" and "correct answer" not in c.detail for c in result.cases
+    )
+
+
+def test_a_solution_that_checks_both_ends_first_still_fits_the_budget(
+    package: ExercisePackage,
+) -> None:
+    result = run(package, SOLUTIONS / "checks_both_ends_first.py")
     assert result.status == "passed", result.message
-    assert result.duration_seconds < result.timeout_seconds
+
+
+def test_the_logarithmic_solutions_read_few_entries_and_the_counts_are_recorded(
+    package: ExercisePackage,
+) -> None:
+    assert package.probe_budget is not None
+    assert package.probe_budget.limit(10_000) == 16
+    for name in ("iterative_closed", "half_open_loop", "bisect_module"):
+        result = run(package, SOLUTIONS / f"{name}.py")
+        assert result.status == "passed", name
+        for case in result.cases:
+            assert case.probes is not None and case.probe_budget is not None
+            assert case.probes <= case.probe_budget, (name, case.case_id)
+        assert max(c.probes or 0 for c in result.cases) <= 15, name
 
 
 def test_a_failure_reports_the_case_and_both_answers(package: ExercisePackage) -> None:
@@ -167,10 +194,10 @@ def test_a_changed_suite_makes_recorded_evidence_for_another_suite(
     shutil.copytree(PACKAGE_DIR, package_copy)
     suite = package_copy / "tests.json"
     suite.write_text(
-        suite.read_text(encoding="utf-8").replace("leetcode-704-v1", "leetcode-704-v2"),
+        suite.read_text(encoding="utf-8").replace("leetcode-704-v2", "leetcode-704-v3"),
         encoding="utf-8",
     )
     before = load_manifest(REFERENCES_DIR, ORIGINAL).evidence.local_validation
     again = validate_source(references, ORIGINAL, package_copy)
-    assert again.evidence.local_validation.suite_version == "leetcode-704-v2"
+    assert again.evidence.local_validation.suite_version == "leetcode-704-v3"
     assert again.evidence.local_validation.suite_sha256 != before.suite_sha256

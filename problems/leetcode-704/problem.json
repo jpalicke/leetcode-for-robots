@@ -9,5 +9,6 @@
     "parameters": ["nums", "target"]
   },
   "checker": "exact",
-  "allow_none": false
+  "allow_none": false,
+  "probe_budget": {"argument": "nums", "growth": "log2", "slack": 2}
 }
