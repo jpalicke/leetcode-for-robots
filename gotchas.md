@@ -8,3 +8,4 @@ Rules learned from corrections. Review before starting new work.
 - A clean-checkout test must allow the first sync to fill the uv cache. Forcing `--offline` there fails on a cold machine.
 - Use `uv run --locked mypy` without `-q`; mypy rejects it.
 - Upstream NeetCode Python files are class-only and many annotate with `List[int]` without importing `List`, so they raise `NameError` when imported (704 and 121 do; 20 does not). Never edit the preserved file. The adapter prepends `from typing import List` and appends a top-level wrapper, and the upstream bytes must stay inside it unchanged. Run the upstream file once to see which case you have.
+- Treat Joe P's in-progress reports as active ticket reservations; an absent assignee or PR does not make a ticket available.

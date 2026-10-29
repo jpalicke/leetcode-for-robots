@@ -53,6 +53,10 @@ paid problems, and the slug. Exit codes: 0 found, 1 nothing matches, 2 usage
 error, 3 the catalog file is corrupt or unreadable (the reason goes to stderr).
 `--catalog PATH` searches a different catalog file, for example a copy.
 
+Refresh the snapshot with `uv run --locked practice catalog refresh --json`.
+See [catalog refresh](docs/catalog-refresh.md) for safe scratch-copy examples,
+atomic replacement, change reports and durable coverage mapping flags.
+
 Run a solution file against an exercise package (see the
 [exercise package contract](docs/exercise-package-contract.md)):
 

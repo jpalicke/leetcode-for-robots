@@ -4,6 +4,7 @@
 import copy
 import json
 from collections.abc import Callable
+from datetime import date
 from typing import Any
 
 import pytest
@@ -17,12 +18,13 @@ def real_data() -> dict[str, Any]:
 
 
 def test_real_snapshot_is_valid_and_complete() -> None:
-    catalog = parse_catalog(real_data())
+    data = real_data()
+    catalog = parse_catalog(data)
 
     assert catalog.platform == "leetcode"
     assert catalog.source_url == "https://leetcode.com/api/problems/all/"
-    assert catalog.fetched_on == "2026-10-28"
-    assert len(catalog.entries) == 4096
+    assert date.fromisoformat(catalog.fetched_on) <= date.today()
+    assert len(catalog.entries) == len(data["entries"]) > 0
 
 
 def test_frontend_and_internal_ids_stay_distinct() -> None:

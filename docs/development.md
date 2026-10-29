@@ -24,6 +24,7 @@ uv run --locked pytest
 uv run --locked practice tutor check
 uv run --locked practice curriculum check
 uv run --locked practice curriculum next
+uv run --locked practice catalog refresh --help
 ```
 
 `.python-version` selects Python 3.13.14. uv can acquire that interpreter when

@@ -17,6 +17,8 @@ from practice.attempts import (
     VERDICT_STATUSES,
 )
 from practice.catalog import DEFAULT_CATALOG_PATH, CatalogError, Entry, load_catalog
+from practice.catalog_commands import run_catalog_command
+from practice.catalog_refresh import DEFAULT_SOURCE
 from practice.classification import CONTENT_CLASSES
 from practice.clock import ClockError
 from practice.curriculum import DEFAULT_CURRICULUM_PATH
@@ -84,6 +86,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="curated problem lists (default: catalog/lists/)",
     )
     commands = parser.add_subparsers(dest="command", required=True)
+    catalog = commands.add_parser("catalog", help="refresh catalog metadata")
+    actions = catalog.add_subparsers(dest="catalog_command", required=True)
+    refresh = actions.add_parser("refresh", help="validate and replace the snapshot")
+    refresh.add_argument("--source", default=DEFAULT_SOURCE)
+    refresh.add_argument("--json", action="store_true")
     find = commands.add_parser("search", help="find problems by ID, title or slug")
     find.add_argument(
         "query",
@@ -495,6 +502,8 @@ def main(argv: list[str]) -> int:
 
 def dispatch(argv: list[str]) -> int:
     args = build_parser().parse_args(argv)
+    if args.command == "catalog":
+        return run_catalog_command(args)
     if args.command == "knowledge":
         private = resolve_practice_dir(args.practice_dir, os.environ)
         return run_knowledge_command(args, private)

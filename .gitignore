@@ -11,3 +11,7 @@ htmlcov/
 
 # Learner attempts, progress, notes, and generated requests.
 .practice/
+
+# Catalog refresh reserves these sibling lock and staging paths.
+*.refresh.lock
+.*.refresh-*.tmp
