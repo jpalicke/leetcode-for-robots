@@ -1,8 +1,10 @@
 {
-  "version": "leetcode-242-v1",
+  "version": "leetcode-242-v2",
   "seed": 20261029,
   "generator": "tools/build_valid_anagram_suite.py",
   "cases": [
+    {"id": "platform-example-1", "args": ["anagram", "nagaram"], "expected": true},
+    {"id": "platform-example-2", "args": ["rat", "car"], "expected": false},
     {"id": "example-anagram", "args": ["listen", "silent"], "expected": true},
     {"id": "example-different-letters", "args": ["stone", "stoke"], "expected": false},
     {"id": "example-same-letters-different-counts", "args": ["aab", "abb"], "expected": false},

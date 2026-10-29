@@ -109,16 +109,19 @@ def test_the_committed_references_verify_through_the_cli(tmp_path: Path) -> None
     assert re.search(r"\d+ source\(s\) verified", check.stdout)
 
 
-def test_readiness_is_blocked_only_by_the_pending_page_facts(tmp_path: Path) -> None:
+def test_readiness_reports_ready_and_says_who_confirmed_the_facts(
+    tmp_path: Path,
+) -> None:
     result = practice(tmp_path, "readiness", "leetcode", "242", "--json")
-    assert result.returncode == 1, result.stdout
+    assert result.returncode == 0, result.stdout
     report = json.loads(result.stdout)
-    assert report["ready"] is False
-    assert [c["name"] for c in report["checks"] if not c["ok"]] == ["blockers"]
+    assert report["ready"] is True
+    assert [c["name"] for c in report["checks"] if not c["ok"]] == []
     assert report["platform_acceptance"] == "none"
-    assert any(
-        "leetcode.com" in item for item in report["verification"]["not_verified"]
-    )
+    verified = " ".join(item["against"] for item in report["verification"]["verified"])
+    assert "reported by a person, not fetched" in verified
+    not_verified = " ".join(report["verification"]["not_verified"])
+    assert "leetcode.com was unreachable" in not_verified
     text = practice(tmp_path, "readiness", "leetcode", "242")
-    assert "NOT READY  leetcode/242" in text.stdout
-    assert "FAIL  blockers" in text.stdout
+    assert "READY  leetcode/242" in text.stdout
+    assert "NOT READY" not in text.stdout

@@ -47,7 +47,11 @@ subtract version, one more table in memory.
 - Dropping the last or first letter from the comparison.
 - Returning `1` or `0`, or `None`, instead of `True` or `False`.
 - Assuming 26 letters when the input could hold other characters. For the stated
-  lowercase input it is safe; for arbitrary text use a dictionary of counts.
+  lowercase input it is safe. The page's follow-up asks about Unicode: then a
+  fixed 26-slot table no longer fits, and a dictionary of counts keyed by character
+  (or sorting) is the natural adaptation. Take care that user-visible characters can
+  be built from several code points, so decide whether to compare as given or after
+  normalising. These tests do not cover this.
 
 ## Complexity summary
 

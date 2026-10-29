@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 SEED = 20261029
-SUITE_VERSION = "leetcode-242-v1"
+SUITE_VERSION = "leetcode-242-v2"
 MAX_LENGTH = 5 * 10**4  # Assumed from the published constraints.
 ALPHABET = string.ascii_lowercase
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +18,9 @@ DEFAULT_OUTPUT = REPO_ROOT / "problems" / "leetcode-242" / "tests.json"
 
 # (id, s, t). The answer is never written here; the oracle finds it.
 HAND_CASES: tuple[tuple[str, str, str], ...] = (
+    # The two examples listed on the problem page, as the owner reported them.
+    ("platform-example-1", "anagram", "nagaram"),
+    ("platform-example-2", "rat", "car"),
     ("example-anagram", "listen", "silent"),
     ("example-different-letters", "stone", "stoke"),
     ("example-same-letters-different-counts", "aab", "abb"),

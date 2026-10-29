@@ -80,7 +80,7 @@ other check passes. Clear it only after re-reading the signature, return type an
 constraints and correcting the package to match. A person who has read the page may
 supply those facts; record them as reported by that person, not as fetched.
 LeetCode 217 was in this state until its owner confirmed the signature,
-constraints and examples. LeetCode 242 is in this state now.
+constraints and examples, and so was LeetCode 242.
 
 ## Known limits
 

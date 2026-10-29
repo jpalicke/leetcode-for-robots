@@ -25,20 +25,28 @@
         "against": "catalog/leetcode.json (snapshot 2026-10-28)"
       },
       {
+        "fact": "The Python3 method is isAnagram(self, s: str, t: str) -> bool, returning true if t is an anagram of s and false otherwise.",
+        "against": "the problem statement and code stub jpalicke copied from the LeetCode problem page and pasted in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
+      },
+      {
+        "fact": "Constraints: 1 <= s.length, t.length <= 5 * 10^4, and s and t consist of lowercase English letters. The page's follow-up asks about Unicode input; the suite does not cover it.",
+        "against": "the problem statement jpalicke pasted in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
+      },
+      {
+        "fact": "The page lists two examples: s = anagram, t = nagaram gives true; s = rat, t = car gives false. They are cases platform-example-1 and 2 in the suite.",
+        "against": "the problem statement jpalicke pasted in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
+      },
+      {
         "fact": "The upstream NeetCode file python/0242-valid-anagram.py exists at revision 8fed5f7daa6a517e375a0562d876e4a72dfdafb8 and is preserved byte for byte with its MIT notice. Its method is isAnagram(self, s: str, t: str) -> bool.",
         "against": "raw.githubusercontent.com, compared with the preserved copy (the upstream file is a third party's account of the signature, not the platform's)"
       }
     ],
     "not_verified": [
-      "leetcode.com was unreachable from the environment that prepared this package (the egress proxy refused the connection), so this tooling never read the problem page or the GraphQL endpoint.",
-      "The Python3 signature isAnagram(self, s: str, t: str) -> bool, the bounds 1 <= s.length, t.length <= 5 * 10^4, and the input alphabet (lowercase English letters) come from the preparer's knowledge of the published problem, not from a fetch or a report. The suite and statement are built to those bounds.",
-      "The examples listed on the problem page were not read; the suite has no platform-example cases yet.",
+      "leetcode.com was unreachable from the environment that prepared this package (the egress proxy refused the connection), so this tooling never read the problem page or the GraphQL endpoint. The signature, constraints and examples above were confirmed by a person who pasted the page; the output contract beyond the return type was not compared with the page, and the page was not viewed in a browser.",
       "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
       "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",
       "The class-method form is not run locally: the runner calls a top-level function, so learners paste the body into class Solution when they submit."
     ]
   },
-  "blockers": [
-    "Page facts pending: read the Python3 signature, constraints and listed examples from leetcode.com (or have the project owner report them), correct statement.md and tools/build_valid_anagram_suite.py if they differ, add the examples as platform-example cases, rebuild and revalidate the references, remove the PENDING line from statement.md, then remove this blocker."
-  ]
+  "blockers": []
 }

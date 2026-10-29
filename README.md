@@ -81,8 +81,8 @@ project owner from the LeetCode page; the tooling itself could not reach
 leetcode.com, and `readiness.json` says so.
 
 LeetCode 242, Valid Anagram, is under `problems/leetcode-242`. Its signature,
-constraints and examples have not yet been confirmed against the LeetCode page, so
-`practice readiness leetcode 242` reports `NOT READY` and names that blocker.
+constraints and examples were confirmed by the project owner from the LeetCode page,
+and `readiness.json` records that they were reported by a person, not fetched.
 
 A blank starter reports `STUB`, never a pass. A local pass is not a LeetCode
 acceptance; record that yourself with `attempt verdict`. See

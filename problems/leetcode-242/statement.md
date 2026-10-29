@@ -37,7 +37,8 @@ To try your answer on LeetCode, put the body inside the class method.
 
 ## Constraints
 
-PENDING: confirm against the problem page before this package is marked ready.
+These are the published bounds, confirmed against the LeetCode problem page by the
+project owner (see `readiness.json`).
 
 - `1 <= len(s), len(t) <= 50_000`
 - `s` and `t` hold only lowercase English letters (`a` to `z`).
@@ -49,3 +50,7 @@ PENDING: confirm against the problem page before this package is marked ready.
 | `"listen"` | `"silent"` | `True` | the same six letters, rearranged |
 | `"stone"` | `"stoke"` | `False` | `n` against `k` |
 | `"aab"` | `"abb"` | `False` | same letters, different counts |
+
+The page also asks a follow-up: what if the inputs hold Unicode characters? The tests
+here use lowercase English letters only, so the follow-up is for you to think about,
+not something they check.

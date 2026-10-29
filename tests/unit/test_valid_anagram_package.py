@@ -87,6 +87,8 @@ def test_performance_cases_are_maximum_size() -> None:
 def test_the_suite_covers_the_named_risks() -> None:
     ids = {case["id"] for case in cases()}
     for needed in (
+        "platform-example-1",
+        "platform-example-2",
         "single-letter-same",
         "single-letter-different",
         "identical-strings",
@@ -113,6 +115,14 @@ def test_the_same_total_of_letter_codes_case_really_has_equal_totals() -> None:
     s, t = by_id["same-total-of-letter-codes"]["args"]
     assert sum(map(ord, s)) == sum(map(ord, t))
     assert is_anagram(s, t) is False
+
+
+def test_the_platform_examples_have_the_answers_the_page_lists() -> None:
+    by_id = {case["id"]: case for case in cases()}
+    assert by_id["platform-example-1"]["args"] == ["anagram", "nagaram"]
+    assert by_id["platform-example-1"]["expected"] is True
+    assert by_id["platform-example-2"]["args"] == ["rat", "car"]
+    assert by_id["platform-example-2"]["expected"] is False
 
 
 def test_the_committed_suite_is_what_the_generator_builds() -> None:
