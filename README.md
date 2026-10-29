@@ -4,7 +4,7 @@ Practice data structures and algorithms locally with a coding-agent tutor.
 The learner writes the solution; the tutor offers questions, gradual hints,
 realistic tests, explanation feedback, and review suggestions.
 
-**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner, private attempt history and five real exercise packages (LeetCode 1, Two Sum; 217, Contains Duplicate; 242, Valid Anagram; 20, Valid Parentheses; and 704, Binary Search) are available.
+**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner, private attempt history and six real exercise packages (LeetCode 1, Two Sum; 217, Contains Duplicate; 242, Valid Anagram; 20, Valid Parentheses; 704, Binary Search; and 121, Best Time to Buy and Sell Stock), which are the six starter problems, are available.
 The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
@@ -103,6 +103,10 @@ LeetCode 704, Binary Search, is under `problems/leetcode-704`, with facts fetche
 same way. The problem asks for `O(log n)` time, and the local tests cannot enforce
 that: they check answers, and a plain scan of 10,000 entries passes. The statement,
 notes and `readiness.json` all say so.
+
+LeetCode 121, Best Time to Buy and Sell Stock, is under `problems/leetcode-121`, also
+with fetched facts. A quadratic answer runs out of time on its maximum-length cases
+and is reported as a timeout, not a pass.
 
 A blank starter reports `STUB`, never a pass. A local pass is not a LeetCode
 acceptance; record that yourself with `attempt verdict`. See

@@ -1,0 +1,13 @@
+{
+  "platform": "leetcode",
+  "id": "121",
+  "title": "Best Time to Buy and Sell Stock",
+  "language": "python",
+  "callable": {
+    "adapter": "function",
+    "name": "maxProfit",
+    "parameters": ["prices"]
+  },
+  "checker": "exact",
+  "allow_none": false
+}

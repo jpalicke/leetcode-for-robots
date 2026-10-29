@@ -4,8 +4,9 @@ How a problem becomes a committed, learner-facing exercise package, and how to
 tell that it is ready. LeetCode 1 (Two Sum) is the worked example. LeetCode 217
 (Contains Duplicate), 242 (Valid Anagram) and 20 (Valid Parentheses) follow the same
 layout with a boolean answer and the `exact` checker; 242 takes two string arguments.
-704 (Binary Search) uses `exact` on an integer index. Packages 20 and 704 are those whose page facts were fetched from the live endpoint rather
-than reported by a person, and each `readiness.json` says which.
+704 (Binary Search) and 121 (Best Time to Buy and Sell Stock) use `exact` on an
+integer. Packages 20, 704 and 121 are those whose page facts were fetched from the
+live endpoint rather than reported by a person, and each `readiness.json` says which.
 
 ## Pipeline
 
