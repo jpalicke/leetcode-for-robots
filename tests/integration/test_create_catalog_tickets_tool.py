@@ -62,6 +62,7 @@ class Fake(ThreadingHTTPServer):
     seen: list[tuple[str, str, float, str]]
     fail_create_after: int | None
     created: int
+    first_note_delay: float
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -77,6 +78,8 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(raw)
 
     def _note(self) -> None:
+        if not self._state().seen:
+            time.sleep(self._state().first_note_delay)
         self._state().seen.append(
             (
                 self.command,
@@ -148,6 +151,7 @@ def fake() -> Iterator[Fake]:
     httpd.seen = []
     httpd.fail_create_after = None
     httpd.created = 0
+    httpd.first_note_delay = 0.0
     thread = threading.Thread(target=httpd.serve_forever, daemon=True)
     thread.start()
     yield httpd
@@ -420,7 +424,11 @@ def test_a_ticket_created_but_not_yet_linked_is_linked_on_the_next_run(
     assert len(fake.linked) == len(set(fake.linked))
 
 
-def test_requests_are_spaced_by_the_delay(work: Work, fake: Fake) -> None:
+@pytest.mark.parametrize("first_note_delay", [0.0, 0.1])
+def test_requests_are_spaced_by_the_delay(
+    work: Work, fake: Fake, first_note_delay: float
+) -> None:
+    fake.first_note_delay = first_note_delay
     assert work.run("--apply", delay="0.15").returncode == 0
     times = [t for _, _, t, _ in fake.seen]
     gaps = [b - a for a, b in zip(times, times[1:], strict=False)]
