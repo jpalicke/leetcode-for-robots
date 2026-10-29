@@ -131,10 +131,10 @@ def test_a_changed_suite_makes_recorded_evidence_for_another_suite(
     shutil.copytree(PACKAGE_DIR, package_copy)
     suite = package_copy / "tests.json"
     suite.write_text(
-        suite.read_text(encoding="utf-8").replace("leetcode-217-v1", "leetcode-217-v2"),
+        suite.read_text(encoding="utf-8").replace("leetcode-217-v2", "leetcode-217-v3"),
         encoding="utf-8",
     )
     again = validate_source(references, ORIGINAL, package_copy)
     before = load_manifest(REFERENCES_DIR, ORIGINAL).evidence.local_validation
-    assert again.evidence.local_validation.suite_version == "leetcode-217-v2"
+    assert again.evidence.local_validation.suite_version == "leetcode-217-v3"
     assert again.evidence.local_validation.suite_sha256 != before.suite_sha256

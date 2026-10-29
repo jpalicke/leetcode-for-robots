@@ -82,7 +82,7 @@ def test_the_full_flow_from_blank_to_a_passing_attempt(tmp_path: Path) -> None:
     shutil.copyfile(SOLUTIONS / "hash_set.py", code)
     right = practice(tmp_path, "attempt", "test", attempt_id)
     assert right.returncode == 0, right.stdout
-    assert "PASSED  leetcode/217: all 69 cases passed" in right.stdout
+    assert "PASSED  leetcode/217: all 72 cases passed" in right.stdout
 
     progress = practice(tmp_path, "progress", "leetcode", "217")
     assert progress.returncode == 0, progress.stderr

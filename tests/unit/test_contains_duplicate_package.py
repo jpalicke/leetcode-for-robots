@@ -84,6 +84,9 @@ def test_performance_cases_are_maximum_size() -> None:
 def test_the_suite_covers_the_named_risks() -> None:
     ids = {case["id"] for case in cases()}
     for needed in (
+        "platform-example-1",
+        "platform-example-2",
+        "platform-example-3",
         "example-repeat",
         "example-all-different",
         "single-element",
@@ -106,6 +109,16 @@ def test_the_suite_covers_the_named_risks() -> None:
     assert any(i.startswith("generated-small-") for i in ids)
     assert any(i.startswith("generated-wide-") for i in ids)
     assert len(ids) == len(cases())
+
+
+def test_the_platform_examples_have_the_answers_the_page_lists() -> None:
+    by_id = {case["id"]: case for case in cases()}
+    assert by_id["platform-example-1"]["args"] == [[1, 2, 3, 1]]
+    assert by_id["platform-example-1"]["expected"] is True
+    assert by_id["platform-example-2"]["args"] == [[1, 2, 3, 4]]
+    assert by_id["platform-example-2"]["expected"] is False
+    assert by_id["platform-example-3"]["args"] == [[1, 1, 1, 3, 3, 4, 3, 2, 4, 2]]
+    assert by_id["platform-example-3"]["expected"] is True
 
 
 def test_the_committed_suite_is_what_the_generator_builds() -> None:

@@ -33,12 +33,16 @@
         "against": "the constraints jpalicke read from the LeetCode problem page and reported in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
       },
       {
+        "fact": "The page lists three examples: [1,2,3,1] gives true, [1,2,3,4] gives false, [1,1,1,3,3,4,3,2,4,2] gives true. They are cases platform-example-1 to 3 in the suite.",
+        "against": "the examples jpalicke read from the LeetCode problem page and reported in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
+      },
+      {
         "fact": "The Python3 method is containsDuplicate(self, nums: list[int]) -> bool, so the function takes one list of integers and returns a boolean.",
         "against": "the signature jpalicke read from the LeetCode Python3 problem page and reported in the session on 2026-10-29 (reported by a person, not fetched by this tooling)"
       }
     ],
     "not_verified": [
-      "leetcode.com was unreachable from the environment that prepared this package (the egress proxy refused the connection), so this tooling never read the problem page or the GraphQL endpoint. The signature and constraints above were confirmed by a person who read the page; the statement text itself, the examples and the output contract beyond the return type were not compared with the page.",
+      "leetcode.com was unreachable from the environment that prepared this package (the egress proxy refused the connection), so this tooling never read the problem page or the GraphQL endpoint. The signature and constraints above were confirmed by a person who read the page; the statement text itself and the output contract beyond the return type were not compared with the page.",
       "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
       "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",
       "The class-method form is not run locally: the runner calls a top-level function, so learners paste the body into class Solution when they submit."

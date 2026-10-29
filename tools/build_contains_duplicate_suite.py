@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 SEED = 20261029
-SUITE_VERSION = "leetcode-217-v1"
+SUITE_VERSION = "leetcode-217-v2"
 LIMIT = 10**9  # Bound on |nums[i]| (assumed from the published constraints).
 MAX_LENGTH = 10**5
 PERFORMANCE_SPAN = 10**5
@@ -18,6 +18,10 @@ DEFAULT_OUTPUT = REPO_ROOT / "problems" / "leetcode-217" / "tests.json"
 
 # (id, nums). The answer is never written here; the oracle finds it.
 HAND_CASES: tuple[tuple[str, list[int]], ...] = (
+    # The three examples listed on the problem page, as the owner reported them.
+    ("platform-example-1", [1, 2, 3, 1]),
+    ("platform-example-2", [1, 2, 3, 4]),
+    ("platform-example-3", [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]),
     ("example-repeat", [5, 8, 2, 8]),
     ("example-all-different", [4, 9, 1, 7]),
     ("single-element", [42]),

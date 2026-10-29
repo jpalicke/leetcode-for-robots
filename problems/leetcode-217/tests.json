@@ -1,8 +1,11 @@
 {
-  "version": "leetcode-217-v1",
+  "version": "leetcode-217-v2",
   "seed": 20261029,
   "generator": "tools/build_contains_duplicate_suite.py",
   "cases": [
+    {"id": "platform-example-1", "args": [[1, 2, 3, 1]], "expected": true},
+    {"id": "platform-example-2", "args": [[1, 2, 3, 4]], "expected": false},
+    {"id": "platform-example-3", "args": [[1, 1, 1, 3, 3, 4, 3, 2, 4, 2]], "expected": true},
     {"id": "example-repeat", "args": [[5, 8, 2, 8]], "expected": true},
     {"id": "example-all-different", "args": [[4, 9, 1, 7]], "expected": false},
     {"id": "single-element", "args": [[42]], "expected": false},
