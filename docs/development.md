@@ -20,6 +20,8 @@ uv run --locked ruff format --check .
 uv run --locked mypy
 uv run --locked pytest
 uv run --locked practice tutor check
+uv run --locked practice curriculum check
+uv run --locked practice curriculum next
 ```
 
 `.python-version` selects Python 3.13.14. uv can acquire that interpreter when
@@ -72,3 +74,7 @@ delivered behavior and validation, link all relevant PRs and reference sources,
 and state whether merge is pending or complete. Then close the issue as completed.
 Keep unfinished work and parents with unmet coverage open. A pending PR merge
 alone does not require an otherwise complete implementation issue to stay open.
+
+The [curriculum map](curriculum.md) is committed under `curriculum/`. Its tests
+validate real catalog placements, malformed prerequisite graphs, stable objective
+order and learner-safe CLI output using real files and subprocesses.

@@ -17,6 +17,17 @@ See [development setup](docs/development.md) to install dependencies and run che
 
 ## Usage
 
+Validate the curriculum map and list the next eligible objectives without learner history:
+
+```text
+uv run --locked practice curriculum check
+uv run --locked practice curriculum next
+uv run --locked practice curriculum next --json
+```
+
+See [curriculum and prerequisites](docs/curriculum.md) for the map, custom-file
+options and the boundary between placement and exercise readiness.
+
 Search the committed LeetCode catalog snapshot (fetched 2026-10-28) by problem ID,
 slug or title fragment:
 
