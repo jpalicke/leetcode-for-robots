@@ -20,15 +20,20 @@ practice menu choose N --attempt ID            an attempt's menu
 practice menu choose N --attempt ID --confirm-reveal
 practice menu choose N --reviews               the due reviews: start or resume one
 practice menu choose N --recommend             the recommendation: start a pick
+practice menu --browse --timed                  the problem list, opted in to one timed start
+practice menu --problem PLATFORM ID --timed     a problem's menu with the timed start first
 ```
 
 Put `choose N` before the flags. Every menu prints the exact command to use next.
 `practice search sum of` also works without quotes.
 
 Main menu: resume your active attempt; browse and select a problem; progress and
-notes; reviews; recommendation; then study and timed practice. The last two are
-listed as "Not available yet." and do nothing. They are wired in later by #40 and
-#41. Timed practice is never offered as runnable.
+notes; reviews; recommendation; study; then timed practice. Study is listed as
+"Not available yet." and does nothing (it is wired in later by #40). Timed practice
+is real and opt-in: choosing it opens the problem list in timed mode, and a problem's
+menu then offers "Start a new timed practice attempt" first. That choice covers the
+one attempt you start. It writes nothing until you start, nothing is remembered, and
+the next start from any menu is untimed. See `docs/timed-practice.md`.
 
 Recommendation: choosing it opens a screen that shows the pick, why, and the
 evidence, then offers items to start the recommended problem (or resume or review it),

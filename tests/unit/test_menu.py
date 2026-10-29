@@ -6,7 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from practice.history import AttemptError
+from practice.attempts import finish_attempt
+from practice.history import AttemptError, find_attempt, load_history
 from practice.menu import (
     MAIN,
     Item,
@@ -66,7 +67,7 @@ def test_main_menu_with_no_history_has_the_documented_items(
     assert item(menu, "progress").available
 
 
-@pytest.mark.parametrize("key", ["study", "timed"])
+@pytest.mark.parametrize("key", ["study"])
 def test_future_features_are_listed_but_say_not_available_yet(
     menu_env: MenuEnvironment, key: str
 ) -> None:
@@ -77,7 +78,7 @@ def test_future_features_are_listed_but_say_not_available_yet(
     assert "not available yet" in entry.reason.lower()
 
 
-@pytest.mark.parametrize("key", ["study", "timed"])
+@pytest.mark.parametrize("key", ["study"])
 def test_choosing_a_future_feature_does_nothing_and_does_not_claim_success(
     menu_env: MenuEnvironment, key: str
 ) -> None:
@@ -329,27 +330,91 @@ def test_a_hint_request_is_prepared_but_no_hint_is_recorded_as_given(
     assert "assistance" not in journal_bytes(menu_env).decode("utf-8")
 
 
-def test_menus_never_offer_timing_or_carry_it_forward(
+def started_flags(menu_env: MenuEnvironment) -> list[object]:
+    return [
+        json.loads(line).get("timed")
+        for line in journal_bytes(menu_env).decode("utf-8").splitlines()
+        if json.loads(line)["type"] == "attempt_started"
+    ]
+
+
+def test_timed_practice_is_an_available_main_menu_item(
+    menu_env: MenuEnvironment,
+) -> None:
+    entry = item(build_menu(menu_env, MAIN), "timed")
+
+    assert entry.available
+    assert entry.reason is None
+
+
+def test_choosing_timed_practice_only_opens_the_timed_list_and_writes_nothing(
+    menu_env: MenuEnvironment,
+) -> None:
+    menu = build_menu(menu_env, MAIN)
+
+    result = choose(menu_env, MAIN, number_of(menu, "timed"))
+
+    assert result.code == 0, result.stderr
+    assert result.next_screen == Screen("browse", timed=True)
+    assert journal_bytes(menu_env) == b""
+    assert not (menu_env.practice_dir / "attempts").exists()
+
+
+def test_the_timed_list_leads_to_a_problem_menu_that_offers_the_timed_start_first(
+    menu_env: MenuEnvironment,
+) -> None:
+    browse = Screen("browse", timed=True)
+    menu = build_menu(menu_env, browse)
+    chosen = choose(
+        menu_env, browse, [i.problem for i in menu.items].index(("leetcode", "1")) + 1
+    )
+
+    assert chosen.next_screen == Screen(
+        "problem", platform="leetcode", problem_id="1", timed=True
+    )
+    problem = build_menu(menu_env, chosen.next_screen)
+    assert keys(problem)[:2] == ["start-timed", "start"]
+    assert "timed" in item(problem, "start-timed").label.lower()
+
+
+def test_the_untimed_problem_menu_lists_both_starts_with_untimed_first(
+    menu_env: MenuEnvironment,
+) -> None:
+    menu = build_menu(menu_env, Screen("problem", platform="leetcode", problem_id="1"))
+
+    assert keys(menu)[:2] == ["start", "start-timed"]
+
+
+def test_the_timed_start_records_a_timed_attempt_and_the_next_start_is_untimed(
+    menu_env: MenuEnvironment,
+) -> None:
+    problem = Screen("problem", platform="leetcode", problem_id="1", timed=True)
+    menu = build_menu(menu_env, problem)
+
+    timed = choose(menu_env, problem, number_of(menu, "start-timed"))
+
+    assert timed.code == 0, timed.stderr
+    assert started_flags(menu_env) == [True]
+    assert not timed.next_screen.timed
+    # Finish it so the problem menu offers a fresh start, then start again.
+    finish_attempt(
+        menu_env.practice_dir,
+        find_attempt(load_history(menu_env.practice_dir), timed.next_screen.attempt_id),
+    )
+    fresh = Screen("problem", platform="leetcode", problem_id="1")
+    plain = choose(menu_env, fresh, number_of(build_menu(menu_env, fresh), "start"))
+    assert plain.code == 0, plain.stderr
+    assert started_flags(menu_env) == [True, False]
+
+
+def test_testing_from_the_menu_never_turns_timing_on(
     menu_env: MenuEnvironment,
 ) -> None:
     attempt_id = start_two_sum(menu_env)
-    screens = [
-        MAIN,
-        Screen("browse"),
-        Screen("problem", platform="leetcode", problem_id="1"),
-        Screen("attempt", attempt_id=attempt_id),
-    ]
-    for screen in screens:
-        for entry in build_menu(menu_env, screen).items:
-            if entry.key == "timed":
-                assert not entry.available
 
     choose(menu_env, Screen("attempt", attempt_id=attempt_id), 1)  # Run tests.
-    records = [
-        json.loads(line)
-        for line in journal_bytes(menu_env).decode("utf-8").splitlines()
-    ]
-    assert all(r.get("timed") is not True for r in records)
+
+    assert started_flags(menu_env) == [False]
 
 
 def test_menu_text_leaks_no_technique_hint_or_answer(

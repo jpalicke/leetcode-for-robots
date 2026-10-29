@@ -55,14 +55,15 @@ def screen_flags(screen: Screen) -> str:
     """The flags that bring a stateless `practice menu` back to this screen."""
     if screen.kind == "attempt":
         return f" --attempt {screen.attempt_id}"
+    timed = " --timed" if screen.timed else ""
     if screen.kind == "problem":
-        return f" --problem {screen.platform} {screen.problem_id}"
+        return f" --problem {screen.platform} {screen.problem_id}{timed}"
     if screen.kind == "reviews":
         return " --reviews"
     if screen.kind == "recommend":
         return " --recommend"
     if screen.kind == "browse":
-        return " --browse" + "".join(f" {word}" for word in screen.words)
+        return " --browse" + "".join(f" {word}" for word in screen.words) + timed
     return ""
 
 
@@ -86,9 +87,11 @@ def screen_from_args(args: argparse.Namespace) -> Screen:
         return Screen("attempt", attempt_id=args.attempt)
     if args.problem is not None:
         platform, problem_id = args.problem
-        return Screen("problem", platform=platform, problem_id=problem_id)
+        return Screen(
+            "problem", platform=platform, problem_id=problem_id, timed=args.timed
+        )
     if args.browse is not None:
-        return Screen("browse", words=tuple(args.browse))
+        return Screen("browse", words=tuple(args.browse), timed=args.timed)
     if args.reviews:
         return Screen("reviews")
     if args.recommend:

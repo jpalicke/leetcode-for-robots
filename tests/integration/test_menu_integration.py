@@ -141,6 +141,20 @@ def test_terminal_menu_starts_and_tests_an_attempt_like_the_numbered_menu(
     assert "Started attempt" in capsys.readouterr().out
 
 
+def test_terminal_menu_timed_item_opts_in_for_one_attempt_only(
+    menu_env: MenuEnvironment, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # Item 7 is timed practice: pick a problem, then the timed start (item 1).
+    code = tui_flow(menu_env, f"7{ENTER}1{ENTER}1{ENTER}{CTRL_C}")
+
+    assert code == 0
+    started = [
+        r for r in records(menu_env.practice_dir) if r["type"] == "attempt_started"
+    ]
+    assert [r["timed"] for r in started] == [True]
+    assert "Timer started" in capsys.readouterr().out
+
+
 def test_terminal_menu_says_unavailable_items_are_not_available_yet(
     menu_env: MenuEnvironment, capsys: pytest.CaptureFixture[str]
 ) -> None:

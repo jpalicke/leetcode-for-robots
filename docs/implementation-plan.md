@@ -138,7 +138,7 @@ outcome unless explicitly marked as a tracking parent.
 | Six starter exercises (tracking parent) | All six individual exercise children meet readiness criteria | Six problem tickets |
 | Curriculum and prerequisite map | Ordered concepts and prerequisites for the starters, validated, no technique labels in practice mode | Catalog |
 | Study-mode lessons | Cited, classified teaching units for the starter concepts | Source intake; export; tutor contract |
-| Optional timed practice | Per-session opt-in timing that resets and never affects explanation scores | Navigation; history |
+| Optional timed practice | Per-attempt opt-in timing that resets and never affects explanation scores | Navigation; history |
 | First-release acceptance | Clean-clone run of the spec scenarios with recorded evidence | Other v0.1 tickets |
 | Future refinements (tracking parent) | Separate discovery tickets for RAG, C++, Rust, Go, CodeFights and HackerRank; each defines its own implementation work | First-release baseline as relevant |
 

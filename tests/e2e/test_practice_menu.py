@@ -67,7 +67,9 @@ def test_the_numbered_flow_runs_two_sum_end_to_end(
     assert main_menu.returncode == 0, main_menu.stderr
     assert "1. Resume your active attempt" in main_menu.stdout
     assert "5. Get a recommendation" in main_menu.stdout
-    assert "Not available yet." in main_menu.stdout  # Study and timed practice.
+    assert (
+        "Not available yet." in main_menu.stdout
+    )  # Study only; timed practice is real.
 
     browse = practice(learner, problems, "menu", "choose", "2")
     assert browse.returncode == 0, browse.stderr

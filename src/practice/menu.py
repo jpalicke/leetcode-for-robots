@@ -37,6 +37,10 @@ from practice.reviews import (
 from practice.search import search
 
 MAX_RESULTS = 20
+TIMED_NOTE = (
+    "Timing is your explicit choice for one attempt: pick the timed start. "
+    "It is never remembered; every other start is untimed."
+)
 NOT_AVAILABLE_YET = "Not available yet."
 
 
@@ -88,6 +92,7 @@ class Screen:
     platform: str = ""
     problem_id: str = ""
     attempt_id: str = ""
+    timed: bool = False  # browse and problem: the learner chose timed practice.
 
 
 MAIN = Screen("main")
@@ -199,8 +204,6 @@ def _main_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         Item(
             "timed",
             "Timed practice (optional; always needs your explicit opt-in)",
-            False,
-            NOT_AVAILABLE_YET,
         ),
     )
     return Menu(screen, "Main menu", tuple(lines), items, tuple(history.notices))
@@ -222,6 +225,9 @@ def _browse_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         entries, extras = _packaged_entries(env, catalog)
         title = "Problems with an exercise package"
         lines = list(extras)
+    if screen.timed:
+        title = f"Timed practice: {title}"
+        lines.insert(0, TIMED_NOTE)
     items = [_problem_item(env, entry) for entry in entries]
     items.append(Item("main", "Back to the main menu"))
     return Menu(screen, title, tuple(lines), tuple(items))
@@ -235,6 +241,7 @@ def _problem_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         f"{entry.frontend_question_id}  {entry.title}  [{_difficulty(entry)}]",
         "Exercise: ready" if exercise.ready else f"Exercise: {exercise.reason}",
         "A new attempt starts in practice mode, untimed, with a blank file.",
+        TIMED_NOTE,
     ]
     items: list[Item] = []
     existing = latest_unfinished(history, screen.platform, screen.problem_id)
@@ -246,15 +253,23 @@ def _problem_menu(env: MenuEnvironment, screen: Screen) -> Menu:
                 attempt_id=existing.attempt_id,
             )
         )
-    items.append(
+    starts = [
         Item(
-            "start",
-            "Start a new practice attempt",
+            key,
+            label,
             exercise.ready,
             None if exercise.ready else exercise.reason,
             problem=(screen.platform, screen.problem_id),
         )
-    )
+        for key, label in (
+            ("start", "Start a new practice attempt"),
+            (
+                "start-timed",
+                "Start a new timed practice attempt (timed for this attempt only)",
+            ),
+        )
+    ]
+    items.extend(reversed(starts) if screen.timed else starts)
     items.append(Item("main", "Back to the main menu"))
     return Menu(screen, "Problem", tuple(lines), tuple(items), tuple(history.notices))
 
@@ -536,19 +551,37 @@ def _select(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
     assert item.problem is not None
     platform, problem_id = item.problem
     return StepResult(
-        0, "", "", Screen("problem", platform=platform, problem_id=problem_id)
+        0,
+        "",
+        "",
+        Screen("problem", platform=platform, problem_id=problem_id, timed=screen.timed),
     )
 
 
-def _start(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+def _start_attempt(
+    env: MenuEnvironment, screen: Screen, item: Item, *timing: str
+) -> StepResult:
     assert item.problem is not None
     platform, problem_id = item.problem
-    argv = ["attempt", "start", platform, problem_id]
+    argv = ["attempt", "start", platform, problem_id, *timing]
     result = env.run([*argv, *_package_flags(env, platform, problem_id)])
     if result.code != 0:
         return StepResult(result.code, result.stdout, result.stderr, screen)
     follow = _active(load_history(env.practice_dir), platform, problem_id)
     return StepResult(0, result.stdout, result.stderr, follow)
+
+
+def _start(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    return _start_attempt(env, screen, item)
+
+
+def _start_timed(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    return _start_attempt(env, screen, item, "--timed")
+
+
+def _timed(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    """Open the problem list in timed mode. This writes nothing and sets nothing."""
+    return StepResult(0, "", "", Screen("browse", timed=True))
 
 
 def _test(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
@@ -616,6 +649,8 @@ _ACTIONS: dict[str, Callable[[MenuEnvironment, Screen, Item], StepResult]] = {
     "progress": _progress,
     "select": _select,
     "start": _start,
+    "start-timed": _start_timed,
+    "timed": _timed,
     "test": _test,
     "hint": _request("hint"),
     "explain-approach": _request("explain-my-approach"),

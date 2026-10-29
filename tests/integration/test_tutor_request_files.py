@@ -49,7 +49,6 @@ def prepare(
         None,
         action=action,
         mode="practice",
-        timed=False,
         reveal=reveal,
     )
 
@@ -168,7 +167,6 @@ def test_pending_package_is_refused(
             pending,
             action="hint",
             mode="practice",
-            timed=False,
             reveal=None,
         )
     assert not (practice_dir / REQUESTS_DIR).exists()
@@ -192,7 +190,6 @@ def test_a_package_with_readiness_blockers_is_refused(
             copy,
             action="hint",
             mode="practice",
-            timed=False,
             reveal=None,
         )
 

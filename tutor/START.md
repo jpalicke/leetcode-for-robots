@@ -13,3 +13,5 @@
    learner has explicitly confirmed a full solution reveal in this conversation.
 6. Items marked unavailable do nothing. Say so plainly and never claim they worked.
    The menu only prepares requests; it never records help as given.
+   Timed practice is the menu's own opt-in for one attempt. Add `--timed` only when
+   the learner chose it for that attempt, and never carry it to the next one.

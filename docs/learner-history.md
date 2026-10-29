@@ -18,8 +18,9 @@ the repository.
 
 `practice attempt start` always creates a new attempt directory with an exclusive
 file create. Earlier attempts are never read, printed, overwritten or copied, so a
-retry is a fresh blank start. Timing is chosen per attempt with `--timed` and is
-never carried forward.
+retry is a fresh blank start. Timing is chosen per attempt with `--timed` (and an
+optional `--limit-minutes N`) and is never carried forward. See
+`docs/timed-practice.md`; `practice attempt time ATTEMPT_ID` prints the evidence.
 
 ## Journal
 
@@ -42,7 +43,7 @@ stays one reportable bad line and never corrupts a later record.
 
 | type | meaning |
 | --- | --- |
-| `attempt_started` | platform, problem, title, language, mode, timed, code path, starter source and hash |
+| `attempt_started` | platform, problem, title, language, mode, timed, optional `limit_minutes` (only on timed attempts), code path, starter source and hash; its timestamp is the timer start |
 | `test_run` | outcome, message, `code_sha256`, `suite_sha256`, suite version, per-case outcomes |
 | `assistance` | delivered help only: `hint` (level 0 to 3), `reveal`, `concept`, optional summary |
 | `platform_verdict` | `accepted`, `rejected` or `not_submitted`, plus source and date, recorded separately |
