@@ -6,7 +6,9 @@ private attempt history (see [learner history](learner-history.md)) and
 preserved reference sources (see [source intake](source-intake.md)).
 The tutor contract (a development `CLAUDE.md`, a separate scoped tutor policy and
 `practice tutor check`) is described in the [tutor contract](tutor-contract.md).
-The other practice commands and exercise packages are still planned.
+The first real exercise package (LeetCode 1) is committed under `problems/` and
+described in [exercise preparation](exercise-preparation.md). The other practice
+commands and packages are still planned.
 
 Install [uv](https://docs.astral.sh/uv/getting-started/installation/), then run
 these commands from the repository root in fish, PowerShell, or another shell:
@@ -31,7 +33,8 @@ establish that the future practice application or tutor behavior works.
 
 The suite also runs real solution files in real child processes, including a
 timeout that must leave no stray processes. `tests/fixtures/` holds the Two Sum
-runner fixture and its solution variants. They are deliberately broken in places,
+runner fixture and its solution variants, and `tests/fixtures/leetcode_two_sum_solutions/`
+holds the defective and alternate solutions used against the real package. They are deliberately broken in places,
 so Ruff and mypy exclude that directory.
 
 The suite covers configuration contracts, actual successful/failing lint and
@@ -48,7 +51,7 @@ Restricted runners may need writable cache and temporary directories. Configure
 or the dependency lock. On systems without hardlink support, uv's documented
 `UV_LINK_MODE=copy` setting selects file copying explicitly.
 
-First-party code under `src/` and `tests/` uses strict mypy and Ruff. Keep new
+First-party code under `src/`, `tests/` and `tools/` uses strict mypy and Ruff. Keep new
 packages inside mypy's `files` setting. Preserved upstream reference files under
 `references/` are never edited or linted; they are checked with
 `practice sources verify` and run only through separate adapters.

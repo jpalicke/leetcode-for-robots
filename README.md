@@ -4,7 +4,7 @@ Practice data structures and algorithms locally with a coding-agent tutor.
 The learner writes the solution; the tutor offers questions, gradual hints,
 realistic tests, explanation feedback, and review suggestions.
 
-**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner and private attempt history are available.
+**Status: development tooling.** Python setup, quality-gate tests, catalog search, a solution runner, private attempt history and the first real exercise package (LeetCode 1, Two Sum) are available.
 The remaining practice tools and exercise packages are not implemented. Development follows
 the reviewed PDD plan, with separate deliverable tickets and verified PRs.
 
@@ -62,6 +62,23 @@ Every start makes a new blank attempt; earlier code is never touched. Progress a
 notes are computed from the journal each time. See
 [learner history](docs/learner-history.md) for the design.
 
+## Quick start: LeetCode 1, Two Sum
+
+The first real exercise package is committed under `problems/leetcode-1`, so a fresh
+clone needs no `--package` flag:
+
+```text
+uv run --locked practice search "two sum"
+uv run --locked practice attempt start leetcode 1      # blank typed starter, private copy
+uv run --locked practice attempt test ATTEMPT_ID       # stub until you write a body
+uv run --locked practice progress leetcode 1           # local result, no platform verdict
+uv run --locked practice readiness leetcode 1          # is the package ready, and on what evidence
+```
+
+A blank starter reports `STUB`, never a pass. A local pass is not a LeetCode
+acceptance; record that yourself with `attempt verdict`. See
+[exercise preparation](docs/exercise-preparation.md) for how packages are made.
+
 ## Tutor contract
 
 ```text
@@ -85,7 +102,13 @@ uv run --locked practice sources show neetcode-leetcode-0001-two-sum-python
 uv run --locked practice sources add ID --repository URL --revision SHA --path PATH ...
 ```
 
-Intake never runs the code and claims nothing about correctness. See
+```text
+uv run --locked practice sources validate ID --package problems/leetcode-1
+```
+
+`sources validate` runs a preserved reference file against a package and records the
+result, bound to the file's SHA-256 and the suite hash. Platform acceptance is never
+touched by it. Intake itself never runs the code and claims nothing about correctness. See
 [source intake](docs/source-intake.md).
 
 ## Planning documents

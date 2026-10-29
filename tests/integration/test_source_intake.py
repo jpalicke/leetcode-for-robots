@@ -28,6 +28,7 @@ from practice.sources import (
     list_source_ids,
     load_manifest,
     record_validation,
+    validate_source,
     verify_references,
 )
 
@@ -612,3 +613,46 @@ def test_unknown_source_id_is_reported(imported: Path) -> None:
 def test_list_source_ids_is_sorted(imported: Path, tmp_path: Path) -> None:
     add_local(imported, original_request(tmp_path))
     assert list_source_ids(imported) == ["sample-original", SOURCE_ID]
+
+
+def test_validate_source_runs_the_preserved_file_and_records_the_result(
+    imported: Path,
+) -> None:
+    manifest = validate_source(imported, SOURCE_ID, FIXTURES / "two_sum")
+    recorded = manifest.evidence.local_validation
+    assert recorded.status == "passed"
+    assert recorded.code_sha256 == sha256_hex(SOURCE_BYTES)
+    assert recorded.suite_version == load_package(FIXTURES / "two_sum").suite.version  # type: ignore[union-attr]
+    assert validation_state(manifest) == "current"
+    assert verify_references(imported).problems == []
+
+
+def test_validate_source_records_a_failing_run_honestly(
+    imported: Path, tmp_path: Path
+) -> None:
+    wrong = FIXTURES / "two_sum_solutions" / "wrong_answer.py"
+    add_local(
+        imported, original_request(tmp_path, source_id="wrong", source_file=wrong)
+    )
+    manifest = validate_source(imported, "wrong", FIXTURES / "two_sum")
+    assert manifest.evidence.local_validation.status == "failed"
+    assert load_manifest(imported, "wrong").evidence.local_validation.status == "failed"
+
+
+def test_validate_source_refuses_an_unknown_source(imported: Path) -> None:
+    with pytest.raises(SourceNotFoundError):
+        validate_source(imported, "nope", FIXTURES / "two_sum")
+
+
+def test_validate_source_refuses_a_bad_package(imported: Path, tmp_path: Path) -> None:
+    with pytest.raises(SourceError, match="not a directory"):
+        validate_source(imported, SOURCE_ID, tmp_path / "missing")
+    assert load_manifest(imported, SOURCE_ID).evidence.local_validation.status == "none"
+
+
+@pytest.mark.parametrize("timeout", [0.0, -1.0, float("inf"), float("nan")])
+def test_validate_source_refuses_a_nonsense_timeout(
+    imported: Path, timeout: float
+) -> None:
+    with pytest.raises(SourceError, match="timeout"):
+        validate_source(imported, SOURCE_ID, FIXTURES / "two_sum", timeout)

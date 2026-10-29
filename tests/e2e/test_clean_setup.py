@@ -14,7 +14,7 @@ def test_clean_checkout_runs_locked_checks(tmp_path: Path) -> None:
     checkout.mkdir()
     for name in ("pyproject.toml", "uv.lock", ".python-version", "README.md"):
         shutil.copy2(root / name, checkout / name)
-    for folder in ("src", "catalog"):
+    for folder in ("src", "catalog", "problems", "references", "tools"):
         shutil.copytree(
             root / folder,
             checkout / folder,

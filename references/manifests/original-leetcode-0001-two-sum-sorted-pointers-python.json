@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "original-leetcode-0001-two-sum-sorted-pointers-python",
+  "kind": "original",
+  "title": "Original Two Sum: sort with original positions, then two pointers",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "original/original-leetcode-0001-two-sum-sorted-pointers-python/two_sum_sorted_pointers.py",
+    "sha256": "31b1fcd53d6bfe807eba72b4bd922ef6a2e6e4ca37262f497ce43796e33bdd53"
+  },
+  "license": null,
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-28T23:54:11+00:00",
+    "method": "authored",
+    "fetched_urls": [],
+    "actor": "Claude Code agent (written for this project)",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "31b1fcd53d6bfe807eba72b4bd922ef6a2e6e4ca37262f497ce43796e33bdd53",
+      "run_at": "2026-10-28T23:54:15+00:00",
+      "suite_sha256": "654cfe453370ce21f3b643fdbcd5d6f91a7f1a8af01858364ebd9f88385aa3dd",
+      "suite_version": "leetcode-1-v1",
+      "runner": "practice run"
+    }
+  }
+}

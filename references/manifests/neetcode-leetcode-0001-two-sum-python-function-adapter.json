@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "neetcode-leetcode-0001-two-sum-python-function-adapter",
+  "kind": "adaptation",
+  "title": "NeetCode 1. Two Sum, wrapped as a plain function for the local runner",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "adaptations/neetcode-leetcode-0001-two-sum-python-function-adapter/0001-two-sum-function.py",
+    "sha256": "f272c49424916c9e00e42a187b1d044f3cc0c0aba4d746b4b293380a5748d2f2"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "Permission is granted to use, copy, modify and distribute with the copyright and permission notice included in all copies or substantial portions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/neetcode-leetcode-0001-two-sum-python/LICENSE",
+      "sha256": "a38883b60382c74837fce42753736e2efbb663c9458dee74b00e414558ae2c16"
+    }
+  },
+  "derived_from": "neetcode-leetcode-0001-two-sum-python",
+  "transformation": "Added the typing import the upstream file omits, kept the Solution class byte for byte, and added a top-level twoSum function that calls it so the runner can find a plain callable.",
+  "acquisition": {
+    "acquired_at": "2026-10-28T23:54:11+00:00",
+    "method": "local_adaptation",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "f272c49424916c9e00e42a187b1d044f3cc0c0aba4d746b4b293380a5748d2f2",
+      "run_at": "2026-10-28T23:54:14+00:00",
+      "suite_sha256": "654cfe453370ce21f3b643fdbcd5d6f91a7f1a8af01858364ebd9f88385aa3dd",
+      "suite_version": "leetcode-1-v1",
+      "runner": "practice run"
+    }
+  }
+}
