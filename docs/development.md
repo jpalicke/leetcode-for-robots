@@ -4,6 +4,8 @@ The repository currently provides development tooling, `practice search` and
 `practice run` (see the [exercise package contract](exercise-package-contract.md)) and
 private attempt history (see [learner history](learner-history.md)) and
 preserved reference sources (see [source intake](source-intake.md)).
+Paste-ready requests for an existing tutor chat are described in
+[tutor requests](tutor-requests.md).
 The tutor contract (a development `CLAUDE.md`, a separate scoped tutor policy and
 `practice tutor check`) is described in the [tutor contract](tutor-contract.md).
 The first real exercise package (LeetCode 1) is committed under `problems/` and

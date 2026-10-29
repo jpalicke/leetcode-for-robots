@@ -22,12 +22,14 @@ from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
 from practice.readiness_commands import run_readiness_command
+from practice.request_commands import run_request_command
 from practice.rubric import APPROACH_MAX, CORRECTNESS_MAX, SPACE_BONUS_MAX, TIME_MAX
 from practice.runner import RunResult, run_exercise
 from practice.search import search
 from practice.source_commands import run_sources_command
 from practice.sources import DEFAULT_ACTOR
 from practice.tutor_commands import run_tutor_command
+from practice.tutor_request import ACTIONS
 
 MAX_RESULTS = 20
 DEFAULT_TIMEOUT_SECONDS = 10.0
@@ -81,6 +83,7 @@ def build_parser() -> argparse.ArgumentParser:
     ready.add_argument("--json", action="store_true", help="print the report as JSON")
     add_sources_commands(commands)
     add_tutor_commands(commands)
+    add_request_command(commands)
     return parser
 
 
@@ -236,6 +239,41 @@ def add_tutor_commands(
     actions.add_parser("classes", help="print the content class list for the policy")
 
 
+def add_request_command(
+    commands: "argparse._SubParsersAction[argparse.ArgumentParser]",
+) -> None:
+    request = commands.add_parser(
+        "request",
+        help="prepare a paste-ready request for an existing tutor chat",
+        description="Writes a spoiler-aware request under the practice directory "
+        "and prints it. Nothing is sent, and no help is recorded as given.",
+    )
+    request.add_argument("attempt_id")
+    request.add_argument(
+        "--action", choices=sorted(ACTIONS), required=True, help="what to ask the tutor"
+    )
+    request.add_argument(
+        "--mode", choices=MODES, default="practice", help="default: practice"
+    )
+    request.add_argument(
+        "--timed",
+        action="store_true",
+        help="timed practice for this request only; never carried forward",
+    )
+    request.add_argument(
+        "--reveal",
+        default=None,
+        help="a hint level such as 2 to choose that hint, or 'solution' (required "
+        "by explain-solution) to authorize the full solution",
+    )
+    request.add_argument(
+        "--package",
+        type=Path,
+        default=None,
+        help="exercise package directory (default: problems/<platform>-<id>)",
+    )
+
+
 def format_entry(entry: Entry) -> str:
     premium = " premium" if entry.paid_only else ""
     return (
@@ -291,6 +329,9 @@ def main(argv: list[str]) -> int:
     if args.command == "tutor":
         practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
         return run_tutor_command(args, practice_dir, REPO_ROOT)
+    if args.command == "request":
+        practice_dir = resolve_practice_dir(args.practice_dir, os.environ)
+        return run_request_command(args, practice_dir)
     if args.command == "readiness":
         return run_readiness_command(args, args.references)
     if args.command == "sources":
