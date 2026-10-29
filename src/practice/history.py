@@ -39,6 +39,7 @@ class Attempt:
     events: list[dict[str, Any]] = field(default_factory=list)  # Starts with the start.
     finished_at: str | None = None
     review: bool = False  # Started as a blank spaced review of an earlier pass.
+    limit_minutes: int | None = None  # The optional limit chosen with timing.
 
 
 @dataclass
@@ -146,6 +147,7 @@ def build_history(records: list[dict[str, Any]]) -> History:
                 started_at=record["at"],
                 events=[record],
                 review=record.get("review") is True,
+                limit_minutes=_limit_minutes(record),
             )
         elif attempt_id is not None:
             attempt = attempts.get(attempt_id)
@@ -168,6 +170,13 @@ def build_history(records: list[dict[str, Any]]) -> History:
             if record["type"] == "attempt_finished":
                 attempt.finished_at = attempt.finished_at or record["at"]
     return History(list(attempts.values()), notices, records)
+
+
+def _limit_minutes(record: dict[str, Any]) -> int | None:
+    """The chosen limit, or None when absent or not a positive whole number."""
+    limit = record.get("limit_minutes")
+    valid = isinstance(limit, int) and not isinstance(limit, bool) and limit > 0
+    return limit if valid else None
 
 
 def find_attempt(history: History, text: str) -> Attempt:

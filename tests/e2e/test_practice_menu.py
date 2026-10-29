@@ -67,7 +67,8 @@ def test_the_numbered_flow_runs_two_sum_end_to_end(
     assert main_menu.returncode == 0, main_menu.stderr
     assert "1. Resume your active attempt" in main_menu.stdout
     assert "5. Get a recommendation" in main_menu.stdout
-    assert "Not available yet." in main_menu.stdout  # Study and timed practice.
+    assert "6. Study a concept" in main_menu.stdout
+    assert "Not available yet." not in main_menu.stdout
 
     browse = practice(learner, problems, "menu", "choose", "2")
     assert browse.returncode == 0, browse.stderr
@@ -122,11 +123,11 @@ def test_a_problem_without_a_package_is_pending_and_never_started(
     assert not (learner / "journal.jsonl").exists()
 
 
-def test_unavailable_future_items_do_nothing(learner: Path, problems: Path) -> None:
-    result = practice(learner, problems, "menu", "choose", "6")
+def test_an_unavailable_item_does_nothing(learner: Path, problems: Path) -> None:
+    result = practice(learner, problems, "menu", "choose", "1")
 
     assert result.returncode == 1
-    assert "Not available yet." in result.stdout
+    assert "No unfinished attempt." in result.stdout
     assert "Nothing was done." in result.stdout
     assert not (learner / "journal.jsonl").exists()
 

@@ -159,6 +159,8 @@ third is LeetCode 242 Valid Anagram, path `python/0242-valid-anagram.py`, and th
 fourth is LeetCode 20 Valid Parentheses, path `python/0020-valid-parentheses.py`, and the
 fifth is LeetCode 704 Binary Search, path `python/0704-binary-search.py`, and the
 sixth is LeetCode 121 Best Time to Buy and Sell Stock, path
-`python/0121-best-time-to-buy-and-sell-stock.py`. Their
+`python/0121-best-time-to-buy-and-sell-stock.py`. Five concept units for study mode
+(Hello Algo, Runestone and OpenDSA, each pinned to its own commit and carrying its own
+notice) were added later; see [study mode](study-mode.md). Their
 platform acceptance and local validation are all `none`; the runnable adapters carry
 the validation evidence.

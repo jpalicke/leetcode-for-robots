@@ -7,7 +7,7 @@ uses the network.
 
 ```text
 uv run --locked practice request ATTEMPT_ID --action ACTION
-    [--mode practice|study] [--timed] [--reveal LEVEL|solution] [--package DIR]
+    [--mode practice|study] [--reveal LEVEL|solution] [--package DIR]
 ```
 
 `ATTEMPT_ID` is an exact attempt id or a unique prefix. The request is printed to
@@ -28,8 +28,8 @@ is exactly the text to paste.
 | `concept-refresher` | ask which concept, then refresh it | none |
 
 - Mode is `practice` unless `--mode study` is given for that request.
-- Timing is `untimed` unless `--timed` is given for that request. It is never read
-  from the attempt and never carried to a later request.
+- Timing is `untimed` unless the attempt was started with `--timed`. It is read from
+  that attempt only, shown as evidence, and never carried to another attempt.
 - A plain `hint` request asks for the level after the highest hint recorded in the
   journal (level 0 when none). `--reveal N` asks for level `N` instead. Levels
   come from the package's `hints/index.json`; a level it does not list is refused,

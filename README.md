@@ -25,7 +25,7 @@ uv run --locked practice knowledge export leetcode 1 --hint-level 2
 ```
 
 The default exports only the statement summary. Solutions, selected references and
-study material need explicit scope; learner data is always excluded. See
+study material (see [study mode](docs/study-mode.md)) need explicit scope; learner data is always excluded. See
 [knowledge export](docs/knowledge-export.md) for reveal rules and the JSON contract.
 
 Validate the curriculum map and list the next eligible objectives without learner history:
@@ -142,6 +142,14 @@ is `[ready]` only when its package passes `practice readiness`; premium problems
 `[blocked]` and everything else is `[pending]`. See [problem lists](docs/lists.md) for
 the ten lists, their sources and terms, and how to add one.
 
+## Catalog mapping
+
+Every catalog problem is assigned to exactly one preparation ticket in
+`catalog/ticket-plan.json`, grouped by concept and difficulty with premium, SQL and
+other non-Python problems kept apart. Check it with
+`uv run --locked python tools/plan_catalog.py check`, and see coverage with `report`.
+See [catalog mapping](docs/catalog-mapping.md). GitHub tickets are not created yet.
+
 ## Tutor contract
 
 ```text
@@ -191,7 +199,9 @@ touched by it. Intake itself never runs the code and claims nothing about correc
   requests to paste into an existing agent chat.
 - Full LeetCode catalog coverage, with preparation tracked as development tasks
   in GitHub issues. Six easy exercises form the first validated batch.
-- Study and practice modes; timed practice is strictly optional.
+- Study and practice modes; study is an explicit choice from the menu, with cited
+  units described in [study mode](docs/study-mode.md). Timed practice is strictly
+  optional.
 - Local completion, explanation grading, and LeetCode acceptance tracked separately.
 - Personal attempts, progress, notes, and generated requests excluded from Git by default.
 - Locally stored reference code with citations, preserved source notices, and

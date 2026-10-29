@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "runestone-pythonds-stack-concept",
+  "kind": "upstream",
+  "title": "Runestone: What is a Stack?",
+  "language": "python",
+  "classification": "teaching_explanation",
+  "file": {
+    "path": "upstream/runestone-pythonds-stack-concept/WhatisaStack.rst",
+    "sha256": "8cece2af2c70c06ffac1113331155addfd7ca817080c115e86816bc257096616"
+  },
+  "license": {
+    "identifier": "CC-BY-NC-SA-4.0",
+    "terms": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0: give credit, link the license and indicate changes; noncommercial use only; share adaptations under the same license.",
+    "policy_note": "Study mode only. The project is noncommercial (approved by Joe P, docs/reference-sources.md). Share-alike and noncommercial terms stay with this unit: the file is preserved unchanged, cited with its license, and any adaptation must keep the same license.",
+    "notice": {
+      "path": "upstream/runestone-pythonds-stack-concept/LICENSE.txt",
+      "sha256": "90e9ef4bcf0eb8e9b770aa357da597047b7e36dafa02366dae5cf743a9390393"
+    }
+  },
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T03:01:25+00:00",
+    "method": "http_fetch",
+    "fetched_urls": [
+      "https://raw.githubusercontent.com/RunestoneInteractive/pythonds/946c02ed651768bc99ea9751961fabd20bb8194d/_sources/BasicDS/WhatisaStack.rst",
+      "https://raw.githubusercontent.com/RunestoneInteractive/pythonds/946c02ed651768bc99ea9751961fabd20bb8194d/LICENSE.txt"
+    ],
+    "actor": "Claude Code for Joe P",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "published",
+      "url": "https://github.com/RunestoneInteractive/pythonds/blob/946c02ed651768bc99ea9751961fabd20bb8194d/_sources/BasicDS/WhatisaStack.rst",
+      "repository": "https://github.com/RunestoneInteractive/pythonds",
+      "revision": "946c02ed651768bc99ea9751961fabd20bb8194d",
+      "path": "_sources/BasicDS/WhatisaStack.rst"
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "none",
+      "code_sha256": null,
+      "run_at": null,
+      "suite_sha256": null,
+      "suite_version": null,
+      "runner": null
+    }
+  }
+}

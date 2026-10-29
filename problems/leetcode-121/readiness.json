@@ -17,6 +17,7 @@
     "adaptations": ["neetcode-leetcode-0121-best-time-to-buy-and-sell-stock-python-function-adapter"],
     "originals": ["original-leetcode-0121-highest-price-ahead-python"]
   },
+  "knowledge_sources": ["hello-algo-array-concept"],
   "verification": {
     "checked_on": "2026-10-29",
     "verified": [

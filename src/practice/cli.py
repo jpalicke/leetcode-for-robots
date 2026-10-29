@@ -244,7 +244,15 @@ def add_menu_commands(
     )
     menu.add_argument("--reviews", action="store_true", help="the menu of due reviews")
     menu.add_argument(
+        "--timed",
+        action="store_true",
+        help="the timed practice screens; the opt-in is for one started attempt only",
+    )
+    menu.add_argument(
         "--recommend", action="store_true", help="the menu with the recommendation"
+    )
+    menu.add_argument(
+        "--study", action="store_true", help="the study mode screen (your opt-in)"
     )
     menu.add_argument(
         "--confirm-reveal",
@@ -269,7 +277,17 @@ def add_attempt_commands(
     start.add_argument("problem_id")
     start.add_argument("--language", choices=LANGUAGES, default="python")
     start.add_argument("--mode", choices=MODES, default="practice")
-    start.add_argument("--timed", action="store_true", help="mark this attempt timed")
+    start.add_argument(
+        "--timed",
+        action="store_true",
+        help="time this attempt only; never carried to a later attempt",
+    )
+    start.add_argument(
+        "--limit-minutes",
+        type=int,
+        default=None,
+        help="optional time limit in minutes; needs --timed",
+    )
     start.add_argument("--package", type=Path, default=None, help=package_help)
 
     for name, text in (
@@ -331,6 +349,11 @@ def add_attempt_commands(
 
     finish = actions.add_parser("finish", help="close an attempt, keeping its history")
     finish.add_argument("attempt_id")
+
+    elapsed = actions.add_parser(
+        "time", help="show an attempt's timing evidence, apart from feedback and tests"
+    )
+    elapsed.add_argument("attempt_id")
 
     progress = commands.add_parser("progress", help="show progress from the journal")
     progress.add_argument("platform", nargs="?")
@@ -424,11 +447,6 @@ def add_request_command(
     )
     request.add_argument(
         "--mode", choices=MODES, default="practice", help="default: practice"
-    )
-    request.add_argument(
-        "--timed",
-        action="store_true",
-        help="timed practice for this request only; never carried forward",
     )
     request.add_argument(
         "--reveal",

@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "ticket_size": 100,
+  "individual": [
+    {
+      "problem": 1,
+      "issue": 20
+    },
+    {
+      "problem": 217,
+      "issue": 21
+    },
+    {
+      "problem": 242,
+      "issue": 22
+    },
+    {
+      "problem": 20,
+      "issue": 23
+    },
+    {
+      "problem": 704,
+      "issue": 24
+    },
+    {
+      "problem": 121,
+      "issue": 25
+    }
+  ],
+  "specialized": [
+    {
+      "id": "premium",
+      "title": "premium problems",
+      "reason": "Premium problems cannot be read without a LeetCode subscription.",
+      "match": {
+        "premium": true
+      }
+    },
+    {
+      "id": "sql",
+      "title": "SQL problems",
+      "reason": "SQL problems need a database runner; the runner calls Python functions only.",
+      "match": {
+        "categories": [
+          "database"
+        ]
+      }
+    },
+    {
+      "id": "pandas",
+      "title": "pandas problems",
+      "reason": "pandas problems need a dataframe adapter and the pandas package.",
+      "match": {
+        "categories": [
+          "pandas"
+        ]
+      }
+    },
+    {
+      "id": "shell",
+      "title": "shell problems",
+      "reason": "Shell problems need a shell runner.",
+      "match": {
+        "categories": [
+          "shell"
+        ]
+      }
+    },
+    {
+      "id": "concurrency",
+      "title": "concurrency problems",
+      "reason": "Concurrency problems need a threaded harness and a way to judge ordering.",
+      "match": {
+        "categories": [
+          "concurrency"
+        ]
+      }
+    },
+    {
+      "id": "javascript",
+      "title": "JavaScript problems",
+      "reason": "These problems are JavaScript only; this project runs Python.",
+      "match": {
+        "categories": [
+          "javascript"
+        ]
+      }
+    },
+    {
+      "id": "interactive",
+      "title": "interactive problems",
+      "reason": "Interactive problems need an interactor adapter that answers the solution's queries.",
+      "match": {
+        "topics": [
+          "interactive"
+        ]
+      }
+    },
+    {
+      "id": "design",
+      "title": "stateful design problems",
+      "reason": "Design problems build a class and replay a call sequence; the runner has no stateful adapter.",
+      "match": {
+        "topics": [
+          "design"
+        ]
+      }
+    }
+  ],
+  "ignored_tags": [
+    "concurrency",
+    "database",
+    "design",
+    "interactive",
+    "shell"
+  ],
+  "ignored_tags_note": "Handled by a specialized rule above, so they place no problem in a concept.",
+  "concepts": [
+    {
+      "id": "dp",
+      "tags": [
+        "0-1-knapsack",
+        "complete-knapsack",
+        "dp-on-trees",
+        "dynamic-programming",
+        "knapsack-problem",
+        "longest-common-subsequence",
+        "longest-increasing-subsequence",
+        "memoization",
+        "mixed-knapsack",
+        "multiple-knapsack"
+      ]
+    },
+    {
+      "id": "graphs",
+      "tags": [
+        "0-1-bfs",
+        "a-search",
+        "articulation-point",
+        "bellman-ford-algorithm",
+        "biconnected-component",
+        "bidirectional-search",
+        "bipartite-graph",
+        "boruvkas-algorithm",
+        "breadth-first-search",
+        "bridge-graph",
+        "depth-first-search",
+        "dijkstra",
+        "dinics-algorithm",
+        "directed-acyclic-graph",
+        "edmonds-karp-algorithm",
+        "eulerian-circuit",
+        "eulerian-graph",
+        "eulerian-path",
+        "flow-network",
+        "floyd-warshall-algorithm",
+        "graph",
+        "graph-coloring",
+        "hamiltonian-path",
+        "heuristic-search",
+        "hungarian-algorithm",
+        "k-shortest-path",
+        "kosarajus-algorithm",
+        "kruskals-algorithm",
+        "matching-graph",
+        "maximum-flow",
+        "maximum-matching",
+        "minimum-cost-flow",
+        "minimum-cut",
+        "minimum-spanning-tree",
+        "mpm-algorithm",
+        "perfect-matching",
+        "planar-graph",
+        "prims-algorithm",
+        "push-relabel-algorithm",
+        "semi-eulerian-graph",
+        "shortest-path",
+        "strongly-connected-component",
+        "successive-shortest-path-algorithm",
+        "tarjans-scc-algorithm",
+        "topological-sort",
+        "union-find"
+      ]
+    },
+    {
+      "id": "trees",
+      "tags": [
+        "binary-indexed-tree",
+        "binary-lifting",
+        "binary-search-tree",
+        "binary-tree",
+        "cartesian-tree",
+        "heap",
+        "heap-priority-queue",
+        "k-d-tree",
+        "li-chao-tree",
+        "lowest-common-ancestor",
+        "ordered-set",
+        "palindromic-tree",
+        "persistent-data-structure",
+        "range-minimum-maximum-query",
+        "segment-tree",
+        "splay-tree",
+        "sqrt-decomposition",
+        "suffix-automaton",
+        "suffix-tree",
+        "treap",
+        "tree",
+        "trie"
+      ]
+    },
+    {
+      "id": "linked",
+      "tags": [
+        "doubly-linked-list",
+        "floyds-cycle-finding-algorithm",
+        "linked-list"
+      ],
+      "note": "Many of these use a list node; the runner has no node adapter yet (#7)."
+    },
+    {
+      "id": "lookup",
+      "tags": [
+        "boyer-moore-majority-vote-algorithm",
+        "counting",
+        "data-stream",
+        "hash-function",
+        "hash-table",
+        "rolling-hash"
+      ]
+    },
+    {
+      "id": "strings",
+      "tags": [
+        "aho-corasick-algorithm",
+        "boyer-moore-string-search-algorithm",
+        "bracket-sequences",
+        "knuth-morris-pratt-algorithm",
+        "lexicographically-minimal-string-rotation",
+        "lyndon-factorization",
+        "manacher",
+        "string",
+        "string-matching",
+        "suffix-array",
+        "z-algorithm"
+      ]
+    },
+    {
+      "id": "sequences",
+      "tags": [
+        "algorithm-x",
+        "backtracking",
+        "binary-search",
+        "brute-force-search",
+        "bubble-sort",
+        "bucket-sort",
+        "counting-sort",
+        "dancing-links",
+        "divide-and-conquer",
+        "greedy",
+        "line-sweep",
+        "meet-in-the-middle",
+        "merge-sort",
+        "monotonic-queue",
+        "monotonic-stack",
+        "prefix-sum",
+        "queue",
+        "quickselect",
+        "quicksort",
+        "radix-sort",
+        "recursion",
+        "simulation",
+        "sliding-window",
+        "sort",
+        "sorting",
+        "stack",
+        "sweep-line",
+        "ternary-search",
+        "timsort",
+        "tournament-sort",
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "arrays",
+      "tags": [
+        "array",
+        "bezouts-lemma",
+        "bit-manipulation",
+        "bitmask",
+        "brainteaser",
+        "combinatorics",
+        "convex-hull",
+        "enumeration",
+        "euclidean-algorithm",
+        "eulers-theorem",
+        "eulers-totient-function",
+        "extended-euclidean-algorithm",
+        "fermats-little-theorem",
+        "game-theory",
+        "geometry",
+        "greatest-common-divisor",
+        "impartial-game",
+        "inclusion-exclusion-principle",
+        "iterator",
+        "least-common-multiple",
+        "linear-algebra",
+        "math",
+        "matrix",
+        "minimax-algorithm",
+        "minimum-enclosing-circle",
+        "nearest-pair-of-points",
+        "newtons-method",
+        "nim-game",
+        "number-theory",
+        "pigeonhole-principle",
+        "polygons",
+        "primality-test",
+        "prime-factorization",
+        "prime-number-sieve",
+        "probability-and-statistics",
+        "randomized",
+        "rejection-sampling",
+        "reservoir-sampling",
+        "sieve-theory",
+        "sparse-table",
+        "sprague-grundy-theorem",
+        "triangulation",
+        "zero-sum-game"
+      ]
+    }
+  ],
+  "fallback": {
+    "id": "uncategorised",
+    "title": "problems with no topic tags",
+    "note": "LeetCode lists no topic tags for these problems.",
+    "split_by_difficulty": false
+  }
+}

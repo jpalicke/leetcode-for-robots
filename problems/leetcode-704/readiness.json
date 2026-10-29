@@ -17,6 +17,7 @@
     "adaptations": ["neetcode-leetcode-0704-binary-search-python-function-adapter"],
     "originals": ["original-leetcode-0704-binary-search-half-open-python"]
   },
+  "knowledge_sources": ["hello-algo-binary-search-concept", "hello-algo-array-concept"],
   "verification": {
     "checked_on": "2026-10-29",
     "verified": [

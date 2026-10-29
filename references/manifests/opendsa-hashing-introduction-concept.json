@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "opendsa-hashing-introduction-concept",
+  "kind": "upstream",
+  "title": "OpenDSA: Introduction to Hashing",
+  "language": "python",
+  "classification": "teaching_explanation",
+  "file": {
+    "path": "upstream/opendsa-hashing-introduction-concept/HashIntro.rst",
+    "sha256": "625a0be83942a3d73c40c54f12d23b1622d73ec5b649e1765bbf09eec7265cc6"
+  },
+  "license": {
+    "identifier": "MIT",
+    "terms": "MIT: keep the copyright and permission notice with copies of the material; no other conditions.",
+    "policy_note": null,
+    "notice": {
+      "path": "upstream/opendsa-hashing-introduction-concept/MIT-license.txt",
+      "sha256": "a4d83bb66f3f9058c49a9795583fe20a4256def38e9bc365c76c40affaf20709"
+    }
+  },
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T03:01:26+00:00",
+    "method": "http_fetch",
+    "fetched_urls": [
+      "https://raw.githubusercontent.com/OpenDSA/OpenDSA/f900a7aa3d7fd4289b82a767e4958974eb3e9d17/RST/en/Hashing/HashIntro.rst",
+      "https://raw.githubusercontent.com/OpenDSA/OpenDSA/f900a7aa3d7fd4289b82a767e4958974eb3e9d17/MIT-license.txt"
+    ],
+    "actor": "Claude Code for Joe P",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "published",
+      "url": "https://github.com/OpenDSA/OpenDSA/blob/f900a7aa3d7fd4289b82a767e4958974eb3e9d17/RST/en/Hashing/HashIntro.rst",
+      "repository": "https://github.com/OpenDSA/OpenDSA",
+      "revision": "f900a7aa3d7fd4289b82a767e4958974eb3e9d17",
+      "path": "RST/en/Hashing/HashIntro.rst"
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "none",
+      "code_sha256": null,
+      "run_at": null,
+      "suite_sha256": null,
+      "suite_version": null,
+      "runner": null
+    }
+  }
+}

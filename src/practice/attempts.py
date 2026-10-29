@@ -7,6 +7,7 @@ import uuid
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
+from typing import Any
 
 from practice import clock
 from practice.catalog import Catalog
@@ -21,6 +22,7 @@ from practice.journal import JournalError
 from practice.package import ExercisePackage
 from practice.rubric import ExplanationScores, RubricError
 from practice.runner import RunResult, run_exercise
+from practice.timing import TimingError, validate_limit
 
 LANGUAGES = ("python",)
 MODES = ("practice", "study")
@@ -35,6 +37,7 @@ class StartedAttempt:
     attempt_id: str
     code_path: Path
     starter_source: str
+    started_at: str
 
 
 def start_attempt(
@@ -47,6 +50,7 @@ def start_attempt(
     language: str,
     mode: str,
     timed: bool,
+    limit_minutes: int | None = None,
     review: bool = False,
 ) -> StartedAttempt:
     """Create a new blank attempt. Earlier attempts and their code are untouched."""
@@ -69,6 +73,10 @@ def start_attempt(
     _require_package_matches(package, platform, problem_id)
     if package.language != language:
         raise AttemptError(f"the package is for {package.language}, not {language}")
+    try:
+        validate_limit(timed, limit_minutes)
+    except TimingError as error:
+        raise AttemptError(str(error)) from error
 
     starter, starter_source = _starter_for(package)
     attempt_id = f"{clock.now():%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
@@ -82,10 +90,12 @@ def start_attempt(
     except OSError as error:
         raise AttemptError(f"cannot create {code_path}: {error}") from error
     marker = {"review": True} if review else {}
-    _append(
+    limit = {"limit_minutes": limit_minutes} if limit_minutes is not None else {}
+    record = _append(
         practice_dir,
         "attempt_started",
         **marker,
+        **limit,
         attempt_id=attempt_id,
         platform=platform,
         problem_id=problem_id,
@@ -97,7 +107,7 @@ def start_attempt(
         starter_source=starter_source,
         starter_sha256=hashlib.sha256(starter).hexdigest(),
     )
-    return StartedAttempt(attempt_id, code_path, starter_source)
+    return StartedAttempt(attempt_id, code_path, starter_source, record["at"])
 
 
 def run_attempt_tests(
@@ -252,8 +262,8 @@ def _require_package_matches(
         )
 
 
-def _append(practice_dir: Path, event_type: str, **fields: object) -> None:
+def _append(practice_dir: Path, event_type: str, **fields: object) -> dict[str, Any]:
     try:
-        journal_for(practice_dir).append(event_type, **fields)
+        return journal_for(practice_dir).append(event_type, **fields)
     except JournalError as error:
         raise AttemptError(str(error)) from error

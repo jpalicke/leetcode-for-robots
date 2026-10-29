@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "hello-algo-binary-search-concept",
+  "kind": "upstream",
+  "title": "Hello Algo: Binary Search",
+  "language": "python",
+  "classification": "teaching_explanation",
+  "file": {
+    "path": "upstream/hello-algo-binary-search-concept/binary_search.md",
+    "sha256": "92e5771e8e4cd08da0d2338f9be4a44a13af2f10a37b1834e41386823bf71bcb"
+  },
+  "license": {
+    "identifier": "CC-BY-NC-SA-4.0",
+    "terms": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0: give credit, link the license and indicate changes; noncommercial use only; share adaptations under the same license.",
+    "policy_note": "Study mode only. The project is noncommercial (approved by Joe P, docs/reference-sources.md). Share-alike and noncommercial terms stay with this unit: the file is preserved unchanged, cited with its license, and any adaptation must keep the same license.",
+    "notice": {
+      "path": "upstream/hello-algo-binary-search-concept/LICENSE",
+      "sha256": "1349a4b6148492b44f629e64eed676612e234fe9a839e4f3b277c1482c8849f1"
+    }
+  },
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T03:01:25+00:00",
+    "method": "http_fetch",
+    "fetched_urls": [
+      "https://raw.githubusercontent.com/krahets/hello-algo/2f561d3d51878063a02667ab7903962f009925f4/en/docs/chapter_searching/binary_search.md",
+      "https://raw.githubusercontent.com/krahets/hello-algo/2f561d3d51878063a02667ab7903962f009925f4/LICENSE"
+    ],
+    "actor": "Claude Code for Joe P",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "published",
+      "url": "https://github.com/krahets/hello-algo/blob/2f561d3d51878063a02667ab7903962f009925f4/en/docs/chapter_searching/binary_search.md",
+      "repository": "https://github.com/krahets/hello-algo",
+      "revision": "2f561d3d51878063a02667ab7903962f009925f4",
+      "path": "en/docs/chapter_searching/binary_search.md"
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "none",
+      "code_sha256": null,
+      "run_at": null,
+      "suite_sha256": null,
+      "suite_version": null,
+      "runner": null
+    }
+  }
+}
