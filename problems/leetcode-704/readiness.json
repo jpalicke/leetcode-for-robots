@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "platform": "leetcode",
+  "problem_id": "704",
+  "slug": "binary-search",
+  "title": "Binary Search",
+  "difficulty": "easy",
+  "language": "python",
+  "files": {
+    "statement": {"path": "statement.md", "content_class": "statement_summary"},
+    "notes": {"path": "notes.md", "content_class": "reference_solution"},
+    "hints": "hints/index.json",
+    "starter": "starter.py"
+  },
+  "references": {
+    "upstream": ["neetcode-leetcode-0704-binary-search-python"],
+    "adaptations": ["neetcode-leetcode-0704-binary-search-python-function-adapter"],
+    "originals": ["original-leetcode-0704-binary-search-half-open-python"]
+  },
+  "verification": {
+    "checked_on": "2026-10-29",
+    "verified": [
+      {
+        "fact": "Problem 704 is titled Binary Search, slug binary-search, difficulty easy, not premium.",
+        "against": "catalog/leetcode.json (snapshot 2026-10-28) and the live LeetCode GraphQL question endpoint"
+      },
+      {
+        "fact": "The method is search(nums, target); nums is integer[], target is integer, the return is an integer. The Python3 stub is class Solution with search(self, nums: list[int], target: int) -> int.",
+        "against": "the live LeetCode GraphQL metaData field and the python3 codeSnippets entry"
+      },
+      {
+        "fact": "Constraints: 1 <= nums.length <= 10^4, -10^4 < nums[i], target < 10^4 (strict), all integers in nums are unique, and nums is sorted in ascending order. The problem asks for O(log n) runtime.",
+        "against": "the live LeetCode GraphQL content field"
+      },
+      {
+        "fact": "The page lists two examples: nums = [-1,0,3,5,9,12] with target 9 gives 4, and with target 2 gives -1. They are cases platform-example-1 and 2 in the suite.",
+        "against": "the live LeetCode GraphQL content field"
+      },
+      {
+        "fact": "The upstream NeetCode file python/0704-binary-search.py exists at revision 8fed5f7daa6a517e375a0562d876e4a72dfdafb8 and is preserved byte for byte with its MIT notice.",
+        "against": "raw.githubusercontent.com, compared with the preserved copy"
+      }
+    ],
+    "not_verified": [
+      "The problem requires O(log n) time. The local runner checks answers and total run time only, and at 10^4 entries a linear scan finishes instantly, so a correct O(n) answer passes locally. The requirement is stated to the learner but not enforced.",
+      "The rendered problem page was not viewed in a browser; only the GraphQL fields were read.",
+      "LeetCode's hidden tests and judge limits were not observed, so nothing here says the local suite matches them.",
+      "No solution was submitted to LeetCode; platform acceptance stays none for every reference.",
+      "The class-method form is not run locally: the runner calls a top-level function, so learners paste the body into class Solution when they submit."
+    ]
+  },
+  "blockers": []
+}

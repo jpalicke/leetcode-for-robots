@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "id": "original-leetcode-0704-binary-search-half-open-python",
+  "kind": "original",
+  "title": "Original: 704. Binary Search with a half-open window",
+  "language": "python",
+  "classification": "reference_solution",
+  "file": {
+    "path": "original/original-leetcode-0704-binary-search-half-open-python/binary_search_half_open.py",
+    "sha256": "31c5af9d3918e4e584152fbc5cff21e71261a1d36f405a3fe78dfbb71cfde99a"
+  },
+  "license": null,
+  "derived_from": null,
+  "transformation": null,
+  "acquisition": {
+    "acquired_at": "2026-10-29T02:03:39+00:00",
+    "method": "authored",
+    "fetched_urls": [],
+    "actor": "Claude Code agent running practice sources add-local for jpalicke",
+    "tool": {
+      "name": "practice",
+      "version": "0.1.0"
+    }
+  },
+  "evidence": {
+    "publication": {
+      "status": "unpublished",
+      "url": null,
+      "repository": null,
+      "revision": null,
+      "path": null
+    },
+    "platform_acceptance": {
+      "status": "none",
+      "platform": null,
+      "evidence": null
+    },
+    "local_validation": {
+      "status": "passed",
+      "code_sha256": "31c5af9d3918e4e584152fbc5cff21e71261a1d36f405a3fe78dfbb71cfde99a",
+      "run_at": "2026-10-29T02:03:40+00:00",
+      "suite_sha256": "969a6cac7bdbe763500e44751c2d5c38a69bdba166ce3e7529ba48abf92e8bb7",
+      "suite_version": "leetcode-704-v1",
+      "runner": "practice run"
+    }
+  }
+}
