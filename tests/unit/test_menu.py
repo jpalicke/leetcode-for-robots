@@ -67,32 +67,58 @@ def test_main_menu_with_no_history_has_the_documented_items(
     assert item(menu, "progress").available
 
 
-@pytest.mark.parametrize("key", ["study"])
-def test_future_features_are_listed_but_say_not_available_yet(
-    menu_env: MenuEnvironment, key: str
-) -> None:
-    entry = item(build_menu(menu_env, MAIN), key)
-
-    assert not entry.available
-    assert entry.reason is not None
-    assert "not available yet" in entry.reason.lower()
-
-
-@pytest.mark.parametrize("key", ["study"])
-def test_choosing_a_future_feature_does_nothing_and_does_not_claim_success(
-    menu_env: MenuEnvironment, key: str
+def test_study_is_an_available_main_menu_item_that_opens_the_study_screen(
+    menu_env: MenuEnvironment,
 ) -> None:
     menu = build_menu(menu_env, MAIN)
-    before = journal_bytes(menu_env)
 
-    result = choose(menu_env, MAIN, number_of(menu, key))
+    assert item(menu, "study").available
+    result = choose(menu_env, MAIN, number_of(menu, "study"))
+    assert result.code == 0
+    assert result.next_screen == Screen("study")
+    assert journal_bytes(menu_env) == b""
 
-    assert result.code != 0
-    assert "not available yet" in result.stdout.lower()
-    assert "nothing was done" in result.stdout.lower()
-    assert result.next_screen == MAIN
-    assert journal_bytes(menu_env) == before
-    assert not (menu_env.practice_dir / "attempts").exists()
+
+def test_the_study_screen_lists_only_problems_that_have_study_units(
+    menu_env: MenuEnvironment,
+) -> None:
+    menu = build_menu(menu_env, Screen("study"))
+
+    assert keys(menu) == ["study-start", "main"]
+    label = item(menu, "study-start").label
+    assert "Two Sum" in label
+    assert "Hello Algo: Hash Table" in label
+    assert any("never authorizes a full solution" in line for line in menu.lines)
+
+
+def test_choosing_a_study_problem_starts_a_study_mode_attempt_and_hands_off(
+    menu_env: MenuEnvironment,
+) -> None:
+    screen = Screen("study")
+    menu = build_menu(menu_env, screen)
+
+    result = choose(menu_env, screen, number_of(menu, "study-start"))
+
+    assert result.code == 0, result.stderr
+    attempt = find_attempt(
+        load_history(menu_env.practice_dir), result.next_screen.attempt_id
+    )
+    assert attempt.mode == "study"
+    assert (
+        "practice knowledge export leetcode 1 --mode study "
+        "--source hello-algo-hash-table-concept"
+    ) in result.stdout
+    assert "Paste-ready request for the tutor:" in result.stdout
+    assert "CC-BY-NC-SA-4.0" in result.stdout
+    assert "NonCommercial-ShareAlike" in result.stdout
+    assert "(revision 2f561d3d51878063a02667ab7903962f009925f4)" in result.stdout
+
+
+def test_other_starts_stay_in_practice_mode(menu_env: MenuEnvironment) -> None:
+    assert start_two_sum(menu_env)
+    attempts = load_history(menu_env.practice_dir).attempts
+
+    assert [a.mode for a in attempts] == ["practice"]
 
 
 def test_resume_is_refused_when_there_is_no_active_attempt(

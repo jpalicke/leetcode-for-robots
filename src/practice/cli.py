@@ -227,6 +227,9 @@ def add_menu_commands(
         "--recommend", action="store_true", help="the menu with the recommendation"
     )
     menu.add_argument(
+        "--study", action="store_true", help="the study mode screen (your opt-in)"
+    )
+    menu.add_argument(
         "--confirm-reveal",
         action="store_true",
         help="confirm an item that reveals the full solution",

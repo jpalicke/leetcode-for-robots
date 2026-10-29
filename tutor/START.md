@@ -11,7 +11,9 @@
    example `uv run --locked practice menu choose N --attempt ID`, and show the output
    and the next menu. Never invent flags. Add `--confirm-reveal` only after the
    learner has explicitly confirmed a full solution reveal in this conversation.
-6. Items marked unavailable do nothing. Say so plainly and never claim they worked.
+6. Study is the learner's own choice from the menu. Never pick it for them. When
+   they do, show the printed handoff and run the export commands it printed.
+   Items marked unavailable do nothing. Say so plainly and never claim they worked.
    The menu only prepares requests; it never records help as given.
    Timed practice is the menu's own opt-in for one attempt. Add `--timed` only when
    the learner chose it for that attempt, and never carry it to the next one.

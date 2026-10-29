@@ -62,6 +62,8 @@ def screen_flags(screen: Screen) -> str:
         return " --reviews"
     if screen.kind == "recommend":
         return " --recommend"
+    if screen.kind == "study":
+        return " --study"
     if screen.kind == "browse":
         return " --browse" + "".join(f" {word}" for word in screen.words) + timed
     return ""
@@ -96,6 +98,8 @@ def screen_from_args(args: argparse.Namespace) -> Screen:
         return Screen("reviews")
     if args.recommend:
         return Screen("recommend")
+    if args.study:
+        return Screen("study")
     return MAIN
 
 

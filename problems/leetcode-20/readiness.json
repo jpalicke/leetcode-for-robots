@@ -17,6 +17,7 @@
     "adaptations": ["neetcode-leetcode-0020-valid-parentheses-python-function-adapter"],
     "originals": ["original-leetcode-0020-valid-parentheses-pair-removal-python"]
   },
+  "knowledge_sources": ["runestone-pythonds-stack-concept"],
   "verification": {
     "checked_on": "2026-10-29",
     "verified": [

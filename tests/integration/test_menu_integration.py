@@ -155,12 +155,17 @@ def test_terminal_menu_timed_item_opts_in_for_one_attempt_only(
     assert "Timer started" in capsys.readouterr().out
 
 
-def test_terminal_menu_says_unavailable_items_are_not_available_yet(
+def test_terminal_menu_study_item_starts_a_study_mode_attempt(
     menu_env: MenuEnvironment, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    # Item 6 (study mode) is still not available yet, then leave.
-    code = tui_flow(menu_env, f"6{ENTER}{CTRL_C}")
+    # Item 6 is study mode: pick the problem, then leave with Ctrl-C.
+    code = tui_flow(menu_env, f"6{ENTER}1{ENTER}{CTRL_C}")
 
     assert code == 0
-    assert "Not available yet" in capsys.readouterr().out
-    assert records(menu_env.practice_dir) == []
+    started = [
+        r for r in records(menu_env.practice_dir) if r["type"] == "attempt_started"
+    ]
+    assert [r["mode"] for r in started] == ["study"]
+    output = capsys.readouterr().out
+    assert "Paste-ready request for the tutor:" in output
+    assert "practice knowledge export leetcode 1 --mode study" in output

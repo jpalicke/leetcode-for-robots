@@ -17,6 +17,7 @@
     "adaptations": ["neetcode-leetcode-0217-contains-duplicate-python-function-adapter"],
     "originals": ["original-leetcode-0217-contains-duplicate-sorted-neighbours-python"]
   },
+  "knowledge_sources": ["opendsa-hashing-introduction-concept", "hello-algo-hash-table-concept"],
   "verification": {
     "checked_on": "2026-10-29",
     "verified": [

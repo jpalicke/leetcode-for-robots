@@ -195,8 +195,7 @@ def test_the_tutor_request_names_timing_only_for_a_timed_attempt(
 def test_the_menu_timed_item_opts_in_for_one_attempt_only(learner: Learner) -> None:
     main = learner.ok("menu")
     assert "Timed practice" in main
-    assert "Unavailable: Not available yet." in main  # Study alone remains.
-    assert main.count("Not available yet.") == 1
+    assert "Not available yet." not in main
 
     timed_item = learner.number([], "Timed practice")
     browse = learner.ok("menu", "choose", timed_item)

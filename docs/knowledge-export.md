@@ -31,7 +31,7 @@ index. Wrong-language, unrelated and unknown sources fail clearly.
 `--mode study --source ID` can admit selected `teaching_explanation` prose (Markdown,
 plain text or reStructuredText). General DSA prose can reveal the current problem's
 strategy, so practice mode excludes it even though the shared vocabulary does not
-mark it as a spoiler. Study mode does not authorize complete solutions or source
+mark it as a spoiler. Study mode (see [study mode](study-mode.md)) does not authorize complete solutions or source
 code. Code needs explicit `--source` plus `--reveal-solution`; test data and every
 learner content class stay excluded in every mode. Registered hint sources are
 excluded: select a numbered problem hint instead.
