@@ -22,6 +22,7 @@ from practice.exit_codes import EXIT_BAD_INPUT, EXIT_NOT_PASSED, EXIT_USAGE
 from practice.package import PackageError, load_package
 from practice.paths import REFERENCES_DIR, REPO_ROOT, resolve_practice_dir
 from practice.readiness_commands import run_readiness_command
+from practice.rubric import APPROACH_MAX, CORRECTNESS_MAX, SPACE_BONUS_MAX, TIME_MAX
 from practice.runner import RunResult, run_exercise
 from practice.search import search
 from practice.source_commands import run_sources_command
@@ -124,6 +125,36 @@ def add_attempt_commands(
     verdict.add_argument("--status", choices=VERDICT_STATUSES, required=True)
     verdict.add_argument("--source", required=True, help="where you saw the verdict")
     verdict.add_argument("--date", default=None, help="ISO date (default: today, UTC)")
+
+    explain = actions.add_parser(
+        "explain",
+        help="record an explanation assessment, separate from tests and optimization",
+    )
+    explain.add_argument("attempt_id")
+    for flag, limit, text in (
+        ("approach", APPROACH_MAX, "the approach"),
+        ("correctness", CORRECTNESS_MAX, "why it works"),
+        ("time", TIME_MAX, "time complexity"),
+        ("space", SPACE_BONUS_MAX, "space complexity, a bonus outside the core 10"),
+    ):
+        explain.add_argument(
+            f"--{flag}",
+            type=int,
+            default=None,
+            help=f"{text}, 0 to {limit}; leave out if not assessed",
+        )
+    explain.add_argument(
+        "--ungraded",
+        action="store_true",
+        help="record that no component was assessed (not the same as zero)",
+    )
+    explain.add_argument("--evidence", required=True, help="what the learner said")
+    explain.add_argument("--feedback", required=True, help="brief feedback given")
+    explain.add_argument(
+        "--coaching",
+        default=None,
+        help="optional optimization coaching note; never scored",
+    )
 
     finish = actions.add_parser("finish", help="close an attempt, keeping its history")
     finish.add_argument("attempt_id")

@@ -63,6 +63,7 @@ tests, live checks and the `practice tutor check` command refer to them.
   bonus of up to 1 and is never part of the core 10. Report them separately, for
   example 9/10 plus 1 bonus. An explanation that was skipped is ungraded, not zero.
   Hints used and elapsed time do not subtract points.
+  Record each assessment with `practice attempt explain`; a revision is a new call.
 - **TUTOR-011** An accurate explanation of a correct but slower solution can earn full
   marks. Optimization coaching is a separate, gradual conversation that starts by
   inviting the learner to look at repeated work. It never reduces the explanation
