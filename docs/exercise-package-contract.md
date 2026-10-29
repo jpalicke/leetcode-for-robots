@@ -41,6 +41,41 @@ Prepared packages add files the runner ignores: `starter.py`, `statement.md`,
 - `checker` names how answers are judged (default `exact`).
 - `allow_none` (default `false`): whether `None` is a legal answer. When false,
   a body of only `return None` is a stub and a `None` result is malformed.
+- `probe_budget` (optional): a read limit on one list argument. See below.
+
+### Probe budget
+
+Some problems state a complexity requirement that answers alone cannot show. A
+package can declare, in `problem.json`:
+
+```json
+"probe_budget": {"argument": "nums", "growth": "log2", "slack": 2}
+```
+
+- `argument` names a parameter whose value is a list in every case; a case that passes
+  anything else makes the package fail to load. `growth` must be `"log2"`.
+  `slack` (default 2, whole number, zero or more) is extra reads allowed.
+- For each case the worker passes that argument as a counting list (a `list`
+  subclass). The limit is the bit length of the list's size plus the slack: 16 for
+  10,000 entries (14 is the most a halving search needs). The count is the number of
+  different positions looked at, so reading one entry several times costs one.
+- A case whose answer is right but whose count is over the limit gets the outcome
+  `failed` with a detail such as "correct answer, but it looked at 10,000 of 10,000
+  entries ...". A wrong answer is judged by the checker first and never blamed on the
+  budget. Cases record `probes` and `probe_budget` in the result and its JSON form.
+  Packages without a `probe_budget` are run exactly as before.
+- The budget sits in `problem.json`, which is hashed with the suite, so changing it
+  makes recorded evidence stale and the references must be validated again.
+
+What counts: indexing (a negative index counts the position it names), slices (every
+position copied), iteration (only what was consumed), `in`, `.index()`, `.count()`,
+`copy`, `+`, `*`, comparisons, `sorted`, `sum`, `max`, `list()` and anything else that
+goes through them. `len()` is free. `bisect` counts the entries it reads.
+
+What it cannot see: C code that reads the list's buffer directly (the `heapq`
+functions, for example), `list.sort(nums)` called as an unbound method, and anything
+done before the function is called. A pass shows that the code read few entries on
+these inputs. It is evidence about reads, not a proof of running time.
 
 ### tests.json
 

@@ -100,9 +100,11 @@ constraints and examples were read from LeetCode's GraphQL endpoint when it was
 prepared, and `readiness.json` records that they were fetched.
 
 LeetCode 704, Binary Search, is under `problems/leetcode-704`, with facts fetched the
-same way. The problem asks for `O(log n)` time, and the local tests cannot enforce
-that: they check answers, and a plain scan of 10,000 entries passes. The statement,
-notes and `readiness.json` all say so.
+same way. The problem asks for `O(log n)` time, and the package enforces that by
+counting how many different entries of `nums` a solution reads: a halving search
+reads about 14 of 10,000, and a correct linear scan fails with the count it reached.
+The count is evidence about reads, not a proof of running time; the statement, notes
+and `readiness.json` say so.
 
 LeetCode 121, Best Time to Buy and Sell Stock, is under `problems/leetcode-121`, also
 with fetched facts. A quadratic answer runs out of time on its maximum-length cases

@@ -39,6 +39,8 @@ class CaseResult:
     detail: str = ""
     expected: Any = None  # For predicate checkers, one example of a valid answer.
     actual: Any = None
+    probes: int | None = None  # Entries looked at; only set under a probe budget.
+    probe_budget: int | None = None  # The most entries this case allowed.
 
 
 @dataclass
@@ -105,8 +107,10 @@ def run_exercise(
             f"incomplete: {package.function_name} is still a stub (no real body yet)",
         )
 
+    budget = package.probe_budget
     payload = {
         "function": package.function_name,
+        "probe_argument": budget.argument_index if budget is not None else None,
         "cases": [
             {"id": case.case_id, "args_json": json.dumps(case.args)} for case in cases
         ],
@@ -202,6 +206,28 @@ def _apply_event(
         verdict = checker.check(result.actual, case.expected, case.args)
         result.outcome = verdict.kind
         result.detail = verdict.detail
+        if verdict.kind == "passed":
+            _apply_probe_budget(package, case, event, result)
+
+
+def _apply_probe_budget(
+    package: ExercisePackage, case: Case, event: dict[str, Any], result: CaseResult
+) -> None:
+    """Fail a correct answer that looked at more entries than the budget allows."""
+    budget = package.probe_budget
+    if budget is None or "probes" not in event:
+        return
+    size = len(case.args[budget.argument_index])
+    limit = budget.limit(size)
+    result.probes = event["probes"]
+    result.probe_budget = limit
+    if event["probes"] > limit:
+        result.outcome = "failed"
+        result.detail = (
+            f"correct answer, but it looked at {event['probes']:,} of {size:,} "
+            f"entries. This exercise asks for logarithmic time, which needs about "
+            f"{size.bit_length():,} and allows up to {limit:,}."
+        )
 
 
 def _summarize(report: ChildReport, results: list[CaseResult]) -> tuple[Status, str]:

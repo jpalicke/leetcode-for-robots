@@ -105,6 +105,37 @@ def test_alternate_approaches_pass_through_the_cli(tmp_path: Path, name: str) ->
     assert "PASSED" in result.stdout
 
 
+def test_a_correct_linear_attempt_fails_with_the_count_it_read(tmp_path: Path) -> None:
+    attempt_id, code = start(tmp_path)
+    shutil.copyfile(SOLUTIONS / "linear_scan.py", code)
+    result = practice(tmp_path, "attempt", "test", attempt_id)
+    assert result.returncode == 1
+    assert "PASSED" not in result.stdout
+    assert "FAILED" in result.stdout
+    assert "correct answer, but it looked at 10,000 of 10,000 entries" in result.stdout
+    assert "allows up to 16" in result.stdout
+    # The same attempt id, rewritten as a halving search, passes.
+    shutil.copyfile(SOLUTIONS / "iterative_closed.py", code)
+    again = practice(tmp_path, "attempt", "test", attempt_id)
+    assert again.returncode == 0, again.stdout
+    assert "PASSED" in again.stdout
+
+
+def test_run_json_carries_the_counts(tmp_path: Path) -> None:
+    result = practice(
+        tmp_path,
+        "run",
+        str(PACKAGE),
+        str(SOLUTIONS / "iterative_closed.py"),
+        "--json",
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    cases = json.loads(result.stdout)["cases"]
+    assert all(c["probe_budget"] is not None for c in cases)
+    assert all(c["probes"] <= c["probe_budget"] for c in cases)
+    assert max(c["probes"] for c in cases) <= 15
+
+
 def test_a_crashing_attempt_is_reported_and_never_passes(tmp_path: Path) -> None:
     attempt_id, code = start(tmp_path)
     shutil.copyfile(SOLUTIONS / "float_midpoint.py", code)
@@ -129,6 +160,7 @@ def test_readiness_reports_ready_and_the_untested_requirement(tmp_path: Path) ->
     verified = " ".join(item["against"] for item in report["verification"]["verified"])
     assert "live LeetCode GraphQL" in verified
     not_verified = " ".join(report["verification"]["not_verified"])
-    assert "O(log n)" in not_verified and "not enforced" in not_verified
+    assert "does not prove" in not_verified
+    assert "not enforced" not in not_verified
     text = practice(tmp_path, "readiness", "leetcode", "704")
     assert "READY  leetcode/704" in text.stdout

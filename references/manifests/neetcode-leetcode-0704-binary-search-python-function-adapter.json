@@ -46,9 +46,9 @@
     "local_validation": {
       "status": "passed",
       "code_sha256": "1470d305f81d0e6bd9a8eab96a9aad6d94061ed663993eb63b6c1bde526d363d",
-      "run_at": "2026-10-29T02:03:40+00:00",
-      "suite_sha256": "969a6cac7bdbe763500e44751c2d5c38a69bdba166ce3e7529ba48abf92e8bb7",
-      "suite_version": "leetcode-704-v1",
+      "run_at": "2026-10-29T02:32:14+00:00",
+      "suite_sha256": "12bdc0dc3810317669475ee9cad19e4958b602d489c177fe035a5e859ad96547",
+      "suite_version": "leetcode-704-v2",
       "runner": "practice run"
     }
   }

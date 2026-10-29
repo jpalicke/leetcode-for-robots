@@ -25,6 +25,23 @@ class Case:
 
 
 @dataclass(frozen=True)
+class ProbeBudget:
+    """How many entries of one list argument a solution may look at, by input size.
+
+    growth "log2" allows the bit length of the size (the most a binary search can
+    read) plus slack, so a search that also checks both ends still fits.
+    """
+
+    argument: str
+    argument_index: int
+    growth: str
+    slack: int
+
+    def limit(self, length: int) -> int:
+        return length.bit_length() + self.slack
+
+
+@dataclass(frozen=True)
 class Suite:
     version: str
     cases: tuple[Case, ...]
@@ -44,6 +61,7 @@ class ExercisePackage:
     allow_none: bool
     suite: Suite | None  # None when the package has no test suite file.
     suite_sha256: str | None
+    probe_budget: ProbeBudget | None = None  # None: the package sets no limit.
 
 
 def load_package(directory: Path) -> ExercisePackage:
@@ -64,10 +82,13 @@ def load_package(directory: Path) -> ExercisePackage:
     if not all(isinstance(name, str) and name for name in parameters):
         raise PackageError("callable parameters must be non-empty strings")
 
+    probe_budget = _parse_probe_budget(metadata.get("probe_budget"), parameters)
     suite = None
     suite_sha256 = None
     if suite_data is not None:
         suite = _parse_suite(suite_data, len(parameters), checker)
+        if probe_budget is not None:
+            _require_lists(suite, probe_budget)
         suite_sha256 = _hash_suite(metadata, suite_data)
     return ExercisePackage(
         path=directory,
@@ -82,7 +103,43 @@ def load_package(directory: Path) -> ExercisePackage:
         allow_none=allow_none,
         suite=suite,
         suite_sha256=suite_sha256,
+        probe_budget=probe_budget,
     )
+
+
+PROBE_BUDGET_KEYS = {"argument", "growth", "slack"}
+DEFAULT_PROBE_SLACK = 2
+
+
+def _parse_probe_budget(raw: object, parameters: list[str]) -> ProbeBudget | None:
+    if raw is None:
+        return None
+    if not isinstance(raw, dict):
+        raise PackageError("probe_budget must be an object")
+    unknown = sorted(set(raw) - PROBE_BUDGET_KEYS)
+    if unknown:
+        raise PackageError(f"probe_budget has unknown keys: {', '.join(unknown)}")
+    argument = raw.get("argument")
+    if not isinstance(argument, str) or not argument:
+        raise PackageError("probe_budget argument must name a parameter")
+    if argument not in parameters:
+        raise PackageError(f"probe_budget argument {argument!r} is not a parameter")
+    if raw.get("growth") != "log2":
+        raise PackageError('probe_budget growth must be "log2"')
+    slack = raw.get("slack", DEFAULT_PROBE_SLACK)
+    if isinstance(slack, bool) or not isinstance(slack, int) or slack < 0:
+        raise PackageError("probe_budget slack must be a whole number, zero or more")
+    return ProbeBudget(argument, parameters.index(argument), "log2", slack)
+
+
+def _require_lists(suite: Suite, budget: ProbeBudget) -> None:
+    """A probe budget counts reads of a list, so every case must pass one."""
+    for case in suite.cases:
+        if not isinstance(case.args[budget.argument_index], list):
+            raise PackageError(
+                f"case {case.case_id!r}: {budget.argument} must be a list "
+                "because the package sets a probe_budget"
+            )
 
 
 def _read_json(path: Path) -> dict[str, Any]:
