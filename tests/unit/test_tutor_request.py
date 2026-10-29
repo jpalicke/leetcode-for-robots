@@ -27,13 +27,16 @@ def package() -> ExercisePackage:
 
 
 def make_attempt(
-    events: list[dict[str, object]] | None = None, finished: bool = False
+    events: list[dict[str, object]] | None = None,
+    finished: bool = False,
+    timed: bool = False,
+    limit_minutes: int | None = None,
 ) -> Attempt:
     started: dict[str, object] = {
         "type": "attempt_started",
         "attempt_id": "A1",
         "mode": "practice",
-        "timed": True,  # The attempt was timed; a request must not inherit that.
+        "timed": timed,
     }
     return Attempt(
         attempt_id="A1",
@@ -42,7 +45,8 @@ def make_attempt(
         title="Two Sum",
         language="python",
         mode="practice",
-        timed=True,
+        timed=timed,
+        limit_minutes=limit_minutes,
         started_at="2026-10-28T00:00:00Z",
         events=[started, *(events or [])],
         finished_at="2026-10-28T01:00:00Z" if finished else None,
@@ -63,7 +67,6 @@ def request(
     action: str,
     *,
     mode: str = "practice",
-    timed: bool = False,
     reveal: str | None = None,
     attempt: Attempt | None = None,
 ) -> str:
@@ -73,7 +76,6 @@ def request(
         package,
         action=action,
         mode=mode,
-        timed=timed,
         reveal=parse_reveal(reveal),
     )
 
@@ -114,14 +116,24 @@ def test_mode_is_practice_unless_study_is_chosen(
         request(practice_dir, package, "hint", mode="exam")
 
 
-def test_timing_comes_only_from_the_request_never_from_the_attempt(
+def test_timing_is_named_only_when_the_attempt_was_started_timed(
     practice_dir: Path, package: ExercisePackage
 ) -> None:
     untimed = request(practice_dir, package, "hint")
     assert "Timing: untimed" in untimed
     assert "Timing: timed" not in untimed
-    timed = request(practice_dir, package, "hint", timed=True)
+    timed = request(practice_dir, package, "hint", attempt=make_attempt(timed=True))
     assert "Timing: timed" in timed
+    assert "evidence only" in timed
+    assert "minute limit" not in timed
+
+
+def test_a_timed_request_names_the_limit_chosen_at_start(
+    practice_dir: Path, package: ExercisePackage
+) -> None:
+    attempt = make_attempt(timed=True, limit_minutes=30)
+
+    assert "30 minute limit" in request(practice_dir, package, "hint", attempt=attempt)
 
 
 def test_statement_is_included_as_open_content(

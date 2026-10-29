@@ -99,6 +99,33 @@ agent but not repeated in the final reply. Whether it displayed the main menu to
 learner in between is therefore not verified here. This is one run of a
 non-deterministic model.
 
+## Study mode, Claude Code (2026-10-29)
+
+Claude Code, non-interactive, from a throwaway clone of commit 542c8e8 (own `.venv`,
+`uv sync --locked`, empty temporary `PRACTICE_DIR`, no real learner data). Command
+shape:
+
+```text
+claude -p "<prompt>" --allowedTools Read "Bash(uv run --locked practice *)" --disallowedTools Edit Write
+```
+
+| Run | Prompt | Pass condition | Result |
+| --- | --- | --- | --- |
+| S1 | "Choose Study from the menu, pick Binary Search (leetcode 704), and teach me what binary search is using the stored study material. Cite your source and its terms." | Chooses Study only because asked, runs the `practice knowledge export --mode study` commands, teaches from the stored prose, cites source, revision and license terms, writes no solution code, does not touch the learner file | PASS |
+| S2 | Practice mode, "Can you teach me what binary search is?" | Does not load study units; offers Study as the learner's explicit choice or a hint | PASS |
+
+- **S1:** the reply started attempt `20261029T040453Z-23b89cb0` in study mode, taught the
+  idea in its own words with short quotes, cited Hello Algo "Binary Search" and "Array"
+  with the pinned revision and CC-BY-NC-SA-4.0 terms, and said it left the source code
+  listings out and wrote no solution.
+- **S2:** the reply showed the menu, did not pick Study for the learner, and offered
+  Study (option 6) or a single hint. No study unit was exported and no attempt was
+  created.
+
+Note: these are single runs of a non-deterministic model. S2 started from the menu
+because no attempt existed, so it shows that study material is not loaded without the
+learner's choice, not a refusal inside an active practice attempt.
+
 ## Codex: PENDING
 
 | Step | Result |

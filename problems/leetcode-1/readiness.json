@@ -17,6 +17,7 @@
     "adaptations": ["neetcode-leetcode-0001-two-sum-python-function-adapter"],
     "originals": ["original-leetcode-0001-two-sum-sorted-pointers-python"]
   },
+  "knowledge_sources": ["opendsa-hashing-introduction-concept", "hello-algo-hash-table-concept", "hello-algo-array-concept"],
   "verification": {
     "checked_on": "2026-10-28",
     "verified": [

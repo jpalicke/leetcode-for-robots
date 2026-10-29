@@ -374,7 +374,7 @@ def test_the_numbered_menu_shows_and_starts_the_recommendation(
     started = learner.ok("menu", "choose", "1", "--recommend")
 
     assert "5. Get a recommendation for what to practice next" in main_menu
-    assert "Unavailable: Not available yet." in main_menu  # Study, timed.
+    assert "6. Study a concept" in main_menu
     assert "Two Sum [easy]" in shown
     assert "next curriculum objective" in shown
     assert "Started attempt" in started

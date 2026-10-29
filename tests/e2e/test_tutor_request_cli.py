@@ -65,7 +65,7 @@ def test_hint_request_demo_prints_and_saves_a_permitted_block(tmp_path: Path) ->
     assert "Problem: 1  Two Sum" in text
     assert f"Attempt: {attempt_id}" in text
     assert "Mode: practice" in text
-    assert "Timing: untimed" in text  # The attempt was timed; the request is not.
+    assert "Timing: timed" in text  # Chosen at attempt start, shown as evidence only.
     assert "Action: hint" in text
     assert "hint level 0 only" in text
     assert "do not name the technique" in text
@@ -76,7 +76,9 @@ def test_hint_request_demo_prints_and_saves_a_permitted_block(tmp_path: Path) ->
     assert "assistance" not in before.decode("utf-8")
 
 
-def test_timed_and_study_are_per_request_choices(tmp_path: Path) -> None:
+def test_study_is_a_per_request_choice_and_timing_follows_the_attempt(
+    tmp_path: Path,
+) -> None:
     attempt_id = start(tmp_path)
     result = practice(
         tmp_path,
@@ -86,7 +88,6 @@ def test_timed_and_study_are_per_request_choices(tmp_path: Path) -> None:
         "concept-refresher",
         "--mode",
         "study",
-        "--timed",
     )
     assert result.returncode == 0, result.stderr
     assert "Mode: study" in result.stdout
@@ -95,7 +96,7 @@ def test_timed_and_study_are_per_request_choices(tmp_path: Path) -> None:
         tmp_path, "request", attempt_id, "--action", "concept-refresher"
     )
     assert "Mode: practice" in follow_up.stdout
-    assert "Timing: untimed" in follow_up.stdout
+    assert "Timing: timed" in follow_up.stdout
 
 
 def test_hint_levels_follow_recorded_help_and_explicit_reveal(tmp_path: Path) -> None:

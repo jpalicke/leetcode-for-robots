@@ -25,7 +25,7 @@ uv run --locked practice knowledge export leetcode 1 --hint-level 2
 ```
 
 The default exports only the statement summary. Solutions, selected references and
-study material need explicit scope; learner data is always excluded. See
+study material (see [study mode](docs/study-mode.md)) need explicit scope; learner data is always excluded. See
 [knowledge export](docs/knowledge-export.md) for reveal rules and the JSON contract.
 
 Validate the curriculum map and list the next eligible objectives without learner history:
@@ -195,7 +195,9 @@ touched by it. Intake itself never runs the code and claims nothing about correc
   requests to paste into an existing agent chat.
 - Full LeetCode catalog coverage, with preparation tracked as development tasks
   in GitHub issues. Six easy exercises form the first validated batch.
-- Study and practice modes; timed practice is strictly optional.
+- Study and practice modes; study is an explicit choice from the menu, with cited
+  units described in [study mode](docs/study-mode.md). Timed practice is strictly
+  optional.
 - Local completion, explanation grading, and LeetCode acceptance tracked separately.
 - Personal attempts, progress, notes, and generated requests excluded from Git by default.
 - Locally stored reference code with citations, preserved source notices, and

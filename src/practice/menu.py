@@ -35,8 +35,13 @@ from practice.reviews import (
     load_schedule,
 )
 from practice.search import search
+from practice.study import StudyError, StudyUnit, handoff, study_units
 
 MAX_RESULTS = 20
+TIMED_NOTE = (
+    "Timing is your explicit choice for one attempt: pick the timed start. "
+    "It is never remembered; every other start is untimed."
+)
 NOT_AVAILABLE_YET = "Not available yet."
 
 
@@ -83,11 +88,13 @@ class MenuEnvironment:
 class Screen:
     """Which menu is showing. It is all the state a stateless front end needs."""
 
-    kind: str  # "main", "browse", "problem", "attempt", "reviews" or "recommend".
+    # "main", "browse", "problem", "attempt", "reviews", "recommend" or "study".
+    kind: str
     words: tuple[str, ...] = ()  # browse: the search words; empty lists packages.
     platform: str = ""
     problem_id: str = ""
     attempt_id: str = ""
+    timed: bool = False  # browse and problem: the learner chose timed practice.
 
 
 MAIN = Screen("main")
@@ -130,6 +137,7 @@ def build_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         "attempt": _attempt_menu,
         "reviews": _reviews_menu,
         "recommend": _recommend_menu,
+        "study": _study_menu,
     }
     builder = builders.get(screen.kind)
     if builder is None:
@@ -195,12 +203,10 @@ def _main_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         Item("progress", "Progress and notes"),
         Item("reviews", "Review problems that are due"),
         Item("recommendations", "Get a recommendation for what to practice next"),
-        Item("study", "Study a concept (study mode)", False, NOT_AVAILABLE_YET),
+        Item("study", "Study a concept (study mode, your explicit choice)"),
         Item(
             "timed",
             "Timed practice (optional; always needs your explicit opt-in)",
-            False,
-            NOT_AVAILABLE_YET,
         ),
     )
     return Menu(screen, "Main menu", tuple(lines), items, tuple(history.notices))
@@ -222,6 +228,9 @@ def _browse_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         entries, extras = _packaged_entries(env, catalog)
         title = "Problems with an exercise package"
         lines = list(extras)
+    if screen.timed:
+        title = f"Timed practice: {title}"
+        lines.insert(0, TIMED_NOTE)
     items = [_problem_item(env, entry) for entry in entries]
     items.append(Item("main", "Back to the main menu"))
     return Menu(screen, title, tuple(lines), tuple(items))
@@ -235,6 +244,7 @@ def _problem_menu(env: MenuEnvironment, screen: Screen) -> Menu:
         f"{entry.frontend_question_id}  {entry.title}  [{_difficulty(entry)}]",
         "Exercise: ready" if exercise.ready else f"Exercise: {exercise.reason}",
         "A new attempt starts in practice mode, untimed, with a blank file.",
+        TIMED_NOTE,
     ]
     items: list[Item] = []
     existing = latest_unfinished(history, screen.platform, screen.problem_id)
@@ -246,17 +256,71 @@ def _problem_menu(env: MenuEnvironment, screen: Screen) -> Menu:
                 attempt_id=existing.attempt_id,
             )
         )
-    items.append(
+    starts = [
         Item(
-            "start",
-            "Start a new practice attempt",
+            key,
+            label,
             exercise.ready,
             None if exercise.ready else exercise.reason,
             problem=(screen.platform, screen.problem_id),
         )
-    )
+        for key, label in (
+            ("start", "Start a new practice attempt"),
+            (
+                "start-timed",
+                "Start a new timed practice attempt (timed for this attempt only)",
+            ),
+        )
+    ]
+    items.extend(reversed(starts) if screen.timed else starts)
     items.append(Item("main", "Back to the main menu"))
     return Menu(screen, "Problem", tuple(lines), tuple(items), tuple(history.notices))
+
+
+def _study_topics(
+    env: MenuEnvironment,
+) -> list[tuple[Entry, Exercise, tuple[StudyUnit, ...]]]:
+    """Packaged problems that list study units, in ID order."""
+    entries, _ = _packaged_entries(env, _catalog(env))
+    topics = []
+    for entry in entries:
+        problem_id = str(entry.frontend_question_id)
+        try:
+            units = study_units(
+                env.references, env.problems_dir, entry.platform, problem_id
+            )
+        except StudyError as error:
+            raise MenuError(str(error)) from error
+        if units:
+            status = exercise_status(env, entry.platform, problem_id)
+            topics.append((entry, status, units))
+    return topics
+
+
+def _study_menu(env: MenuEnvironment, screen: Screen) -> Menu:
+    """Pick a problem to study. Each choice starts a study-mode attempt."""
+    topics = _study_topics(env)
+    lines = [
+        "Study mode is your explicit choice. Practice mode never loads these units.",
+        "Choosing a problem starts a study-mode attempt and shows what to give "
+        "your tutor, with each source's citation and license terms.",
+        "Study material explains concepts only; it never authorizes a full solution.",
+    ]
+    if not topics:
+        lines.append("No problem lists study units yet.")
+    items = [
+        Item(
+            "study-start",
+            f"{entry.frontend_question_id}  {entry.title}: "
+            + ", ".join(u.title for u in units),
+            status.ready,
+            None if status.ready else status.reason,
+            problem=(entry.platform, str(entry.frontend_question_id)),
+        )
+        for entry, status, units in topics
+    ]
+    items.append(Item("main", "Back to the main menu"))
+    return Menu(screen, "Study a concept", tuple(lines), tuple(items))
 
 
 def _reviews_menu(env: MenuEnvironment, screen: Screen) -> Menu:
@@ -536,19 +600,58 @@ def _select(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
     assert item.problem is not None
     platform, problem_id = item.problem
     return StepResult(
-        0, "", "", Screen("problem", platform=platform, problem_id=problem_id)
+        0,
+        "",
+        "",
+        Screen("problem", platform=platform, problem_id=problem_id, timed=screen.timed),
     )
 
 
-def _start(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+def _start_attempt(
+    env: MenuEnvironment, screen: Screen, item: Item, *timing: str
+) -> StepResult:
     assert item.problem is not None
     platform, problem_id = item.problem
-    argv = ["attempt", "start", platform, problem_id]
+    argv = ["attempt", "start", platform, problem_id, *timing]
     result = env.run([*argv, *_package_flags(env, platform, problem_id)])
     if result.code != 0:
         return StepResult(result.code, result.stdout, result.stderr, screen)
     follow = _active(load_history(env.practice_dir), platform, problem_id)
     return StepResult(0, result.stdout, result.stderr, follow)
+
+
+def _start(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    return _start_attempt(env, screen, item)
+
+
+def _start_timed(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    return _start_attempt(env, screen, item, "--timed")
+
+
+def _timed(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    """Open the problem list in timed mode. This writes nothing and sets nothing."""
+    return StepResult(0, "", "", Screen("browse", timed=True))
+
+
+def _study(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    return StepResult(0, "", "", Screen("study"))
+
+
+def _study_start(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
+    """Start a study-mode attempt, then print what the tutor needs. Opt-in only."""
+    assert item.problem is not None
+    platform, problem_id = item.problem
+    argv = ["attempt", "start", platform, problem_id, "--mode", "study"]
+    result = env.run([*argv, *_package_flags(env, platform, problem_id)])
+    if result.code != 0:
+        return StepResult(result.code, result.stdout, result.stderr, screen)
+    try:
+        units = study_units(env.references, env.problems_dir, platform, problem_id)
+    except StudyError as error:
+        raise MenuError(str(error)) from error
+    follow = _active(load_history(env.practice_dir), platform, problem_id)
+    text = result.stdout.rstrip("\n") + "\n\n" + handoff(platform, problem_id, units)
+    return StepResult(0, text + "\n", result.stderr, follow)
 
 
 def _test(env: MenuEnvironment, screen: Screen, item: Item) -> StepResult:
@@ -616,6 +719,10 @@ _ACTIONS: dict[str, Callable[[MenuEnvironment, Screen, Item], StepResult]] = {
     "progress": _progress,
     "select": _select,
     "start": _start,
+    "start-timed": _start_timed,
+    "timed": _timed,
+    "study": _study,
+    "study-start": _study_start,
     "test": _test,
     "hint": _request("hint"),
     "explain-approach": _request("explain-my-approach"),

@@ -5,6 +5,7 @@ import argparse
 import sys
 from pathlib import Path
 
+from practice import clock
 from practice.attempts import (
     finish_attempt,
     record_assistance,
@@ -33,6 +34,7 @@ from practice.package import ExercisePackage, PackageError, load_package
 from practice.paths import default_package_dir
 from practice.rubric import ExplanationScores, format_scores
 from practice.runner import RunResult
+from practice.timing import format_timing, timing_report
 
 HASH_PREFIX = 12
 
@@ -62,6 +64,7 @@ def _dispatch(args: argparse.Namespace, practice_dir: Path) -> int:
         "verdict": _verdict,
         "explain": _explain,
         "finish": _finish,
+        "time": _time,
     }
     return handlers[args.attempt_command](args, practice_dir)
 
@@ -78,6 +81,7 @@ def _start(args: argparse.Namespace, practice_dir: Path) -> int:
         language=args.language,
         mode=args.mode,
         timed=args.timed,
+        limit_minutes=args.limit_minutes,
     )
     title = next(
         e.title
@@ -87,10 +91,17 @@ def _start(args: argparse.Namespace, practice_dir: Path) -> int:
     print(f"Started attempt {started.attempt_id}")
     print(
         f"{args.platform} {args.problem_id}  {title}  "
-        f"({args.language}, {args.mode}, {_timing(args.timed)})"
+        f"({args.language}, {args.mode}, "
+        f"{_timing(args.timed, args.limit_minutes)})"
     )
     print(f"Code: {started.code_path}")
     print(f"Starter: {started.starter_source}")
+    if args.timed:
+        print(f"Timer started: {started.started_at}")
+        print(
+            "Timing is evidence only and applies to this attempt only. "
+            "See it with: practice attempt time " + started.attempt_id
+        )
     return 0
 
 
@@ -193,6 +204,15 @@ def _finish(args: argparse.Namespace, practice_dir: Path) -> int:
     return 0
 
 
+def _time(args: argparse.Namespace, practice_dir: Path) -> int:
+    attempt = find_attempt(_load(practice_dir), args.attempt_id)
+    print(f"Attempt {attempt.attempt_id}")
+    print(describe_attempt(attempt))
+    for line in format_timing(timing_report(attempt, clock.now())):
+        print(line)
+    return 0
+
+
 def _progress(args: argparse.Namespace, practice_dir: Path) -> int:
     if (args.platform is None) != (args.problem_id is None):
         return _usage("give both PLATFORM and PROBLEM_ID, or neither")
@@ -234,6 +254,9 @@ def _notes(args: argparse.Namespace, practice_dir: Path) -> int:
         text = _event_text(event)
         if text is not None:
             print(f"  {event['at']}  {text}")
+    if attempt.timed:
+        for line in format_timing(timing_report(attempt, clock.now())):
+            print(line)
     print("Explanation assessments (separate from tests and the platform verdict):")
     if not view.explanations:
         print("  No explanation assessed yet.")
@@ -283,12 +306,18 @@ def format_result(result: RunResult) -> str:
     return format_run(result)
 
 
+def _event_limit(event: dict[str, object]) -> int | None:
+    limit = event.get("limit_minutes")
+    return limit if isinstance(limit, int) and not isinstance(limit, bool) else None
+
+
 def _event_text(event: dict[str, object]) -> str | None:
     kind = event["type"]
     if kind == "attempt_started":
         return (
             f"started ({event['language']}, {event['mode']}, "
-            f"{_timing(bool(event['timed']))}; starter: {event.get('starter_source')})"
+            f"{_timing(bool(event['timed']), _event_limit(event))}; "
+            f"starter: {event.get('starter_source')})"
         )
     if kind == "test_run":
         headline = str(event["message"]).splitlines()[0]
@@ -326,7 +355,8 @@ def describe_attempt(attempt: Attempt) -> str:
     review = ", review" if attempt.review else ""
     return (
         f"{attempt.platform} {attempt.problem_id}  {attempt.title}  "
-        f"({attempt.language}, {attempt.mode}, {_timing(attempt.timed)}{review})"
+        f"({attempt.language}, {attempt.mode}, "
+        f"{_timing(attempt.timed, attempt.limit_minutes)}{review})"
     )
 
 
@@ -340,8 +370,12 @@ def _attempt_line(view: AttemptView) -> str:
     )
 
 
-def _timing(timed: bool) -> str:
-    return "timed" if timed else "untimed"
+def _timing(timed: bool, limit_minutes: int | None = None) -> str:
+    if not timed:
+        return "untimed"
+    if limit_minutes is None:
+        return "timed"
+    return f"timed, {limit_minutes} minute limit"
 
 
 def _load(practice_dir: Path) -> History:

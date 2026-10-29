@@ -131,7 +131,6 @@ def prepare_request(
     *,
     action: str,
     mode: str,
-    timed: bool,
     reveal: str | None,
 ) -> PreparedRequest:
     """Build the request and save it. The journal is only ever read."""
@@ -146,7 +145,6 @@ def prepare_request(
         package,
         action=action,
         mode=mode,
-        timed=timed,
         reveal=parse_reveal(reveal),
     )
     path = save_request(practice_dir, attempt.attempt_id, action, text)
@@ -191,7 +189,6 @@ def build_request(
     *,
     action: str,
     mode: str,
-    timed: bool,
     reveal: Reveal,
 ) -> str:
     spec = ACTIONS.get(action)
@@ -213,7 +210,7 @@ def build_request(
     selected = _select(candidates, action, target)
 
     view = view_attempt(attempt, practice_dir)
-    lines = _header(attempt, action, mode, timed)
+    lines = _header(attempt, action, mode)
     lines += _task(spec, action, mode)
     lines += _scope(action, target, selected)
     lines += _context(spec, selected, view)
@@ -386,12 +383,17 @@ def _display(path: Path) -> str:
         return str(path)
 
 
-def _header(attempt: Attempt, action: str, mode: str, timed: bool) -> list[str]:
-    timing = (
-        "timed (chosen for this request only)"
-        if timed
-        else "untimed (timing is never carried over from an attempt or request)"
-    )
+def _header(attempt: Attempt, action: str, mode: str) -> list[str]:
+    """Timing is named only when this attempt was started timed, as evidence."""
+    timing = "untimed"
+    if attempt.timed:
+        limit = (
+            f", {attempt.limit_minutes} minute limit" if attempt.limit_minutes else ""
+        )
+        timing = (
+            f"timed (chosen when this attempt started{limit}; evidence only, "
+            "never part of the explanation score)"
+        )
     return [
         f"# Tutor request: {action}",
         "",

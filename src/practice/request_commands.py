@@ -20,7 +20,6 @@ def run_request_command(args: argparse.Namespace, practice_dir: Path) -> int:
             args.package,
             action=args.action,
             mode=args.mode,
-            timed=args.timed,
             reveal=args.reveal,
         )
     except (AttemptError, RequestError) as error:
