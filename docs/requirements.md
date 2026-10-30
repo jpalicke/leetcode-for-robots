@@ -27,8 +27,7 @@ Then close the ticket; do not keep complete work open solely for pending merge.
 For development work on this project, prefer Sol (Codex) or Sonnet (Claude Code) for the
 main agent and delegated work. Use Luna (Codex) or Haiku (Claude Code) for suitable
 lightweight tasks. Do not use Astra High or raise reasoning effort without Joe P's
-explicit approval. Delegate through sequential subagents, one at a time, with Sonnet
-by default and Haiku for light work, to conserve session limits. These preferences do not require learners to
+explicit approval. Use subagents only as `CLAUDE.md` allows. These preferences do not require learners to
 use a particular tutor model or editor.
 
 ## Confirmed decisions
