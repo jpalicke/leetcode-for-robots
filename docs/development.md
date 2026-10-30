@@ -144,10 +144,9 @@ the run's native step logs hold setup/type/lint diagnostics. The artifact contai
 test diagnostics from synthetic fixtures, never real learner history. Local JUnit
 output under `ci-results/` is ignored by Git.
 
-Maintainers should require both stable check names before merging and keep the
-senior-engineer review/comment gate. Adding a workflow does not enable branch
-protection automatically; do not report enforcement until repository settings
-confirm it. The autonomous pod verifies both actual check results before merging.
+Maintainers should require both stable check names before merging. Adding a
+workflow does not enable branch protection automatically; do not report
+enforcement until repository settings confirm it.
 
 Official references, checked 2026-10-30:
 [checkout](https://github.com/actions/checkout/tree/v7.0.1),

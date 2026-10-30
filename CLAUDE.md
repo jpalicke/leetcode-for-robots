@@ -24,11 +24,6 @@ only by `src/practice/menu_tui.py`. Add no other runtime dependency without appr
 
 ## Delivery
 
-- Joe P authorized an autonomous development pod: select the next ready issue,
-  make routine engineering decisions, obtain senior-engineer review, address all
-  comments and merge after checks pass. Continue to the next issue without another
-  go-ahead. Keep chat output minimal unless Joe P asks for an update.
-
 - Follow Prompt-Driven Development: one ticket is one deliverable and one PR, opened
   ready for review after the work is verified. No drafts unless asked.
 - Work on a branch named for the ticket (`build/...`). Merge to `main` through a PR.
