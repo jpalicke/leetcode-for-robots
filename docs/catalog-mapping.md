@@ -83,7 +83,8 @@ token when there is one.
   ticket. A crash leaves what was done, and a rerun finishes the rest. A ticket that
   has an issue but is not yet under the parent is linked on the next run.
 - **Linked:** each class ticket is added as a sub-issue of #1 (`--parent` changes it).
-- **Rate-limited:** one request at a time, `--delay` seconds apart (default 2).
+- **Rate-limited:** one request at a time, waiting at least `--delay` seconds
+  after the previous response before starting another request (default 2).
 - **Body:** the text of `plan_catalog.py render <ticket>`, minus its title line.
 
 After an `--apply`, commit the updated `catalog/ticket-plan.json` so the issue

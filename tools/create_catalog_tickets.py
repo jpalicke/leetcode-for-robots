@@ -53,7 +53,6 @@ class GitHub:
             remaining = self.delay - (time.monotonic() - self.last)
             if remaining > 0:
                 time.sleep(remaining)
-        self.last = time.monotonic()
 
     def call(self, path: str, body: dict[str, Any] | None = None) -> Any:
         self._pause()
@@ -78,6 +77,10 @@ class GitHub:
             raise ToolError(str(error)) from error
         except ValueError as error:
             raise ToolError(f"{url} did not answer with JSON ({error})") from error
+        finally:
+            # Wait after a response so transport and server scheduling cannot
+            # shorten the configured interval between observed requests.
+            self.last = time.monotonic()
 
     def all_issues(self) -> list[dict[str, Any]]:
         """Every issue in the repository, open or closed, pull requests left out."""
