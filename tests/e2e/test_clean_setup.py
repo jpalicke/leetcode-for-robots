@@ -20,7 +20,15 @@ def _check_checkout(root: Path, checkout: Path) -> None:
     check_windows_path(checkout, root / "references")
     for name in ("pyproject.toml", "uv.lock", ".python-version", "README.md"):
         shutil.copy2(root / name, checkout / name)
-    for folder in ("src", "catalog", "curriculum", "problems", "references", "tools"):
+    for folder in (
+        "src",
+        "catalog",
+        "curriculum",
+        "problems",
+        "references",
+        "tools",
+        "experiments",
+    ):
         shutil.copytree(
             root / folder,
             checkout / folder,

@@ -71,3 +71,7 @@ registered references with notices and tampered hashes; teaching versus solution
 scope; identity/class/path failures; stable IDs across content changes and copied
 roots; and exclusive output creation. The clean-checkout scenario also exports
 LeetCode 1 and asserts no `.practice` directory appears.
+
+The [RAG comparison design](rag-experiment.md) uses these exports as the shared
+permission boundary for direct context and retrieval. Its versioned pilot fixtures
+are evaluation inputs, not a retrieval backend or measured model results.
