@@ -32,6 +32,9 @@ only by `src/practice/menu_tui.py`. Add no other runtime dependency without appr
   PR and source links, and whether merge is pending. Then close it.
 - One ticket per session. After the merge, stop and tell Joe P to start the next
   ticket in a fresh session.
+- Use subagents only for truly parallel, independent work, never merely because a
+  ticket exists. The main agent passes the needed file excerpts and line ranges in
+  the prompt, so a subagent does not reread `gotchas.md`, docs, or whole modules.
 - Docs, issues and scenarios repeat shared text. When a decision changes, search
   every doc and open issue for the old wording.
 

@@ -106,9 +106,8 @@ steps do not require separate tickets or repeated approval handoffs.
   not keep a completed implementation ticket open.
 - Never close unfinished or blocked work as completed. A tracking parent closes
   only when its defined scope and coverage criteria are satisfied.
-- Prefer Sol or Sonnet; Luna or Haiku only for suitable lightweight work. Delegate
-  through sequential subagents, one at a time, Sonnet by default and Haiku for light work.
-  Do not raise reasoning effort or use Astra High without explicit approval.
+- Prefer Sol or Sonnet; Luna or Haiku only for suitable lightweight work. Use
+  subagents only as `CLAUDE.md` allows. Do not raise reasoning effort or use Astra High without explicit approval.
 
 ## Deliverables and dependencies
 
