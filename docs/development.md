@@ -116,3 +116,41 @@ alone does not require an otherwise complete implementation issue to stay open.
 The [curriculum map](curriculum.md) is committed under `curriculum/`. Its tests
 validate real catalog placements, malformed prerequisite graphs, stable objective
 order and learner-safe CLI output using real files and subprocesses.
+
+## Hosted quality gates
+
+`.github/workflows/quality.yml` runs on every pull request, pushes to `main`, and
+manual dispatch. The stable check names are `Quality (ubuntu-24.04)` and
+`Quality (windows-2022)`. Both install uv 0.11.26, use the Python version in
+`.python-version`, run locked sync, Ruff lint/format, strict mypy for the native,
+Windows and Linux targets, tutor/curriculum contracts, preserved-source integrity,
+and the complete unit/integration/end-to-end suite. Existing platform skips remain
+visible; the workflow adds none. The independent-checkout gate runs inside pytest.
+
+Jobs have a 45-minute limit and the test step has a 35-minute limit, in addition
+to the existing subprocess deadlines. Matrix failures do not cancel the other OS.
+A newer run cancels an older run for the same pull request or branch. Ordinary
+runner temporary directories are used without shortening `TEMP` or skipping tests.
+
+Actions are pinned to reviewed immutable revisions: checkout v7.0.1, setup-uv
+v10.3.3 and upload-artifact v7.0.2. These use Node 24 on GitHub-hosted runners.
+Workflow permissions are `contents: read`; checkout does not persist credentials.
+There are no repository secrets or model calls. The uv cache is separated by OS,
+architecture, interpreter file and lockfile; only trusted `main` pushes save it.
+The workflow never caches learner directories or uploads the checkout/scratch tree.
+
+Each OS retains only `ci-results/tests.xml` for seven days, including failures;
+the run's native step logs hold setup/type/lint diagnostics. The artifact contains
+test diagnostics from synthetic fixtures, never real learner history. Local JUnit
+output under `ci-results/` is ignored by Git.
+
+Maintainers should require both stable check names before merging and keep the
+senior-engineer review/comment gate. Adding a workflow does not enable branch
+protection automatically; do not report enforcement until repository settings
+confirm it. The autonomous pod verifies both actual check results before merging.
+
+Official references, checked 2026-10-30:
+[checkout](https://github.com/actions/checkout/tree/v7.0.1),
+[setup-uv](https://github.com/astral-sh/setup-uv/tree/v10.3.3),
+[upload-artifact](https://github.com/actions/upload-artifact/tree/v7.0.2),
+[uv integration](https://docs.astral.sh/uv/guides/integration/github/).

@@ -2,6 +2,8 @@
 
 Rules learned from corrections. Review before starting new work.
 
+- Autonomous pod work continues directly from one completed ticket to the next ready ticket; a PR handoff or merge is not a stop requiring another go-ahead. Keep chat output minimal unless Joe P asks for status, and retain senior review and all quality gates before merging.
+
 - Tickets are organized around deliverables a person can observe, not around internal steps (validate, store, search). Each ticket needs an outcome and a demo.
 - Do not guess at missing tickets or hierarchy. Check GitHub for real sub-issues before saying they exist or do not.
 - Planning docs and issue bodies repeat shared text. When a decision changes, search every doc and open issue for the old wording.
