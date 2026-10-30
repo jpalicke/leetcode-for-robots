@@ -15,6 +15,16 @@ Code and optional Cursor.
 
 See [development setup](docs/development.md) to install dependencies and run checks.
 
+Fetch source-attributed problem facts for exercise preparation:
+
+```text
+uv run --locked python tools/fetch_problem_facts.py contains-duplicate valid-anagram
+```
+
+The JSON files stay under ignored `.scratch/problem-facts/`. They are verification
+inputs; compare them with the package before updating readiness evidence. See
+[exercise preparation](docs/exercise-preparation.md#fetching-problem-facts).
+
 ## Usage
 
 Export public knowledge as deterministic, source-aware JSON for future retrieval:
