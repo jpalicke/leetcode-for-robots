@@ -39,6 +39,8 @@ only by `src/practice/menu_tui.py`. Add no other runtime dependency without appr
   `README.md`, `docs/` and `scenarios.jsonl` for the old wording and run
   `gh issue list --state open --search "<old wording>"`. Read and edit only the
   matching sections; never read a whole doc to audit it.
+- Read files with the Read tool and a line range, after a grep finds the lines. Do
+  not dump whole files with `cat`, `head` or `Get-Content` chains in the shell.
 
 ## Code
 
