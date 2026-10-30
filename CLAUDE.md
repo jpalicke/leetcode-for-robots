@@ -30,6 +30,8 @@ only by `src/practice/menu_tui.py`. Add no other runtime dependency without appr
 - Never commit with `--no-verify`. If a hook fails, fix the cause.
 - Comment on the ticket in plain English when done: what works, how it was verified,
   PR and source links, and whether merge is pending. Then close it.
+- One ticket per session. After the merge, stop and tell Joe P to start the next
+  ticket in a fresh session.
 - Docs, issues and scenarios repeat shared text. When a decision changes, search
   every doc and open issue for the old wording.
 
