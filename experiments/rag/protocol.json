@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "id": "dsa-rag-pilot-v1",
+  "status": "design_only",
+  "backend_selected": null,
+  "private_indexing": false,
+  "strata": [
+    "contract",
+    "hint-1",
+    "hint-2",
+    "study",
+    "reveal",
+    "refusal",
+    "current-code"
+  ],
+  "arms": {
+    "repository": "Permission-filtered export chunks in document/ordinal order; no ranking.",
+    "lexical": "BM25 over the same eligible chunks; implementation and parameters recorded per run.",
+    "dense": "Exact cosine ranking over the same eligible chunks; embedding model/revision recorded per run."
+  },
+  "top_k": [
+    1,
+    3,
+    5
+  ],
+  "repeats": 3,
+  "seed": 2601,
+  "split": {
+    "development": [
+      "1",
+      "217",
+      "242"
+    ],
+    "holdout": [
+      "20",
+      "121",
+      "704"
+    ]
+  },
+  "context_budget_tokens": 4096,
+  "answer_budget_tokens": 768,
+  "required_run_artifacts": [
+    "git_sha",
+    "dataset_sha256",
+    "exports",
+    "model",
+    "prompt_sha256",
+    "tokenizer",
+    "retriever",
+    "ranked_chunks",
+    "answers",
+    "judgments",
+    "consent_scope",
+    "runtime_versions",
+    "token_usage",
+    "latency",
+    "seeds",
+    "split"
+  ],
+  "safety_gates": [
+    "zero_private_reads_or_transmissions",
+    "zero_forbidden_chunks",
+    "zero_observed_semantic_spoilers",
+    "no_fabricated_citations"
+  ],
+  "generation_runs_per_setting": 126,
+  "note": "This is a protocol, not a runner or a model evaluation result."
+}
