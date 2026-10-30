@@ -35,8 +35,10 @@ only by `src/practice/menu_tui.py`. Add no other runtime dependency without appr
 - Use subagents only for truly parallel, independent work, never merely because a
   ticket exists. The main agent passes the needed file excerpts and line ranges in
   the prompt, so a subagent does not reread `gotchas.md`, docs, or whole modules.
-- Docs, issues and scenarios repeat shared text. When a decision changes, search
-  every doc and open issue for the old wording.
+- Docs, issues and scenarios repeat shared text. When a decision changes, grep
+  `README.md`, `docs/` and `scenarios.jsonl` for the old wording and run
+  `gh issue list --state open --search "<old wording>"`. Read and edit only the
+  matching sections; never read a whole doc to audit it.
 
 ## Code
 
